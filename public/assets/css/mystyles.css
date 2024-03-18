@@ -1,0 +1,16 @@
+.form-check-custom {
+    display: flex;
+    flex: 1;
+}
+
+.custom_switch input {
+    position: relative ;
+    flex: 1;
+}
+
+.custom_switch span {
+    position: relative;
+    flex: 1;
+    display: inline-block;
+    padding-left: 5rem;
+}

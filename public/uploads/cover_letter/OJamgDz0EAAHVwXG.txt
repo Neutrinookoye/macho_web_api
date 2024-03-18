@@ -1,0 +1,2 @@
+full_name,address,year_of_business,business_type,business_name,phone,state,lga,customer_type,utilized_credit,credit_limit,credit_allowance,active,suspend,guarantor_name,guarantor_address,guarantor_phone,relationship_with_applicant,years_of_relationship
+Test Upload,Test Address,2021-01-08,Proprietorship,Test Business,8012345678,KANO,DALA,Kirana,100000,200000,100000,1,0,Test Guarantor,Guarantor Address,8012345677,Relationship, 5 years
