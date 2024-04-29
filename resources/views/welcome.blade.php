@@ -19,6 +19,8 @@
 		<link href="{{ asset('assets/plugins/custom/prismjs/prismjs.bundle.css') }}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
 		<!--end::Global Theme Styles-->
+		<link href="{{ asset('assets/css/mystyles.css') }}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('assets/css/mystyle.css') }}" rel="stylesheet" type="text/css" />
 		<!--begin::Layout Themes(used by all pages)-->
 		<link href="{{ asset('assets/css/themes/layout/header/base/light.css') }}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset('assets/css/themes/layout/header/menu/light.css') }}" rel="stylesheet" type="text/css" />
@@ -54,14 +56,14 @@
 								<!--begin::Title-->
 								<!--begin::Form group-->
 								<div class="form-group">
-									<label class="font-size-h6 font-weight-bolder text-dark">Email</label>
+									<label class="font-size-h6 font-weight-bolder">Email</label>
 									<input class="form-control form-control-solid h-auto py-4 px-6 rounded-lg border-0" type="email" name="email" autocomplete="off" />
 								</div>
 								<!--end::Form group-->
 								<!--begin::Form group-->
 								<div class="form-group">
 									<div class="d-flex justify-content-between mt-n5">
-										<label class="font-size-h6 font-weight-bolder text-dark pt-5">Password</label>
+										<label class="font-size-h6 font-weight-bolder pt-5">Password</label>
 										{{-- <a href="custom/pages/login/login-4/forgot.html" class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5">Forgot Password ?</a> --}}
 									</div>
 									<input class="form-control form-control-solid h-auto py-4 px-6 rounded-lg border-0" type="password" name="password" autocomplete="off" />
@@ -69,7 +71,7 @@
 								<!--end::Form group-->
 								<!--begin::Action-->
 								<div class="pb-lg-0 pb-5">
-									<button type="submit" id="kt_login_singin_form_submit_button" class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3">Login</button>
+									<button type="submit" id="kt_login_singin_form_submit_button" class="btn btn-warning font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3">Login</button>
 									{{-- <button type="button" class="btn btn-light-primary font-weight-bolder px-8 py-4 my-3 font-size-lg">
 									<span class="svg-icon svg-icon-md">
 										<!--begin::Svg Icon | path:assets/media/svg/social-icons/google.svg-->
@@ -93,10 +95,10 @@
 				<!--begin::Content-->
 				<!--begin::Aside-->
 				<div class="login-aside order-1 order-lg-2 bgi-no-repeat bgi-position-x-right">
-					<div class="login-conteiner bgi-no-repeat bgi-position-x-right bgi-position-y-bottom" style="background-image: url({{ asset('assets/media/svg/illustrations/login-visual-4.svg') }});">
+					<div class="login-conteiner bgi-no-repeat bgi-position-x-right bgi-position-y-bottom" style="background-image: url({{ asset('assets/media/images/logo.png') }});">
 						<!--begin::Aside title-->
-						<h3 class="pt-lg-40 pl-lg-20 pb-lg-0 pl-10 py-20 m-0 d-flex justify-content-lg-start font-weight-boldest display5 display1-lg text-white">IDH
-						<br /> Backend
+						<h3 class="pt-lg-40 pl-lg-20 pb-lg-0 pl-10 py-20 m-0 d-flex justify-content-lg-start font-weight-boldest display5 display1-lg text-white">
+						<br /> 
 						<br /></h3>
 						<!--end::Aside title-->
 					</div>
