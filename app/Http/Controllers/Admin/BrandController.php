@@ -27,13 +27,14 @@ class BrandController extends Controller
     {
         try
         {
-                $this->validate($request, [
+            // dd($request->all());
+            $this->validate($request, [
                 'name' => 'bail|required|string',
                 'status' => 'nullable|integer',
                 'description' => 'nullable|string',
                 'brand_image' => 'bail|required',
             ]);
-
+            
             $slug = Str::slug($request->name);
             $ref = strtoupper(Str::random(20));
 
@@ -45,7 +46,6 @@ class BrandController extends Controller
 
             // Log::info($seocontent);
             // dd($request->content);
-
             if($request->hasFile('brand_image'))
             {
                 $bg_image_path = public_path("uploads/brands/");

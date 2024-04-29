@@ -6,6 +6,7 @@ use App\Models\Service;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use Illuminate\Validation\ValidationException;
 
 class ServiceController extends Controller
@@ -31,6 +32,7 @@ class ServiceController extends Controller
                 'name' => 'bail|required|string',
                 'description' => 'bail|required|string',
                 'status' => 'nullable|integer',
+                'image' => 'bail|required',
             ]);
 
             $slug = Str::slug($request->name);
@@ -41,11 +43,27 @@ class ServiceController extends Controller
                 return redirect()->back()->with('danger', 'Sorry! you have already added this service');
             }
 
+            if($request->hasFile('image'))
+            {
+                $bg_image_path = public_path("uploads/services/");
+
+                $bg_image = $request->file("image");
+                $bg_image_name = Str::random(16).'.'.$bg_image->extension();
+
+                if($bg_image->move($bg_image_path, $bg_image_name))
+                {
+                    $bg_image_name = $bg_image_name;
+                }
+            }else{
+                $bg_image_name = null;
+            }
+            
             $service = Service::create([
                 'name' => $request->name,
                 'description' => $request->description,
                 'slug' => $slug,
                 'status' => $request->status ?? 0,
+                'image' => $bg_image_name,
             ]);
 
             return redirect()->back()->with('success', 'Service created successfully');
@@ -68,6 +86,7 @@ class ServiceController extends Controller
                 'name' => 'bail|required|string',
                 'description' => 'bail|required|string',
                 'status' => 'nullable|integer',
+                'image' => 'nullable',
             ]);
 
             $slug = Str::slug($request->name);
@@ -80,11 +99,32 @@ class ServiceController extends Controller
 
             $service = Service::find($service_id);
 
+            if($request->hasFile('image'))
+            {
+
+                $image_delete_path = public_path("uploads/services/" . $service->bg_image);
+                if (File::exists($image_delete_path)) {
+                    File::delete($image_delete_path);
+                }
+                $bg_image_path = public_path("uploads/brands/");
+
+                $bg_image = $request->file("image");
+                $bg_image_name = Str::random(16).'.'.$bg_image->extension();
+
+                if($bg_image->move($bg_image_path, $bg_image_name))
+                {
+                    $bg_image_name = $bg_image_name;
+                }
+            }else{
+                $bg_image_name = $service->brand_image;
+            }
+
             $service->update([
                 'name' => $request->name,
                 'description' => $request->description,
                 'slug' => $slug,
                 'status' => $request->status ?? 0,
+                'image' => $bg_image_name,
             ]);
 
             return redirect()->back()->with('success', 'Service updated successfully');

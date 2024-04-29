@@ -24,7 +24,7 @@
                 </ul>
             </div>
             <a href="#" class="btn btn-warning font-weight-bolder font-size-sm mr-3" data-toggle="modal" data-target="#create-service">
-                <i class="flaticon2-pen"></i> Create New Services
+                <i class="flaticon2-pen"></i> Create New Service
             </a>
         </div>
     </div>
@@ -57,6 +57,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
+                                        <th>Service Image</th>
                                         <th>Name</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -70,6 +71,9 @@
                                     <tr>
                                         <td>
                                             {{ $cnt++ }}
+                                        </td>
+                                        <td>
+                                            <img src="{{ asset('uploads/services') }}/{{ $service->image }}" style="width: 75px; height: 42px" alt="Icon">
                                         </td>
                                         <td>
                                             <div>
@@ -146,6 +150,20 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="form-group row">
+                                    <div class="col-lg-12">
+                                        <label>Service Image <span class="text-danger"><b>*</b></span></span> <span class="font-weight-bolder"></span></label>
+                                        <div class="input-group">
+                                            <input type="file" class="form-control form-control-solid" placeholder="" name="image" accept="image/png,image/gif,image/jpeg,image/jpg" value="{{ old('image') }}">
+                                            <div class="input-group-append">
+                                                {{-- <span class="input-group-text"> --}}
+                                                    {{-- <i class="la la-map-marker"></i> --}}
+                                                {{-- </span> --}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <hr>
 
                                 <div class="row">
@@ -214,6 +232,20 @@
                                     <div class="form-group">
                                         <label>Description <span class="text-danger">*</span></label>
                                         <textarea type="text" rows="4" name="description" class="form-control" value="{{ old('description') }}" required="required"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-lg-12">
+                                    <label>Service Image <span class="text-danger"><b>*</b></span></span> <span class="font-weight-bolder"></span></label>
+                                    <div class="input-group">
+                                        <input type="file" class="form-control form-control-solid" placeholder="" name="image" accept="image/png,image/gif,image/jpeg,image/jpg" value="{{ old('image') }}">
+                                        <div class="input-group-append">
+                                            {{-- <span class="input-group-text"> --}}
+                                                {{-- <i class="la la-map-marker"></i> --}}
+                                            {{-- </span> --}}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
