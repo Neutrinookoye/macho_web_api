@@ -156,23 +156,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Full Name <span class="text-danger">*</span></label>
-                                            <input type="text" name="full_name" value="{{ $admin->full_name }}" class="form-control alphabetic-input" required="required">
-                                        </div>
-                                    </div>
-                                </div>
-                                {{-- <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Admin Email<span class="text-danger">*</span></label>
-                                            <input type="email" name="email" value="{{ $admin->email }}" class="form-control" required="required">
-                                        </div>
-                                    </div>
-                                </div> --}}
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Admin Phone <span class="text-danger">*</span></label>
-                                            <input type="text" name="phone" value="{{ $admin->phone }}" class="form-control numeric-input" required="required">
+                                            <input type="text" name="name" value="{{ $admin->name }}" class="form-control alphabetic-input" required="required">
                                         </div>
                                     </div>
                                 </div>
