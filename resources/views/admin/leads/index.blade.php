@@ -114,7 +114,7 @@
                                                 <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
                                                     @php
                                                         $timestamp = $lead->created_at;
-                                                        $carbonDate = \Carbon\Carbon::parse($timestamp)->addHour();
+                                                        $carbonDate = \Carbon\Carbon::parse($timestamp);
                                                         $leadDate = $carbonDate->format('d/m/Y');
                                                     @endphp
                                                     {{ $leadDate }}
