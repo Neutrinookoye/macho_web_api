@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('projects', function (Blueprint $table) {
+        Schema::table('leads', function (Blueprint $table) {
             //
-            $table->integer('created_by')->after('thumb_image');
-            $table->integer('last_edited_by')->after('created_by')->nullable();
+            $table->string('services')->nullable()->after('brief');
         });
     }
 
@@ -23,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('projects', function (Blueprint $table) {
+        Schema::table('leads', function (Blueprint $table) {
             //
         });
     }

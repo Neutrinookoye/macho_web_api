@@ -23,9 +23,9 @@
                     </li>
                 </ul>
             </div>
-            {{-- <a href="{{ route('admin.career.index') }}" class="btn btn-warning font-weight-bolder font-size-sm mr-3">
-                 View all openings
-            </a> --}}
+            <a href="{{ route('admin.leads.export') }}" class="btn btn-warning font-weight-bolder font-size-sm mr-3">
+                 Export all Leads
+            </a>
         </div>
     </div>
     <!--end::Subheader-->
@@ -59,9 +59,9 @@
                                         <th></th>
                                         <th>Name</th>
                                         <th>Email</th>
-                                        <th>Phone</th>
-                                        <th>Subject</th>
-                                        <th>Message</th>
+                                        <th>Organization</th>
+                                        <th>Brief</th>
+                                        {{-- <th>Message</th> --}}
                                         <th>Date</th>
                                     </tr>
                                 </thead>
@@ -77,7 +77,7 @@
                                         <td>
                                             <div>
                                                 <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
-                                                    {{ $lead->name }}
+                                                    {{ $lead->first_name . '' .$lead->last_name }}
                                                 </span>
                                             </div>
                                         </td>
@@ -91,24 +91,24 @@
                                         <td>
                                             <div>
                                                 <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
-                                                    {{ $lead->phone }}
+                                                    {{ $lead->organization }}
                                                 </span>
                                             </div>
                                         </td>
                                         <td>
                                             <div>
                                                 <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
-                                                    {{ $lead->subject }}
+                                                    {{ $lead->brief }}
                                                 </span>
                                             </div>
                                         </td>
-                                        <td>
+                                        {{-- <td>
                                             <div>
                                                 <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
                                                     {{ $lead->message }}
                                                 </span>
                                             </div>
-                                        </td>
+                                        </td> --}}
                                         <td>
                                             <div>
                                                 <span class="text-dark-75 font-weight-bolder d-block font-size-lg">

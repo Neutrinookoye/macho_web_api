@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Models\Lead;
+use App\Models\Service;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class LeadController extends Controller
 {
@@ -13,20 +14,30 @@ class LeadController extends Controller
     public function create(Request $request)
     {
         try{
+            // dd($request);
             $validated = $request->validate([
-                'name' => 'bail|required|string',
-                'email' => 'bail|required|email|string',
-                'phone' => 'bail|required|numeric',
-                'subject' => 'bail|required|string',
-                'message' => 'bail|required|string',
+                'first_name' => 'bail|required|string',
+                'last_name' => 'bail|required|string',
+                'job_title' => 'bail|required|string',
+                'email' => 'bail|required|email|string',             
+                'organization' => 'bail|required|string',
+                'country' => 'bail|required|string',
+                'services' => 'bail|required|array',
+                'services.*' => 'string',
+                'brief' => 'bail|required|string',
             ]);
-            
+
+            $services = implode(', ', $validated['services']);
+
             $lead = Lead::create([
-                'name' => $validated['name'],
+                'first_name' => $validated['first_name'],
+                'last_name' => $validated['last_name'],
+                'job_title' => $validated['job_title'],
                 'email' => $validated['email'],
-                'phone' => $validated['phone'],
-                'subject' => $validated['subject'],
-                'message' => $validated['message'],
+                'organization' => $validated['organization'],
+                'country' => $validated['country'],
+                'services' => $services,
+                'brief' => $validated['brief'],
             ]);
 
             return response()->json([

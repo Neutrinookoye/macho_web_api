@@ -67,6 +67,7 @@ Route::group(['middleware' => 'admin_auth'], function()
         Route::group(["prefix" => "leads"], function ()
         {
             Route::get('/', 'index')->name('admin.lead.index');
+            Route::get('export-leads', 'exportLead')->name('admin.leads.export');
         });
     });
 
