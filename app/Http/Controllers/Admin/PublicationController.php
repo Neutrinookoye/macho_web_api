@@ -15,6 +15,12 @@ class PublicationController extends Controller
     public function index()
     {
         $publications = Publication::orderBy('created_at', 'DESC')->get();
+        foreach($publications as $publication)
+        {
+            $category_id = $publication->category_id;
+            $category = Category::find($category_id);
+            $publication["category_name"] = $category->name;
+        }
         return view('admin.publication.index', compact('publications'))   ;
     }
 
@@ -91,7 +97,7 @@ class PublicationController extends Controller
         }else{
             try
             {
-                $categories = Category::all();
+                $categories = Category::where('type', 'publication')->get();
                 return view('admin.publication.create', compact('categories'));
             } catch(\Exception $e)
             {

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Admin\LeadController;
 use App\Http\Controllers\Admin\RoleController;
@@ -67,7 +68,7 @@ Route::group(['middleware' => 'admin_auth'], function()
         Route::group(["prefix" => "leads"], function ()
         {
             Route::get('/', 'index')->name('admin.lead.index');
-            Route::get('export-leads', 'exportLead')->name('admin.leads.export');
+            Route::post('export-leads', 'exportLead')->name('admin.leads.export');
         });
     });
 
@@ -95,6 +96,15 @@ Route::group(['middleware' => 'admin_auth'], function()
             Route::get('/', 'index')->name('admin.publication.index');
             Route::match(['GET', 'POST'], 'create', 'createPublication')->name('admin.publication.create');
             Route::match(['GET', 'PATCH'], 'edit/{publication_id}', 'editPublication')->name('admin.publication.edit');
+        });
+    });
+
+    Route::controller(BlogController::class)->group(function () {
+        Route::group(["prefix" => "blogs"], function ()
+        {
+            Route::get('/', 'index')->name('admin.blog.index');
+            Route::match(['GET', 'POST'], 'create', 'createBlog')->name('admin.blog.create');
+            Route::match(['GET', 'PATCH'], 'edit/{blog_id}', 'editBlog')->name('admin.blog.edit');
         });
     });
 

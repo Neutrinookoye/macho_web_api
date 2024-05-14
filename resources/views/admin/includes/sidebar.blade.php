@@ -146,6 +146,20 @@
                             </li>
                         </ul>
                     </div>
+                    <div class="menu-submenu">
+                        <i class="menu-arrow"></i>
+                        <ul class="menu-subnav">
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{{ route('admin.category.index') }}?type=blog" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text">Blog Categories</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
             </li>
 
@@ -181,6 +195,15 @@
                         <i class="fa-solid fa-newspaper"></i>
                     </span>
                     <span class="menu-text">View Publications</span>
+                </a>
+            </li>
+
+            <li class="menu-item @if(in_array(Route::currentRouteName(), ['admin.users.admins'])) menu-item-active @endif" aria-haspopup="true">
+                <a href="{{ route('admin.blog.index') }}" class="menu-link">
+                    <span class="svg-icon menu-icon">
+                        <i class="fa-solid fa-newspaper"></i>
+                    </span>
+                    <span class="menu-text">View Blogs</span>
                 </a>
             </li>
 

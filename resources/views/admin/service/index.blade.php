@@ -73,7 +73,7 @@
                                             {{ $cnt++ }}
                                         </td>
                                         <td>
-                                            <img src="{{ asset('uploads/services') }}/{{ $service->image }}" style="width: 75px; height: 42px" alt="Icon">
+                                            <img src="{{ asset('uploads/services') }}/{{ $service->image }}" style="width: 75px; height: 70px" alt="Image">
                                         </td>
                                         <td>
                                             <div>

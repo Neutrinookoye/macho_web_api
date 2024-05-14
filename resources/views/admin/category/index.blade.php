@@ -1,5 +1,5 @@
 @extends("layouts.overall")
-@section("page_title", "Publication Categories")
+@section("page_title", ucfirst($type) . " Categories")
 @section('module', 'Categories')
 @section("content")
 

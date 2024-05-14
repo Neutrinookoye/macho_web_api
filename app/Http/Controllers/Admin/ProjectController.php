@@ -143,7 +143,7 @@ class ProjectController extends Controller
         {
             try
             {
-                dd($request);
+                // dd($request);
                  $this->validate($request, [
                     'name' => 'bail|required|string',
                     'service' => 'bail|required|string',

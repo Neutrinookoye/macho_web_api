@@ -106,7 +106,7 @@ class ServiceController extends Controller
                 if (File::exists($image_delete_path)) {
                     File::delete($image_delete_path);
                 }
-                $bg_image_path = public_path("uploads/brands/");
+                $bg_image_path = public_path("uploads/services/");
 
                 $bg_image = $request->file("image");
                 $bg_image_name = Str::random(16).'.'.$bg_image->extension();
@@ -119,6 +119,8 @@ class ServiceController extends Controller
                 $bg_image_name = $service->brand_image;
             }
 
+            // dd($service);
+
             $service->update([
                 'name' => $request->name,
                 'description' => $request->description,
@@ -126,6 +128,8 @@ class ServiceController extends Controller
                 'status' => $request->status ?? 0,
                 'image' => $bg_image_name,
             ]);
+
+            // dd($service);
 
             return redirect()->back()->with('success', 'Service updated successfully');
 

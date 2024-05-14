@@ -1,6 +1,6 @@
 @extends("layouts.overall")
-@section("page_title", "All Publications")
-@section('module', 'Publications')
+@section("page_title", "All Blogs")
+@section('module', 'Blogs')
 @section("content")
 
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
@@ -23,8 +23,8 @@
                     </li>
                 </ul>
             </div>
-            <a href="{{ route('admin.publication.create') }}" class="btn btn-warning font-weight-bolder font-size-sm mr-3">
-                <i class="flaticon2-pen"></i> Create Publications
+            <a href="{{ route('admin.blog.create') }}" class="btn btn-warning font-weight-bolder font-size-sm mr-3">
+                <i class="flaticon2-pen"></i> Create Blogs
             </a>
         </div>
     </div>
@@ -57,11 +57,11 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>Image</th>
                                         <th>Title</th>
                                         <th>Category</th>
-                                        <th>Status</th>
+                                        <th>Author</th>
                                         <th>Publication Date</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -69,47 +69,48 @@
                                     @php
                                         $cnt = 1;
                                     @endphp
-                                    @foreach($publications as $publication)
+                                    @foreach($blogs as $blog)
                                     <tr>
                                         <td>
                                             {{ $cnt++ }}
                                         </td>
                                         <td>
-                                            <img src="{{ asset('uploads/publication') }}/{{ $publication->thumb_image }}" style="width: 75px; height: 50px" alt="Icon">
+                                            {{ $blog->title }}
                                         </td>
                                         <td>
                                             <div>
                                                 <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
-                                                    {{ $publication->title }}
+                                                    {{ $blog->category_name }}
                                                 </span>
                                             </div>
                                         </td>
                                         <td>
-                                            {{ $publication->category_name }}
+                                            <div>
+                                                <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
+                                                    {{ $blog->author }}
+                                                </span>
+                                            </div>
                                         </td>
                                         <td>
                                             <div>
-                                                @if ($publication->status == 1)
+                                                <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
+                                                    {{ date('d/m/Y', strtotime($blog->publication_date)) }}
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                @if ($blog->status == 1)
                                                 <span class="text-dark-75 font-weight-bolder d-block font-size-lg">Active</span>
                                                 @endif
-                                                @if ($publication->status == 0)
+                                                @if ($blog->status == 0)
                                                 <span class="text-dark-75 font-weight-bolder d-block font-size-lg">Inactive</span>
                                                 @endif
                                             </div>
                                         </td>
                                         <td>
-                                            <div>
-                                                <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
-                                                    {{ date('d/m/Y', strtotime($publication->publication_date)) }}
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('admin.publication.edit', $publication->id) }}" class="btn btn-warning font-weight-bolder font-size-sm mr-3">
+                                            <a href="{{ route('admin.blog.edit', $blog->id) }}" class="btn btn-warning font-weight-bolder font-size-sm mr-3">
                                                 <i class="flaticon2-edit"></i> 
-                                            </a>
-                                            <a href="{{ asset('uploads/publication/' . $publication->publication_file) }}" target="blank" class="btn btn-warning font-weight-bolder font-size-sm mr-3">
-                                                <i class="flaticon-download"></i> 
                                             </a>
                                         </td>
                                     </tr>

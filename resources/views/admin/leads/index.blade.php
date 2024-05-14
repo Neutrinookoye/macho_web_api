@@ -23,8 +23,11 @@
                     </li>
                 </ul>
             </div>
-            <a href="{{ route('admin.leads.export') }}" class="btn btn-warning font-weight-bolder font-size-sm mr-3">
+            {{-- <a href="{{ route('admin.leads.export') }}" class="btn btn-warning font-weight-bolder font-size-sm mr-3">
                  Export all Leads
+            </a> --}}
+            <a href="#" class="btn btn-warning font-weight-bolder font-size-sm mr-3" data-toggle="modal" data-target="#export-lead">
+                <i class="flaticon2-pen"></i> Export Leads
             </a>
         </div>
     </div>
@@ -139,6 +142,77 @@
         <!--end::Container-->
     </div>
     <!--end::Entry-->
+</div>
+
+<div class="modal fade" id="export-lead" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="exampleModalLabel"><b>Export Leads/Contacts</b></h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card card-custom">
+
+                    <!--begin::Form-->
+                    <form class="form" action="{{ route('admin.leads.export') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        {{-- <div class="card-body">
+                            <div class="text-center pt-4">
+                                <div class="row pb-5">
+                                    <div class="col-md-6">
+                                        <label for="filter_by_distributor" style="white-space: nowrap;">Start Date </label>
+                                        <input class="date form-control" type="date" id="filter_by_date" name="start_date" />
+                                    </div>
+                                        
+                                    <div class="col-md-6">
+                                        <label for="filter_by_date" style="white-space: nowrap;">End Date </label>
+                                        <input class="date form-control" type="date" id="filter_by_date" name="end_date" />
+                                    </div>
+                                </div>
+                                <button data-dismiss="modal" type="button" class="btn btn-light me-3">Close</button>
+                                <button type="submit" class="btn btn-warning">
+                                    <span class="indicator-label">Export</span>
+                                </button>
+                            </div>
+                        </div> --}}
+                        <div class="card-body">
+                            <div class="text-center pt-4 pb-2">
+                                <div class="form-group row">
+                                    <label class="col-3 col-form-label">Start Date: </label>
+                                    <div class="col-9">
+                                        <input class="date form-control" type="date" id="start_date" name="start_date" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-3 col-form-label">End Date: </label>
+                                    <div class="col-9">
+                                        <input class="date form-control" type="date" id="end_date" name="end_date" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <button data-dismiss="modal" type="button" class="btn btn-light me-3">Close</button>
+                                        <button type="submit" class="btn btn-warning">
+                                            <span class="indicator-label">Export</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!--end::Actions-->
+                    </form>
+                    <!--end::Form-->
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
 </div>
 
 @endsection
