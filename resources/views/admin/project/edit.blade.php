@@ -208,10 +208,10 @@
                                 <div class="card-xl-stretch me-md-6">
                                     <!--begin::Overlay-->
                                     <a class="d-block overlay" data-fslightbox="lightbox-hot-sales"
-                                        href="{{ asset('uploads/project') }}/{{ $image->image }}" target="_blank">
+                                        href="{{ asset('uploads/projects') }}/{{ $image->image }}" target="_blank">
                                         <!--begin::Image-->
                                         <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px"
-                                            style="background-image:url('{{ asset('uploads/project') }}/{{ $image->image }}')">
+                                            style="background-image:url('{{ asset('uploads/projects') }}/{{ $image->image }}')">
                                         </div>
                                         <!--end::Image-->
                                         <!--begin::Action-->
@@ -256,10 +256,10 @@
                                 <div class="card-xl-stretch me-md-6">
                                     <!--begin::Overlay-->
                                     <a class="d-block overlay" data-fslightbox="lightbox-hot-sales"
-                                        href="{{ asset('uploads/project') }}/{{ $project->thumb_image }}" target="_blank">
+                                        href="{{ asset('uploads/projects') }}/{{ $project->thumb_image }}" target="_blank">
                                         <!--begin::Image-->
                                         <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px"
-                                            style="background-image:url('{{ asset('uploads/project') }}/{{ $project->thumb_image }}')">
+                                            style="background-image:url('{{ asset('uploads/projects') }}/{{ $project->thumb_image }}')">
                                         </div>
                                         <!--end::Image-->
                                         <!--begin::Action-->

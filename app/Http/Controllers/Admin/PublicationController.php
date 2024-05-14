@@ -47,7 +47,7 @@ class PublicationController extends Controller
 
                 if($request->hasFile('thumb_image'))
                 {
-                    $thumb_image_path = public_path("uploads/publication/");
+                    $thumb_image_path = public_path("uploads/publications/");
 
                     $thumb_image = $request->file("thumb_image");
                     $thumb_image_name = Str::random(16).'.'.$thumb_image->extension();
@@ -62,7 +62,7 @@ class PublicationController extends Controller
 
                 if($request->hasFile('publication_file'))
                 {
-                    $publication_file_path = public_path("uploads/publication/");
+                    $publication_file_path = public_path("uploads/publications/");
 
                     $publication_file = $request->file("publication_file");
                     $publication_file_name = Str::random(16).'.'.$publication_file->extension();
@@ -131,7 +131,7 @@ class PublicationController extends Controller
 
                 if($request->hasFile('thumb_image'))
                 {
-                    $thumb_image_path = public_path("uploads/publication/");
+                    $thumb_image_path = public_path("uploads/publications/");
 
                     $thumb_image = $request->file("thumb_image");
                     $thumb_image_name = Str::random(16).'.'.$thumb_image->extension();
@@ -146,7 +146,7 @@ class PublicationController extends Controller
 
                 if($request->hasFile('publication_file'))
                 {
-                    $publication_file_path = public_path("uploads/publication/");
+                    $publication_file_path = public_path("uploads/publications/");
 
                     $publication_file = $request->file("publication_file");
                     $publication_file_name = Str::random(16).'.'.$publication_file->extension();

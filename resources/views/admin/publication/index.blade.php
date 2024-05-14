@@ -75,7 +75,7 @@
                                             {{ $cnt++ }}
                                         </td>
                                         <td>
-                                            <img src="{{ asset('uploads/publication') }}/{{ $publication->thumb_image }}" style="width: 75px; height: 50px" alt="Icon">
+                                            <img src="{{ asset('uploads/publications') }}/{{ $publication->thumb_image }}" style="width: 75px; height: 50px" alt="Icon">
                                         </td>
                                         <td>
                                             <div>
@@ -108,7 +108,7 @@
                                             <a href="{{ route('admin.publication.edit', $publication->id) }}" class="btn btn-warning font-weight-bolder font-size-sm mr-3">
                                                 <i class="flaticon2-edit"></i> 
                                             </a>
-                                            <a href="{{ asset('uploads/publication/' . $publication->publication_file) }}" target="blank" class="btn btn-warning font-weight-bolder font-size-sm mr-3">
+                                            <a href="{{ asset('uploads/publications/' . $publication->publication_file) }}" target="blank" class="btn btn-warning font-weight-bolder font-size-sm mr-3">
                                                 <i class="flaticon-download"></i> 
                                             </a>
                                         </td>

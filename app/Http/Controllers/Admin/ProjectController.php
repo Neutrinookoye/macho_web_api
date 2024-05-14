@@ -65,7 +65,7 @@ class ProjectController extends Controller
 
                 if($request->hasFile('thumb_image'))
                 {
-                    $thumb_image_path = public_path("uploads/project/");
+                    $thumb_image_path = public_path("uploads/projects/");
 
                     $thumb_image = $request->file("thumb_image");
                     $thumb_image_name = Str::random(16).'.'.$thumb_image->extension();
@@ -95,7 +95,7 @@ class ProjectController extends Controller
                 foreach($request->images as $k => $image)
                 {
 
-                    $image_path = public_path("uploads/project/");
+                    $image_path = public_path("uploads/projects/");
 
                     $image = $request->file('images')[$k];
                     $image_name = Str::random(16).'_'.time().'.'.$image->extension();
@@ -171,7 +171,7 @@ class ProjectController extends Controller
 
                 if($request->hasFile('thumb_image'))
                 {
-                    $thumb_image_path = public_path("uploads/project/");
+                    $thumb_image_path = public_path("uploads/projects/");
 
                     $thumb_image = $request->file("thumb_image");
                     $thumb_image_name = Str::random(16).'.'.$thumb_image->extension();
@@ -202,7 +202,7 @@ class ProjectController extends Controller
                     foreach($request->images as $k => $image)
                     {
 
-                        $image_path = public_path("uploads/project/");
+                        $image_path = public_path("uploads/projects/");
 
                         $image = $request->file('images')[$k];
                         $image_name = Str::random(16).'_'.time().'.'.$image->extension();

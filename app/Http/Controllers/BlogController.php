@@ -55,7 +55,7 @@ class BlogController extends Controller
 
             if($request->hasFile('featured_image'))
             {
-                $featured_image_path = public_path("uploads/blog/");
+                $featured_image_path = public_path("uploads/blogs/");
 
                 $featured_image = $request->file("featured_image");
                 $featured_image_name = Str::random(16).'.'.$featured_image->extension();
@@ -124,11 +124,11 @@ class BlogController extends Controller
             if($request->hasFile('featured_image'))
             {
 
-                $featured_image_delete_path = public_path("uploads/blog/" . $blog->featured_image);
+                $featured_image_delete_path = public_path("uploads/blogs/" . $blog->featured_image);
                 if (File::exists($featured_image_delete_path)) {
                     File::delete($featured_image_delete_path);
                 }
-                $featured_image_path = public_path("uploads/blog/");
+                $featured_image_path = public_path("uploads/blogs/");
 
                 $featured_image = $request->file("featured_image");
                 $featured_image_name = Str::random(16).'.'.$featured_image->extension();

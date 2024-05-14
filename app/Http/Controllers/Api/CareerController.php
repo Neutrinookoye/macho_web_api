@@ -61,7 +61,7 @@ class CareerController extends Controller
 
             if($request->hasFile('cv'))
             {
-                $cv_file_path = public_path("uploads/cv/");
+                $cv_file_path = public_path("uploads/cvs/");
 
                 $cv_file = $request->file("cv");
                 $cv_file_name = 'CV'.'.'.$cv_file->extension();
