@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Models\Location;
+use Illuminate\Http\Request;
+
+class LocationController extends Controller
+{
+    //
+    public function index()
+    {
+        try{
+
+            $locations = Location::paginate(10);
+
+            return response()->json([
+                'data' => [
+                    'locations' => $locations,
+                ]
+            ], 200);
+
+
+        } catch (\Exception $e)
+        {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+
+        }
+    }
+}

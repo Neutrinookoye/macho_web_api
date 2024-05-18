@@ -11,7 +11,7 @@ class RoleController extends Controller
     //
     public function index()
     {
-        if(!checkPermission('view_role'))
+        if(!checkPermission('view_roles'))
         {
             return redirect()->back()->with('danger', 'Access Forbidden');
         }

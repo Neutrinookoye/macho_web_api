@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Blog;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Validation\ValidationException;
 
@@ -14,6 +15,10 @@ class BlogController extends Controller
     //
     public function index()
     {
+        if(!checkPermission('view_blogs'))
+        {
+            return redirect()->back()->with('danger', 'Access Forbidden');
+        }
         $blogs = Blog::orderBy('created_at', 'DESC')->get();
         foreach($blogs as $blog)
         {
@@ -21,13 +26,13 @@ class BlogController extends Controller
             $category = Category::find($category_id);
             $blog["category_name"] = $category->name;
         }
-        dd($blogs);
+        // dd($blogs);
         return view('admin.blog.index', compact('blogs'))   ;
     }   
 
     public function createBlog(Request $request)
     {
-        if(!checkPermission('create_job_application'))
+        if(!checkPermission('create_blog'))
         {
             return redirect()->back()->with('danger', 'Access Forbidden');
         }
@@ -101,68 +106,82 @@ class BlogController extends Controller
         {
             return redirect()->back()->with('danger', 'Access Forbidden');
         }
-        try
+        if($request->isMethod('patch'))
         {
-            // dd($request);
-            $this->validate($request, [
-                'title' => 'bail|required|string',
-                'sub_title' => 'bail|string',
-                'category' => 'bail|integer|string',
-                'content' => 'bail|required|string',
-                'author' => 'bail|required|string',
-                'publication_date' => 'bail|required|date',
-                'featured_image' => 'bail|nullable|image',
-                'status' => 'nullable|integer',
-                'is_featured' => 'nullable|integer',
-            ]);
-
-            $slug = Str::slug($request->name);
-
-            $blog = Blog::find($blog_id);
-            dd($blog);
-
-            if($request->hasFile('featured_image'))
+            try
             {
+                // dd($request);
+                $this->validate($request, [
+                    'title' => 'bail|required|string',
+                    'sub_title' => 'bail|string',
+                    'category' => 'bail|integer|string',
+                    'content' => 'bail|required|string',
+                    'author' => 'bail|required|string',
+                    'publication_date' => 'bail|required|date',
+                    'featured_image' => 'bail|nullable|image',
+                    'status' => 'nullable|integer',
+                    'is_featured' => 'nullable|integer',
+                ]);
 
-                $featured_image_delete_path = public_path("uploads/blogs/" . $blog->featured_image);
-                if (File::exists($featured_image_delete_path)) {
-                    File::delete($featured_image_delete_path);
-                }
-                $featured_image_path = public_path("uploads/blogs/");
+                $slug = Str::slug($request->name);
 
-                $featured_image = $request->file("featured_image");
-                $featured_image_name = Str::random(16).'.'.$featured_image->extension();
+                $blog = Blog::find($blog_id);
 
-                if($featured_image->move($featured_image_path, $featured_image_name))
+                if($request->hasFile('featured_image'))
                 {
-                    $featured_image_name = $featured_image_name;
+
+                    $featured_image_delete_path = public_path("uploads/blogs/" . $blog->featured_image);
+                    if (File::exists($featured_image_delete_path)) {
+                        File::delete($featured_image_delete_path);
+                    }
+                    $featured_image_path = public_path("uploads/blogs/");
+
+                    $featured_image = $request->file("featured_image");
+                    $featured_image_name = Str::random(16).'.'.$featured_image->extension();
+
+                    if($featured_image->move($featured_image_path, $featured_image_name))
+                    {
+                        $featured_image_name = $featured_image_name;
+                    }
+                }else{
+                    $featured_image_name = $blog->featured_image;
                 }
-            }else{
-                $featured_image_name = $blog->featured_image;
+
+                $blog->update([
+                    'title' => $request->title,
+                    'sub_title' => $request->sub_title,
+                    'slug' => $slug,
+                    'category_id' => $request->category,
+                    'content' => $request->content,
+                    'author' => $request->author,
+                    'publication_date' => $request->publication_date,
+                    'featured_image' => $featured_image_name,
+                    'status' => $request->status ?? 0,
+                    'is_featured' => $request->is_featured ?? 0,
+                    'last_edited_by' => auth()->user()->id,
+                ]);
+
+                return redirect()->back()->with('success', 'Blog updated successfully');
+
+            } catch (ValidationException $e)
+            {
+                return redirect()->back()->with('danger', $e->validator->errors()->first())->withInput();
+            } catch (\Exception $e)
+            {
+                return redirect()->back()->with('danger', $e->getMessage())->withInput();
             }
-
-            $blog->update([
-                'title' => $request->title,
-                'sub_title' => 'bail|string',
-                'slug' => $slug,
-                'category' => 'bail|integer|string',
-                'content' => 'bail|required|string',
-                'author' => 'bail|required|string',
-                'publication_date' => 'bail|required|date',
-                'featured_image' => 'bail|nullable|image',
-                'status' => 'nullable|integer',
-                'is_featured' => 'nullable|integer',
-                'last_edited_by' => auth()->user()->id,
-            ]);
-
-            return redirect()->back()->with('success', 'Product updated successfully');
-
-        } catch (ValidationException $e)
-        {
-            return redirect()->back()->with('danger', $e->validator->errors()->first())->withInput();
-        } catch (\Exception $e)
-        {
-            return redirect()->back()->with('danger', $e->getMessage())->withInput();
+        }else{
+            try
+            {
+                // $categories = Category::all();
+                $categories = Category::where('type', 'blog')->get();
+                $blog = Blog::find($blog_id);
+                return view('admin.blog.edit', compact('categories', 'blog'));
+            } catch(\Exception $e)
+            {
+                return redirect()->back()->with('danger', $e->getMessage());
+            }
         }
+    
     }
 }

@@ -17,6 +17,10 @@ class CaseStudyController extends Controller
     //
     public function index()
     {
+        if(!checkPermission('view_case_studies'))
+        {
+            return redirect()->back()->with('danger', 'Access Forbidden');
+        }
         $casestudies = CaseStudy::orderBy('created_at', 'DESC')->get();
         // dd($casestudies);
         return view('admin.casestudies.index', compact('casestudies'))   ;
@@ -25,7 +29,7 @@ class CaseStudyController extends Controller
     
     public function createCaseStudy(Request $request)
     {
-        if(!checkPermission('create_job_application'))
+        if(!checkPermission('create_case_study'))
         {
             return redirect()->back()->with('danger', 'Access Forbidden');
         }
@@ -37,12 +41,14 @@ class CaseStudyController extends Controller
                  $this->validate($request, [
                     'name' => 'bail|required|string',
                     'caption' => 'bail|required|string',
+                    'project' => 'bail|required|string',
                     'service' => 'bail|required|string',
                     'brand' => 'bail|required|string',
                     'location' => 'bail|required|string',
                     'about' => 'bail|required',
                     'brief' => 'bail|required',
-                    'solution' => 'bail|required',
+                    'challenge' => 'bail|required',
+                    'approach' => 'bail|required',
                     'outcome' => 'bail|required',
                     'status' => 'nullable|integer',
                     'is_featured' => 'nullable|integer',
@@ -76,7 +82,7 @@ class CaseStudyController extends Controller
                     }
                 }else{
                     $first_background = null;
-                }
+                }   
 
                 if($request->hasFile('second_background_image'))
                 {
@@ -134,7 +140,8 @@ class CaseStudyController extends Controller
                     'location_id' => $request->location,
                     'about' => $request->about,
                     'brief' => $request->brief,
-                    'solution' => $request->solution,
+                    'challenge' => $request->challenge,
+                    'approach' => $request->approach,
                     'outcome' => $request->outcome,
                     'status' => $request->status ?? 0,
                     'is_featured' => $request->is_featured ?? 0,
@@ -172,7 +179,7 @@ class CaseStudyController extends Controller
 
     public function editCaseStudy(Request $request, $casestudy_id)
     {
-        if(!checkPermission('create_job_application'))
+        if(!checkPermission('edit_case_study'))
         {
             return redirect()->back()->with('danger', 'Access Forbidden');
         }
@@ -189,7 +196,8 @@ class CaseStudyController extends Controller
                     'location' => 'bail|required|string',
                     'about' => 'bail|required',
                     'brief' => 'bail|required',
-                    'solution' => 'bail|required',
+                    'challenge' => 'bail|required',
+                    'approach' => 'bail|required',
                     'outcome' => 'bail|required',
                     'status' => 'nullable|integer',
                     'is_featured' => 'nullable|integer',
@@ -283,7 +291,8 @@ class CaseStudyController extends Controller
                     'location_id' => $request->location,
                     'about' => $request->about,
                     'brief' => $request->brief,
-                    'solution' => $request->solution,
+                    'challenge' => $request->challenge,
+                    'approach' => $request->approach,
                     'outcome' => $request->outcome,
                     'status' => $request->status ?? 0,
                     'is_featured' => $request->is_featured ?? 0,

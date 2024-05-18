@@ -11,7 +11,7 @@ class PermissionController extends Controller
     //
     public function index()
     {
-        if(!checkPermission('view_permission'))
+        if(!checkPermission('view_permissions'))
         {
             return redirect()->back()->with('danger', 'Access Forbidden');
         }

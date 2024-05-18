@@ -24,7 +24,7 @@
 
                 </ul>
             </div>
-            <a href="{{ route('admin.project.index') }}" class="btn btn-warning font-weight-bolder font-size-sm mr-3">
+            <a href="{{ route('admin.case.studies.index') }}" class="btn btn-warning font-weight-bolder font-size-sm mr-3">
                 <i class="ki-duotone ki-add-folder"></i> View all Case Studies
             </a>
         </div>
@@ -109,20 +109,27 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-12">
                                         <label>About Section </label>
                                         <textarea type="text" id="about" class="form-control" name="about" placeholder="">{{ $casestudy->about }}</textarea>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <label>Brief Section <span class="text-danger"><b>*</b></span></label>
-                                        <textarea type="text" id="brief" class="form-control" name="brief" placeholder="">{{ $casestudy->brief }}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <div class="col-lg-6">
-                                        <label>Solution Section <span class="text-danger"><b>*</b></span></label>
-                                        <textarea type="text" id="solution" class="form-control" name="solution" placeholder="">{{ $casestudy->solution }}</textarea>
+                                        <label>Brief Section <span class="text-danger"><b>*</b></span></label>
+                                        <textarea type="text" id="brief" class="form-control" name="brief" placeholder="">{{ $casestudy->brief }}</textarea>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label>Challenge Section </label>
+                                        <textarea type="text" id="challenge" class="form-control" name="challenge" placeholder="">{{ $casestudy->challenge }}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-lg-6">
+                                        <label>Approach Section <span class="text-danger"><b>*</b></span></label>
+                                        <textarea type="text" id="approach" class="form-control" name="approach" placeholder="">{{ $casestudy->approach }}</textarea>
                                     </div>
                                     <div class="col-lg-6">
                                         <label>Outcome Section <span class="text-danger"><b>*</b></span></label>
@@ -202,7 +209,7 @@
 @push('js')
 <script>
     $('#brief').summernote({
-      placeholder: 'Enter short description...',
+      placeholder: 'Case study brief...',
       tabsize: 2,
       height: 200,
       toolbar: [
@@ -222,7 +229,7 @@
 
 <script>
     $('#about').summernote({
-      placeholder: 'Enter short description...',
+      placeholder: 'About Case study...',
       tabsize: 2,
       height: 200,
       toolbar: [
@@ -241,8 +248,28 @@
 </script>
 
 <script>
-    $('#solution').summernote({
-      placeholder: 'Enter short description...',
+    $('#challenge').summernote({
+      placeholder: 'Case study challenges...',
+      tabsize: 2,
+      height: 200,
+      toolbar: [
+        ['style', ['style']],
+        ['font', ['bold', 'underline', 'clear']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['table', ['table']],
+        ['insert', ['link', 'picture', 'video']],
+        ['view', ['fullscreen']]
+      ]
+    });
+
+    var input1 = document.querySelector("#kt_tagify_1");
+    new Tagify(input1);
+</script>
+
+<script>
+    $('#approach').summernote({
+      placeholder: 'Case study approach...',
       tabsize: 2,
       height: 200,
       toolbar: [
@@ -262,7 +289,7 @@
 
 <script>
     $('#outcome').summernote({
-      placeholder: 'Enter short description...',
+      placeholder: 'Case study outcome...',
       tabsize: 2,
       height: 200,
       toolbar: [

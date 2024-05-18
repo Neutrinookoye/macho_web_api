@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProjectImage extends Model
+class Projectdata extends Model
 {
     use HasFactory;
-    protected $table = 'project_images';
+    protected $table = 'project_data';
     protected $guarded = [];
 
     public function project()

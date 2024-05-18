@@ -13,6 +13,10 @@ class CategoryController extends Controller
     //
     public function index(Request $request)
     {
+        if(!checkPermission('view_categories'))
+        {
+            return redirect()->back()->with('danger', 'Access Forbidden');
+        }
         try{
             $categories = Category::where('type', $request->type)->orderBy('created_at', 'DESC')->get();
 
@@ -53,6 +57,7 @@ class CategoryController extends Controller
                 'slug' => $slug,
                 'status' => $request->status ?? 0,
                 'type' => $request->type,
+                'created_by' => auth()->user()->id,
             ]);
 
             return redirect()->back()->with('success', 'Category added successfully');
@@ -94,6 +99,7 @@ class CategoryController extends Controller
                 'slug' => $slug,
                 'status' => $request->status ?? 0,
                 'type' => $request->type,
+                'last_edited_by' => auth()->user()->id,
             ]);
 
             return redirect()->back()->with('success', 'Category added successfully');

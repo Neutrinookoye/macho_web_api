@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CareerController;
 use App\Http\Controllers\Admin\AccountController;
+use App\Http\Controllers\Admin\AwardController;
+use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -99,7 +101,7 @@ Route::group(['middleware' => 'admin_auth'], function()
         });
     });
 
-    Route::controller(BlogController::class)->group(function () {
+    Route::controller(AdminBlogController::class)->group(function () {
         Route::group(["prefix" => "blogs"], function ()
         {
             Route::get('/', 'index')->name('admin.blog.index');
@@ -143,6 +145,14 @@ Route::group(['middleware' => 'admin_auth'], function()
             Route::match(['GET', 'POST'], 'create', 'createCaseStudy')->name('admin.case.studies.create');
             Route::match(['GET', 'PATCH'], 'edit/{casestudies_id}', 'editCaseStudy')->name('admin.case.studies.edit');
             // Route::get('remove-project-image/{project_id}/{image_id}', 'removeImage')->name('admin.project.remove.image');
+        });
+    });
+    Route::controller(AwardController::class)->group(function () {
+        Route::group(["prefix" => "awards"], function ()
+        {
+            Route::get('/', 'index')->name('admin.award.index');
+            Route::match(['GET', 'POST'], 'create', 'createAward')->name('admin.award.create');
+            Route::match(['GET', 'PATCH'], 'edit/{award_id}', 'editAward')->name('admin.award.edit');
         });
     });
     

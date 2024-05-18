@@ -15,7 +15,7 @@ class AdminController extends Controller
     //
     public function index()
     {
-        if(!checkPermission('view_admin'))
+        if(!checkPermission('view_admins'))
         {
             return redirect()->back()->with('danger', 'Access Forbidden');
         }

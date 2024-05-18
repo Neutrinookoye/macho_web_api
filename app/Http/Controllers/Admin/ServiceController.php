@@ -14,7 +14,7 @@ class ServiceController extends Controller
     //
     public function index()
     {
-        if(!checkPermission('view_brand'))
+        if(!checkPermission('view_services'))
         {
             return redirect()->back()->with('danger', 'Access Forbidden');
         }
@@ -25,6 +25,10 @@ class ServiceController extends Controller
 
     public function createService(Request $request)
     {
+        if(!checkPermission('create_service'))
+        {
+            return redirect()->back()->with('danger', 'Access Forbidden');
+        }
         try
         {
             // dd($request->all());
@@ -64,6 +68,7 @@ class ServiceController extends Controller
                 'slug' => $slug,
                 'status' => $request->status ?? 0,
                 'image' => $bg_image_name,
+                'created_by' => auth()->user()->id,
             ]);
 
             return redirect()->back()->with('success', 'Service created successfully');
@@ -79,6 +84,10 @@ class ServiceController extends Controller
 
     public function editService(Request $request, $service_id)
     {
+        if(!checkPermission('edit_service'))
+        {
+            return redirect()->back()->with('danger', 'Access Forbidden');
+        }
         try
         {
             // dd($request->all());
@@ -127,6 +136,7 @@ class ServiceController extends Controller
                 'slug' => $slug,
                 'status' => $request->status ?? 0,
                 'image' => $bg_image_name,
+                'last_edited_by' => auth()->user()->id,
             ]);
 
             // dd($service);

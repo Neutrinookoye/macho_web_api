@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProjectImage extends Model
+class Award extends Model
 {
     use HasFactory;
-    protected $table = 'project_images';
+    protected $table = 'awards';
     protected $guarded = [];
 
-    public function project()
+    public function category()
     {
-        return $this->belongsTo(Project::class, 'project_id');
+        return $this->belongsTo(Category::class, 'category_id');
     }
 }

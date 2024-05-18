@@ -26,7 +26,7 @@ class CareerController extends Controller
 
     public function createOpening(Request $request)
     {
-        if(!checkPermission('create_job_application'))
+        if(!checkPermission('create_job_opening'))
         {
             return redirect()->back()->with('danger', 'Access Forbidden');
         }
@@ -59,6 +59,7 @@ class CareerController extends Controller
                     'employment_type' => $request->employment_type,
                     'deadline' => $request->deadline,
                     'status' => $request->status ?? 0,
+                    'created_by' => auth()->user()->id,
                 ]);
 
                 return redirect()->back()->with('success', 'Job Opening created successfully');
@@ -84,6 +85,10 @@ class CareerController extends Controller
 
     public function showApplication($id)
     {
+        if(!checkPermission('view_job_application'))
+        {
+            return redirect()->back()->with('danger', 'Access Forbidden');
+        }
         $applications = Application::where('opening_id', '=', $id)->get();
         // dd($applications);
         return view('admin.career.show', compact('applications'));

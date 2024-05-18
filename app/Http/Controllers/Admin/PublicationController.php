@@ -14,6 +14,10 @@ class PublicationController extends Controller
     //
     public function index()
     {
+        if(!checkPermission('view_publications'))
+        {
+            return redirect()->back()->with('danger', 'Access Forbidden');
+        }
         $publications = Publication::orderBy('created_at', 'DESC')->get();
         foreach($publications as $publication)
         {
@@ -26,7 +30,7 @@ class PublicationController extends Controller
 
     public function createPublication(Request $request)
     {
-        if(!checkPermission('create_job_application'))
+        if(!checkPermission('create_publication'))
         {
             return redirect()->back()->with('danger', 'Access Forbidden');
         }
@@ -108,7 +112,7 @@ class PublicationController extends Controller
 
     public function editPublication(Request $request, $publication_id)
     {
-        if(!checkPermission('create_job_application'))
+        if(!checkPermission('edit_publication'))
         {
             return redirect()->back()->with('danger', 'Access Forbidden');
         }
@@ -182,7 +186,8 @@ class PublicationController extends Controller
         }else{
             try
             {
-                $categories = Category::all();
+                // $categories = Category::all();
+                $categories = Category::where('type', 'publication')->get();
                 $publication = Publication::find($publication_id);
                 return view('admin.publication.edit', compact('categories', 'publication'));
             } catch(\Exception $e)

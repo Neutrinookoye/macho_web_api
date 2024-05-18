@@ -2,14 +2,18 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\LeadController;
+use App\Http\Controllers\Api\AwardController;
+use App\Http\Controllers\Api\BlogController;
 use App\Http\Controllers\Api\BrandsController;
 use App\Http\Controllers\Api\CareerController;
 use App\Http\Controllers\Api\CaseStudyController;
 use App\Http\Controllers\Api\CategoryController as ApiCategoryController;
 use App\Http\Controllers\Api\LeadController as ApiLeadController;
+use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\ProjectsController;
 use App\Http\Controllers\Api\PublicationController;
 use App\Http\Controllers\Api\ServicesController;
+use App\Models\Location;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,12 +40,20 @@ Route::controller(CareerController::class)->group(function () {
     Route::group(["prefix" => "careers"], function ()
     {
         Route::get('/', 'index');
+        Route::get('/{opening_id}', 'show');
         Route::post('apply/{opening_id}', 'apply');
     });
 });
 
 Route::controller(ServicesController::class)->group(function () {
     Route::group(["prefix" => "services"], function ()
+    {
+        Route::get('/', 'index');
+    });
+});
+
+Route::controller(LocationController::class)->group(function () {
+    Route::group(["prefix" => "locations"], function ()
     {
         Route::get('/', 'index');
     });
@@ -58,7 +70,8 @@ Route::controller(ProjectsController::class)->group(function () {
     Route::group(["prefix" => "projects"], function ()
     {
         Route::get('/', 'index');
-        Route::get('/featured', 'featured');
+        Route::get('/featured-projects', 'featured');
+        Route::get('/{project_id}', 'show');
     });
 });
 
@@ -66,7 +79,8 @@ Route::controller(CaseStudyController::class)->group(function () {
     Route::group(["prefix" => "case-study"], function ()
     {
         Route::get('/', 'index');
-        Route::get('/featured', 'featured');
+        Route::get('/featured-casestudy', 'featured');
+        Route::get('/{casestudy_id}', 'show');
     });
 });
 
@@ -76,5 +90,23 @@ Route::controller(PublicationController::class)->group(function () {
         Route::get('/', 'index');
         Route::get('/{slug}', 'show');
 
+    });
+});
+
+Route::controller(BlogController::class)->group(function () {
+    Route::group(["prefix" => "blogs"], function ()
+    {
+        Route::get('/', 'index');
+        Route::get('/featured-blogs', 'featured');
+        Route::get('/{blog_id}', 'show');
+    });
+});
+
+Route::controller(AwardController::class)->group(function () {
+    Route::group(["prefix" => "awards"], function ()
+    {
+        Route::get('/', 'index');
+        Route::get('/featured-awards', 'featured');
+        Route::get('/{award_id}', 'show');
     });
 });

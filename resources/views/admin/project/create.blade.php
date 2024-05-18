@@ -114,6 +114,32 @@
                                             <input type="file" class="form-control form-control-solid" placeholder="" name="thumb_image" accept="image/png,image/gif,image/jpeg,image/jpg" value="{{ old('thumb_image') }}">
                                         </div>
                                     </div>
+                                    <div class="col-lg-6">
+                                        <label>Project Data<span class="text-danger"><b>*</b></span></label>
+                                        <button type="button" class="btn btn-warning btn-add-row mb-2" style="float: right;" onclick="addRow()">Add Row</button>
+                                        <table class="table table-bordered" id="projectTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th style="width: 150px;">Value</th>
+                                                    <th style="width: 100px;">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="project-row">
+                                                    <td>
+                                                        <input type="text" class="form-control" name="project_data[0][data_name]" placeholder="" />
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control" name="project_data[0][data_value]" placeholder=""/>
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-danger btn-remove" onclick="removeRow(this)">Remove</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
 
                                 <div class="row">
@@ -269,6 +295,33 @@
         $(`#add-more-div .${elem}`).remove()
     }
 
+</script>
+
+<script>
+    // Function to add a new row
+    function addRow() {
+        var table = document.getElementById("projectTable").getElementsByTagName('tbody')[0];
+        var newRow = table.insertRow(table.rows.length);
+        var newRowHtml = `
+            <tr class="project-row">
+                <td>
+                    <input type="text" class="form-control" name="project_data[${table.rows.length - 1}][data_name]" placeholder="" />
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="project_data[${table.rows.length - 1}][data_value]" placeholder=""/>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-remove" onclick="removeRow(this)">Remove</button>
+                </td>
+            </tr>`;
+        newRow.innerHTML = newRowHtml;
+    }
+
+    // Function to remove a row
+    function removeRow(button) {
+        var row = button.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+    }
 </script>
     
 @endpush

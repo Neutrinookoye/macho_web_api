@@ -132,7 +132,7 @@
                         <span class="menu-text">Categories</span>
                         <i class="menu-arrow"></i>
                     </a>
-                    <div class="menu-submenu">
+                    {{-- <div class="menu-submenu">
                         <i class="menu-arrow"></i>
                         <ul class="menu-subnav">
                             <li class="menu-item" aria-haspopup="true">
@@ -145,7 +145,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </div>
+                    </div> --}}
                     <div class="menu-submenu">
                         <i class="menu-arrow"></i>
                         <ul class="menu-subnav">
@@ -156,6 +156,20 @@
                                         <span></span>
                                     </i>
                                     <span class="menu-text">Blog Categories</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="menu-submenu">
+                        <i class="menu-arrow"></i>
+                        <ul class="menu-subnav">
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{{ route('admin.category.index') }}?type=award" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text">Award Categories</span>
                                 </a>
                             </li>
                         </ul>
@@ -189,14 +203,14 @@
                 </li>
             </li>
 
-            <li class="menu-item @if(in_array(Route::currentRouteName(), ['admin.users.admins'])) menu-item-active @endif" aria-haspopup="true">
+            {{-- <li class="menu-item @if(in_array(Route::currentRouteName(), ['admin.users.admins'])) menu-item-active @endif" aria-haspopup="true">
                 <a href="{{ route('admin.publication.index') }}" class="menu-link">
                     <span class="svg-icon menu-icon">
                         <i class="fa-solid fa-newspaper"></i>
                     </span>
                     <span class="menu-text">View Publications</span>
                 </a>
-            </li>
+            </li> --}}
 
             <li class="menu-item @if(in_array(Route::currentRouteName(), ['admin.users.admins'])) menu-item-active @endif" aria-haspopup="true">
                 <a href="{{ route('admin.blog.index') }}" class="menu-link">
@@ -204,6 +218,15 @@
                         <i class="fa-solid fa-newspaper"></i>
                     </span>
                     <span class="menu-text">View Blogs</span>
+                </a>
+            </li>
+
+            <li class="menu-item @if(in_array(Route::currentRouteName(), ['admin.users.admins'])) menu-item-active @endif" aria-haspopup="true">
+                <a href="{{ route('admin.award.index') }}" class="menu-link">
+                    <span class="svg-icon menu-icon">
+                        <i class="fa-solid fa-newspaper"></i>
+                    </span>
+                    <span class="menu-text">View Awards</span>
                 </a>
             </li>
 

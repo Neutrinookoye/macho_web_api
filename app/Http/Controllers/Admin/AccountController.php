@@ -10,10 +10,13 @@ class AccountController extends Controller
     //
     public function dashboard()
     {
+        if(!checkPermission('view_dashboard'))
+        {
+            return redirect()->back()->with('danger', 'Access Forbidden');
+        }
         try
         {
-            $user = Auth::user();
-            return view('admin.dashboard', compact('user'));
+            return view('admin.dashboard');
         } catch(\Exception $e)
         {
             return redirect()->back()->with('danger', $e->getMessage());

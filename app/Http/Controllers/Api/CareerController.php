@@ -38,6 +38,26 @@ class CareerController extends Controller
 
         }
     }
+    public function show($opening_id)
+    {
+        try{
+            $opening = Opening::where('id', $opening_id)->where('status', 1)->first();
+
+            return response()->json([
+                'data' => [
+                    'opening' => $opening,
+                ]
+            ], 200);
+
+
+        } catch (\Exception $e)
+        {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+
+        }
+    }
 
     public function apply(Request $request, $id)
     {

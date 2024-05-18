@@ -2,41 +2,28 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\CaseStudy;
+use App\Models\Award;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\ProjectImage;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class CaseStudyController extends Controller
+class AwardController extends Controller
 {
     //
     public function index()
     {
         try{
-
-            // $projects = Project::where('status', 1)->get();
-
-            // $projects = QueryBuilder::for(Project::class)
-            // ->allowedFilters(['brand_id', 'service_id', 'location_id'])
-            // ->where('status', 1)
-            // ->get();
-
-            $caseStudy = QueryBuilder::for(CaseStudy::class)
-            ->allowedIncludes(['project', 'brand', 'service', 'location'])
+            $awards = QueryBuilder::for(Award::class)
+            ->allowedIncludes(['category'])
             ->allowedFilters([
-                'project.slug', 
-                'brand.slug', 
-                'service.slug', 
-                'location.slug',
-                'name',
+                'category.type',
             ])
             ->where('status', 1)
             ->paginate(10);
 
             return response()->json([
                 'data' => [
-                    'caseStudy' => $caseStudy,
+                    'awards' => $awards,
                 ]
             ], 200);
 
@@ -49,18 +36,15 @@ class CaseStudyController extends Controller
 
         }
     }
-    
-    public function show($casestudy_id)
+
+    public function show($award_id)
     {
         try{
-            $caseStudy = CaseStudy::where('id', $casestudy_id)->where('status', 1)->first();
-            dd($caseStudy);
-            $project_images = ProjectImage::where('project_id', $caseStudy->project_id)->get();
+            $award = Award::where('id', $award_id)->where('status', 1)->first();
 
             return response()->json([
                 'data' => [
-                    'caseStudy' => $caseStudy,
-                    'images' => $project_images,
+                    'award' => $award,
                 ]
             ], 200);
 
@@ -77,11 +61,11 @@ class CaseStudyController extends Controller
     public function featured()
     {
         try{
-            $caseStudy = CaseStudy::where('is_featured', 1)->get();
+            $award = Award::where('is_featured', 1)->get();
 
             return response()->json([
                 'data' => [
-                    'caseStudy' => $caseStudy,
+                    'award' => $award,
                 ]
             ], 200);
 

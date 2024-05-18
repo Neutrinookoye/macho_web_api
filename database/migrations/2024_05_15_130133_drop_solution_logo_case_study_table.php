@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('blogs', function (Blueprint $table) {
+        Schema::table('case_study', function (Blueprint $table) {
             //
-            $table->dropColumn('sub_title');
+            $table->dropColumn('logo');
+            $table->dropColumn('page_bg');
+            $table->dropColumn('page_bg2');
+            $table->dropColumn('document');
         });
     }
 
@@ -22,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('blogs', function (Blueprint $table) {
-            //
-        });
+        //
     }
 };

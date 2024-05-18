@@ -14,7 +14,7 @@ class BrandController extends Controller
     //
     public function index()
     {
-        if(!checkPermission('view_brand'))
+        if(!checkPermission('view_brands'))
         {
             return redirect()->back()->with('danger', 'Access Forbidden');
         }
@@ -25,6 +25,10 @@ class BrandController extends Controller
 
     public function createBrand(Request $request)
     {
+        if(!checkPermission('create_brand'))
+        {
+            return redirect()->back()->with('danger', 'Access Forbidden');
+        }
         try
         {
             // dd($request->all());
@@ -67,6 +71,7 @@ class BrandController extends Controller
                 'description' => $request->description,
                 'status' => $request->status ?? 0,
                 'brand_image' => $bg_image_name,
+                'created_by' => auth()->user()->id,
             ]);
 
             return redirect()->back()->with('success', 'Brand created successfully');
@@ -82,6 +87,10 @@ class BrandController extends Controller
 
     public function editBrand(Request $request, $brand_id)
     {
+        if(!checkPermission('edit_brand'))
+        {
+            return redirect()->back()->with('danger', 'Access Forbidden');
+        }
         try
         {
                 $this->validate($request, [
@@ -130,6 +139,7 @@ class BrandController extends Controller
                 'description' => $request->description,
                 'status' => $request->status ?? 0,
                 'brand_image' => $bg_image_name,
+                'last_edited_by' => auth()->user()->id,
             ]);
 
             return redirect()->back()->with('success', 'Brand updated successfully');

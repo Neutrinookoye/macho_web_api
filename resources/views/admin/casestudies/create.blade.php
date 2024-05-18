@@ -108,20 +108,27 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-12">
                                         <label>About Section </label>
                                         <textarea type="text" id="about" class="form-control" name="about" placeholder="">{{ old('about') }}</textarea>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <label>Brief Section <span class="text-danger"><b>*</b></span></label>
-                                        <textarea type="text" id="brief" class="form-control" name="brief" placeholder="">{{ old('brief') }}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <div class="col-lg-6">
-                                        <label>Solution Section <span class="text-danger"><b>*</b></span></label>
-                                        <textarea type="text" id="solution" class="form-control" name="solution" placeholder="">{{ old('solution') }}</textarea>
+                                        <label>Brief Section <span class="text-danger"><b>*</b></span></label>
+                                        <textarea type="text" id="brief" class="form-control" name="brief" placeholder="">{{ old('brief') }}</textarea>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label>Challenge Section </label>
+                                        <textarea type="text" id="challenge" class="form-control" name="challenge" placeholder="">{{ old('challenge') }}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-lg-6">
+                                        <label>Approach Section <span class="text-danger"><b>*</b></span></label>
+                                        <textarea type="text" id="approach" class="form-control" name="approach" placeholder="">{{ old('approach') }}</textarea>
                                     </div>
                                     <div class="col-lg-6">
                                         <label>Outcome Section <span class="text-danger"><b>*</b></span></label>
@@ -201,26 +208,6 @@
 @push('js')
 <script>
     $('#brief').summernote({
-      placeholder: 'About case study...',
-      tabsize: 2,
-      height: 200,
-      toolbar: [
-        ['style', ['style']],
-        ['font', ['bold', 'underline', 'clear']],
-        ['color', ['color']],
-        ['para', ['ul', 'ol', 'paragraph']],
-        ['table', ['table']],
-        ['insert', ['link', 'picture', 'video']],
-        ['view', ['fullscreen']]
-      ]
-    });
-
-    var input1 = document.querySelector("#kt_tagify_1");
-    new Tagify(input1);
-</script>
-
-<script>
-    $('#about').summernote({
       placeholder: 'Case study brief...',
       tabsize: 2,
       height: 200,
@@ -240,8 +227,48 @@
 </script>
 
 <script>
-    $('#solution').summernote({
-      placeholder: 'Case study solution...',
+    $('#about').summernote({
+      placeholder: 'About Case study...',
+      tabsize: 2,
+      height: 200,
+      toolbar: [
+        ['style', ['style']],
+        ['font', ['bold', 'underline', 'clear']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['table', ['table']],
+        ['insert', ['link', 'picture', 'video']],
+        ['view', ['fullscreen']]
+      ]
+    });
+
+    var input1 = document.querySelector("#kt_tagify_1");
+    new Tagify(input1);
+</script>
+
+<script>
+    $('#challenge').summernote({
+      placeholder: 'Case study challenges...',
+      tabsize: 2,
+      height: 200,
+      toolbar: [
+        ['style', ['style']],
+        ['font', ['bold', 'underline', 'clear']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['table', ['table']],
+        ['insert', ['link', 'picture', 'video']],
+        ['view', ['fullscreen']]
+      ]
+    });
+
+    var input1 = document.querySelector("#kt_tagify_1");
+    new Tagify(input1);
+</script>
+
+<script>
+    $('#approach').summernote({
+      placeholder: 'Case study approach...',
       tabsize: 2,
       height: 200,
       toolbar: [

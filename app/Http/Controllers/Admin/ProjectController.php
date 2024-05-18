@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use App\Models\ProjectImage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Projectdata;
 use Illuminate\Support\Facades\File;
 use Illuminate\Validation\ValidationException;
 
@@ -19,6 +20,10 @@ class ProjectController extends Controller
     //
     public function index()
     {
+        if(!checkPermission('view_projects'))
+        {
+            return redirect()->back()->with('danger', 'Access Forbidden');
+        }
         $projects = Project::orderBy('created_at', 'DESC')->get();
         foreach($projects as $project)
         {
@@ -32,7 +37,7 @@ class ProjectController extends Controller
 
     public function createProject(Request $request)
     {
-        if(!checkPermission('create_job_application'))
+        if(!checkPermission('create_project'))
         {
             return redirect()->back()->with('danger', 'Access Forbidden');
         }
@@ -52,8 +57,12 @@ class ProjectController extends Controller
                     'is_featured' => 'nullable|integer',
                     'thumb_image' => 'bail|required',
                     'images' => 'bail|array',
+                    'project_data' => 'bail|required|array|min:1',
+                    'project_data.*.data_name' => 'bail|required',
+                    'project_data.*.data_value' => 'bail|required|string',
                     'created_by' => 'bail|integer',
                 ]);
+                // dd($request);
 
                 $slug = Str::slug($request->name);
 
@@ -91,6 +100,18 @@ class ProjectController extends Controller
                     'thumb_image' => $thumb_image_name,
                     'created_by' => auth()->user()->id,
                 ]);
+                // dd($project);
+                // dd($request->project_data);
+
+                foreach($request->project_data as $projectData)
+                {
+                    $projectdata = Projectdata::create([
+                        'project_id' => $project->id,
+                        'data_name' => $projectData['data_name'],
+                        'data_value' => $projectData['data_value'],
+                    ]);
+                    // dd($projectdata);
+                }
 
                 foreach($request->images as $k => $image)
                 {
@@ -135,7 +156,7 @@ class ProjectController extends Controller
 
     public function editProject(Request $request, $project_id)
     {
-        if(!checkPermission('create_job_application'))
+        if(!checkPermission('edit_project'))
         {
             return redirect()->back()->with('danger', 'Access Forbidden');
         }
@@ -155,6 +176,9 @@ class ProjectController extends Controller
                     'is_featured' => 'nullable|integer',
                     'thumb_image' => 'bail|nullable',
                     'images' => 'bail|nullable|array',
+                    'project_data' => 'bail|required|array|min:1',
+                    'project_data.*.data_name' => 'bail|required',
+                    'project_data.*.data_value' => 'bail|required|string',
                     'edited_by' => 'bail|integer',
 
                 ]);
@@ -218,7 +242,39 @@ class ProjectController extends Controller
                     }
                 }   
 
-                return redirect()->back()->with('success', 'Project created successfully');
+                $existingProjectData = $project->projectdata->keyBy('id');
+
+                // Track IDs of project data that need to be kept
+                $dataToKeep = [];
+
+                foreach ($request->project_data as $index => $data) {
+                    $existingData = $existingProjectData->firstWhere('data_name', $data['data_name']);
+
+                    if ($existingData) {
+                        // Update existing data if value has changed
+                        if ($existingData->data_value != $data['data_value']) {
+                            $existingData->update([
+                                'data_value' => $data['data_value'],
+                            ]);
+                        }
+
+                        $dataToKeep[] = $existingData->id;
+                    } else {
+                        // Create new project data if not found in existing data
+                        $newData = Projectdata::create([
+                            'project_id' => $project->id,
+                            'data_name' => $data['data_name'],
+                            'data_value' => $data['data_value'],
+                        ]);
+
+                        $dataToKeep[] = $newData->id;
+                    }
+                }
+
+                // Delete any project data that was not in the new input
+                Projectdata::where('project_id', $project_id)->whereNotIn('id', $dataToKeep)->delete();
+
+                return redirect()->back()->with('success', 'Project updated successfully');
 
             } catch (ValidationException $e)
             {
@@ -234,8 +290,9 @@ class ProjectController extends Controller
                 $services = Service::all();
                 $locations = Location::all();
                 $project = Project::find($project_id);
-                // dd($project);
-                return view('admin.project.edit', compact('brands', 'services', 'locations', 'project'));
+                $project_data = Projectdata::where('project_id', $project_id)->get();
+                // dd($project_data);
+                return view('admin.project.edit', compact('brands', 'services', 'locations', 'project', 'project_data'));
             } catch(\Exception $e)
             {
                 return redirect()->back()->with('danger', $e->getMessage());
@@ -248,7 +305,7 @@ class ProjectController extends Controller
         // dd($project_id);
         // dd($image_id);
         $image = ProjectImage::where('project_id', $project_id)->where('id', $image_id)->first();
-        $image_delete_path = public_path("uploads/project/".$image->image);
+        $image_delete_path = public_path("uploads/projects/".$image->image);
         if(File::exists($image_delete_path)) {
             File::delete($image_delete_path);
         }
