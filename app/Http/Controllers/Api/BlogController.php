@@ -21,6 +21,7 @@ class BlogController extends Controller
             ->where('status', 1)
             ->paginate(10);
 
+            // dd($blogs);
             return response()->json([
                 'data' => [
                     'blogs' => $blogs,

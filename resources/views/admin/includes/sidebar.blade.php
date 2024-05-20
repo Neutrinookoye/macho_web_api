@@ -55,7 +55,7 @@
                 <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
             </li>
 
-            @if (checkPermissions(['view_admin']))
+            @if (checkPermissions(['view_admins']))
                 <li class="menu-item @if(in_array(Route::currentRouteName(), ['admin.users.admins'])) menu-item-active @endif" aria-haspopup="true">
                     <a href="{{ route('admin.users.admins') }}" class="menu-link">
                         <span class="svg-icon menu-icon">
@@ -66,142 +66,171 @@
                 </li>
             @endif
 
-            <li class="menu-section">
-                <h4 class="menu-text">System</h4>
-                <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
-            </li>
+            @if (checkPermissions(['view_permissions']))
 
-            <li class="menu-item @if(in_array(Route::currentRouteName(), ['admin.users.admins'])) menu-item-active @endif" aria-haspopup="true">
-                <a href="{{ route('admin.permissions.index') }}" class="menu-link">
-                    <span class="svg-icon menu-icon">
-                        <i class="fa-solid fa-user-gear"></i>
-                    </span>
-                    <span class="menu-text">Permissions</span>
-                </a>
-            </li>
+                <li class="menu-section">
+                    <h4 class="menu-text">System</h4>
+                    <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
+                </li>
+            @endif
 
-            <li class="menu-item @if(in_array(Route::currentRouteName(), ['admin.users.admins'])) menu-item-active @endif" aria-haspopup="true">
-                <a href="{{ route('admin.roles.index') }}" class="menu-link">
-                    <span class="svg-icon menu-icon">
-                        <i class="fa-solid fa-user-lock"></i>
-                    </span>
-                    <span class="menu-text">Roles</span>
-                </a>
-            </li>
+            @if (checkPermissions(['view_permissions']))
 
-            <li class="menu-section">
-                <h4 class="menu-text">Enquires</h4>
-                <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
-            </li>
+                <li class="menu-item @if(in_array(Route::currentRouteName(), ['admin.users.admins'])) menu-item-active @endif" aria-haspopup="true">
+                    <a href="{{ route('admin.permissions.index') }}" class="menu-link">
+                        <span class="svg-icon menu-icon">
+                            <i class="fa-solid fa-user-gear"></i>
+                        </span>
+                        <span class="menu-text">Permissions</span>
+                    </a>
+                </li>
+            @endif
 
-            <li class="menu-item @if(in_array(Route::currentRouteName(), ['admin.users.admins'])) menu-item-active @endif" aria-haspopup="true">
-                <a href="{{ route('admin.lead.index') }}" class="menu-link">
-                    <span class="svg-icon menu-icon">
-                        <i class="fa-solid fa-address-book"></i>
-                    </span>
-                    <span class="menu-text">Contacts</span>
-                </a>
-            </li>
+            @if (checkPermissions(['view_permissions']))
 
-            <li class="menu-section">
-                <h4 class="menu-text">Careers</h4>
-                <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
-            </li>
+                <li class="menu-item @if(in_array(Route::currentRouteName(), ['admin.users.admins'])) menu-item-active @endif" aria-haspopup="true">
+                    <a href="{{ route('admin.roles.index') }}" class="menu-link">
+                        <span class="svg-icon menu-icon">
+                            <i class="fa-solid fa-user-lock"></i>
+                        </span>
+                        <span class="menu-text">Roles</span>
+                    </a>
+                </li>
+            @endif
 
-            <li class="menu-item @if(in_array(Route::currentRouteName(), ['admin.users.admins'])) menu-item-active @endif" aria-haspopup="true">
-                <a href="{{ route('admin.career.index') }}" class="menu-link">
-                    <span class="svg-icon menu-icon">
-                        <i class="flaticon-doc"></i>
-                    </span>
-                    <span class="menu-text">View Job Openings</span>
-                </a>
-            </li>
+            @if (checkPermissions(['view_leads']))
+            
+                <li class="menu-section">
+                    <h4 class="menu-text">Enquires</h4>
+                    <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
+                </li>
+            @endif
 
-            <li class="menu-section">
-                <h4 class="menu-text">CMS</h4>
-                <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
-            </li>
+            @if (checkPermissions(['view_leads']))
 
-            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                <li class="menu-item @if(in_array(Route::currentRouteName(), ['admin.users.admins'])) menu-item-active @endif" aria-haspopup="true">
+                    <a href="{{ route('admin.lead.index') }}" class="menu-link">
+                        <span class="svg-icon menu-icon">
+                            <i class="fa-solid fa-address-book"></i>
+                        </span>
+                        <span class="menu-text">Contacts</span>
+                    </a>
+                </li>
+            @endif
+
+            @if (checkPermissions(['view_job_applications']))
+
+                <li class="menu-section">
+                    <h4 class="menu-text">Careers</h4>
+                    <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
+                </li>
+            @endif
+
+            @if (checkPermissions(['view_job_applications']))
+
+                <li class="menu-item @if(in_array(Route::currentRouteName(), ['admin.users.admins'])) menu-item-active @endif" aria-haspopup="true">
+                    <a href="{{ route('admin.career.index') }}" class="menu-link">
+                        <span class="svg-icon menu-icon">
+                            <i class="flaticon-doc"></i>
+                        </span>
+                        <span class="menu-text">View Job Openings</span>
+                    </a>
+                </li>
+            @endif
+
+            @if (checkPermissions(['view_cms']))
+
+                <li class="menu-section">
+                    <h4 class="menu-text">CMS</h4>
+                    <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
+                </li>
+            @endif
+
+            @if (checkPermissions(['view_categories']))
 
                 <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                    <a href="javascript:;" class="menu-link menu-toggle">
-                        <span class="svg-icon menu-icon">
-                            <i class="fa-solid fa-list"></i>
-                        </span>
-                        <span class="menu-text">Categories</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                    {{-- <div class="menu-submenu">
-                        <i class="menu-arrow"></i>
-                        <ul class="menu-subnav">
-                            <li class="menu-item" aria-haspopup="true">
-                                <a href="{{ route('admin.category.index') }}?type=publication" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-dot">
 
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">Publication Categories</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div> --}}
-                    <div class="menu-submenu">
-                        <i class="menu-arrow"></i>
-                        <ul class="menu-subnav">
-                            <li class="menu-item" aria-haspopup="true">
-                                <a href="{{ route('admin.category.index') }}?type=blog" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-dot">
+                    <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                        <a href="javascript:;" class="menu-link menu-toggle">
+                            <span class="svg-icon menu-icon">
+                                <i class="fa-solid fa-list"></i>
+                            </span>
+                            <span class="menu-text">Categories</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        {{-- <div class="menu-submenu">
+                            <i class="menu-arrow"></i>
+                            <ul class="menu-subnav">
+                                <li class="menu-item" aria-haspopup="true">
+                                    <a href="{{ route('admin.category.index') }}?type=publication" class="menu-link">
+                                        <i class="menu-bullet menu-bullet-dot">
 
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">Blog Categories</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="menu-submenu">
-                        <i class="menu-arrow"></i>
-                        <ul class="menu-subnav">
-                            <li class="menu-item" aria-haspopup="true">
-                                <a href="{{ route('admin.category.index') }}?type=award" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="menu-text">Publication Categories</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div> --}}
+                        <div class="menu-submenu">
+                            <i class="menu-arrow"></i>
+                            <ul class="menu-subnav">
+                                <li class="menu-item" aria-haspopup="true">
+                                    <a href="{{ route('admin.category.index') }}?type=blog" class="menu-link">
+                                        <i class="menu-bullet menu-bullet-dot">
 
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">Award Categories</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                                            <span></span>
+                                        </i>
+                                        <span class="menu-text">Blog Categories</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="menu-submenu">
+                            <i class="menu-arrow"></i>
+                            <ul class="menu-subnav">
+                                <li class="menu-item" aria-haspopup="true">
+                                    <a href="{{ route('admin.category.index') }}?type=award" class="menu-link">
+                                        <i class="menu-bullet menu-bullet-dot">
+
+                                            <span></span>
+                                        </i>
+                                        <span class="menu-text">Award Categories</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
                 </li>
-            </li>
+            @endif
 
-            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-
+            @if (checkPermissions(['view_brands']))
                 <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                    <a href="javascript:;" class="menu-link menu-toggle">
-                        <span class="svg-icon menu-icon">
-                            <i class="flaticon-layer"></i>
-                        </span>
-                        <span class="menu-text">Brands</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                    <div class="menu-submenu">
-                        <i class="menu-arrow"></i>
-                        <ul class="menu-subnav">
-                            <li class="menu-item" aria-haspopup="true">
-                                <a href="{{ route('admin.brand.index') }}" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">View Brands</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+
+                    <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                        <a href="javascript:;" class="menu-link menu-toggle">
+                            <span class="svg-icon menu-icon">
+                                <i class="flaticon-layer"></i>
+                            </span>
+                            <span class="menu-text">Brands</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="menu-submenu">
+                            <i class="menu-arrow"></i>
+                            <ul class="menu-subnav">
+                                <li class="menu-item" aria-haspopup="true">
+                                    <a href="{{ route('admin.brand.index') }}" class="menu-link">
+                                        <i class="menu-bullet menu-bullet-dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="menu-text">View Brands</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
                 </li>
-            </li>
+            @endif
 
             {{-- <li class="menu-item @if(in_array(Route::currentRouteName(), ['admin.users.admins'])) menu-item-active @endif" aria-haspopup="true">
                 <a href="{{ route('admin.publication.index') }}" class="menu-link">
@@ -211,107 +240,123 @@
                     <span class="menu-text">View Publications</span>
                 </a>
             </li> --}}
+            @if (checkPermissions(['view_blogs']))
+                <li class="menu-item @if(in_array(Route::currentRouteName(), ['admin.users.admins'])) menu-item-active @endif" aria-haspopup="true">
+                    <a href="{{ route('admin.blog.index') }}" class="menu-link">
+                        <span class="svg-icon menu-icon">
+                            <i class="fa-solid fa-newspaper"></i>
+                        </span>
+                        <span class="menu-text">View Blogs</span>
+                    </a>
+                </li>
+            @endif
 
-            <li class="menu-item @if(in_array(Route::currentRouteName(), ['admin.users.admins'])) menu-item-active @endif" aria-haspopup="true">
-                <a href="{{ route('admin.blog.index') }}" class="menu-link">
-                    <span class="svg-icon menu-icon">
-                        <i class="fa-solid fa-newspaper"></i>
-                    </span>
-                    <span class="menu-text">View Blogs</span>
-                </a>
-            </li>
+            @if (checkPermissions(['view_awards']))
 
-            <li class="menu-item @if(in_array(Route::currentRouteName(), ['admin.users.admins'])) menu-item-active @endif" aria-haspopup="true">
-                <a href="{{ route('admin.award.index') }}" class="menu-link">
-                    <span class="svg-icon menu-icon">
-                        <i class="fa-solid fa-newspaper"></i>
-                    </span>
-                    <span class="menu-text">View Awards</span>
-                </a>
-            </li>
+                <li class="menu-item @if(in_array(Route::currentRouteName(), ['admin.users.admins'])) menu-item-active @endif" aria-haspopup="true">
+                    <a href="{{ route('admin.award.index') }}" class="menu-link">
+                        <span class="svg-icon menu-icon">
+                            <i class="fa-solid fa-newspaper"></i>
+                        </span>
+                        <span class="menu-text">View Awards</span>
+                    </a>
+                </li>
+            @endif
 
-            <li class="menu-section">
-                <h4 class="menu-text">Projects</h4>
-                <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
-            </li>
+            @if (checkPermissions(['view_projects']))
 
-            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                <li class="menu-section">
+                    <h4 class="menu-text">Projects</h4>
+                    <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
+                </li>
+            @endif
+
+            @if (checkPermissions(['view_services']))
 
                 <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                    <a href="javascript:;" class="menu-link menu-toggle">
-                        <span class="svg-icon menu-icon">
-                            <i class="flaticon2-box-1"></i>
-                        </span>
-                        <span class="menu-text">Services</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                    <div class="menu-submenu">
-                        <i class="menu-arrow"></i>
-                        <ul class="menu-subnav">
-                            <li class="menu-item" aria-haspopup="true">
-                                <a href="{{ route('admin.service.index') }}" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">View Services</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            </li>
 
-            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                    <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                        <a href="javascript:;" class="menu-link menu-toggle">
+                            <span class="svg-icon menu-icon">
+                                <i class="flaticon2-box-1"></i>
+                            </span>
+                            <span class="menu-text">Services</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="menu-submenu">
+                            <i class="menu-arrow"></i>
+                            <ul class="menu-subnav">
+                                <li class="menu-item" aria-haspopup="true">
+                                    <a href="{{ route('admin.service.index') }}" class="menu-link">
+                                        <i class="menu-bullet menu-bullet-dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="menu-text">View Services</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </li>
+            @endif
+
+            @if (checkPermissions(['view_projects']))
 
                 <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                    <a href="javascript:;" class="menu-link menu-toggle">
-                        <span class="svg-icon menu-icon">
-                            <i class="flaticon2-menu-4"></i>
-                        </span>
-                        <span class="menu-text">Projects</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                    <div class="menu-submenu">
-                        <i class="menu-arrow"></i>
-                        <ul class="menu-subnav">
-                            <li class="menu-item" aria-haspopup="true">
-                                <a href="{{ route('admin.project.index') }}" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">View Projects</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            </li>
 
-            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                    <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                        <a href="javascript:;" class="menu-link menu-toggle">
+                            <span class="svg-icon menu-icon">
+                                <i class="flaticon2-menu-4"></i>
+                            </span>
+                            <span class="menu-text">Projects</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="menu-submenu">
+                            <i class="menu-arrow"></i>
+                            <ul class="menu-subnav">
+                                <li class="menu-item" aria-haspopup="true">
+                                    <a href="{{ route('admin.project.index') }}" class="menu-link">
+                                        <i class="menu-bullet menu-bullet-dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="menu-text">View Projects</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </li>
+            @endif
+
+            @if (checkPermissions(['view_case_studies']))
 
                 <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                    <a href="javascript:;" class="menu-link menu-toggle">
-                        <span class="svg-icon menu-icon">
-                            <i class="flaticon2-list-1"></i>
-                        </span>
-                        <span class="menu-text">Case Studies</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                    <div class="menu-submenu">
-                        <i class="menu-arrow"></i>
-                        <ul class="menu-subnav">
-                            <li class="menu-item" aria-haspopup="true">
-                                <a href="{{ route('admin.case.studies.index') }}" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">View Case Studies</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+
+                    <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                        <a href="javascript:;" class="menu-link menu-toggle">
+                            <span class="svg-icon menu-icon">
+                                <i class="flaticon2-list-1"></i>
+                            </span>
+                            <span class="menu-text">Case Studies</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="menu-submenu">
+                            <i class="menu-arrow"></i>
+                            <ul class="menu-subnav">
+                                <li class="menu-item" aria-haspopup="true">
+                                    <a href="{{ route('admin.case.studies.index') }}" class="menu-link">
+                                        <i class="menu-bullet menu-bullet-dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="menu-text">View Case Studies</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
                 </li>
-            </li>
+            @endif
 
             <li class="menu-section">
                 <h4 class="menu-text">Account</h4>

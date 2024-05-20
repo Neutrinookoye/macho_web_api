@@ -33,6 +33,10 @@ class CategoryController extends Controller
 
     public function createCategory(Request $request)
     {
+        if(!checkPermission('create_category'))
+        {
+            return redirect()->back()->with('danger', 'Access Forbidden');
+        }
         try
         {
             // dd($request->all());
@@ -73,6 +77,10 @@ class CategoryController extends Controller
 
     public function editCategory(Request $request, $category_id)
     {
+        if(!checkPermission('edit_category'))
+        {
+            return redirect()->back()->with('danger', 'Access Forbidden');
+        }
         try
         {
             // dd($request->all());

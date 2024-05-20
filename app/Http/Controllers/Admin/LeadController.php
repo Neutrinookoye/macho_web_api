@@ -60,7 +60,6 @@ class LeadController extends Controller
         if (!checkPermission('export_leads')) {
             return redirect()->back()->with('danger', 'Access Forbidden');
         }
-
         try {
             $query = Lead::query();
 

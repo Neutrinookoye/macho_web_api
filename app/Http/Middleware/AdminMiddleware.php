@@ -20,7 +20,8 @@ class AdminMiddleware
         {
             return $next($request);
         }
+        return redirect()->route('home')->with('danger', 'Please login to continue!');
 
-        return $next($request);
+        // return $next($request);
     }
 }
