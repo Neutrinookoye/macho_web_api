@@ -11,27 +11,31 @@ use Spatie\QueryBuilder\QueryBuilder;
 class ProjectsController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
         try{
-
-            // $projects = Project::where('status', 1)->get();
-
-            // $projects = QueryBuilder::for(Project::class)
-            // ->allowedFilters(['brand_id', 'service_id', 'location_id'])
-            // ->where('status', 1)
-            // ->get();
-
-            $projects = QueryBuilder::for(Project::class)
+            $query = QueryBuilder::for(Project::class)
             ->allowedIncludes(['brand', 'service', 'location'])
-            ->allowedFilters([
-                'brand.slug', 
-                'service.slug', 
-                'location.slug', 
-                'name',
-            ])
-            ->where('status', 1)
-            ->paginate(10);
+            ->where('status', 1);
+            
+            if ($request->has('brand')) {
+                $query->whereHas('brand', function ($q) use ($request) {
+                    $q->where('name', $request->input('brand'));
+                });
+            }
+
+            if ($request->has('service')) {
+                $query->whereHas('service', function ($q) use ($request) {
+                    $q->where('name', $request->input('service'));
+                });
+            }
+
+            if ($request->has('location')) {
+                $query->whereHas('location', function ($q) use ($request) {
+                    $q->where('name', $request->input('location'));
+                });
+            }
+            $projects = $query->paginate(10);
 
             return response()->json([
                 'data' => [
