@@ -53,11 +53,11 @@ class ProjectsController extends Controller
         }
     }
 
-    public function show($project_id)
+    public function show($slug)
     {
         try{
-            $project = Project::where('id', $project_id)->where('status', 1)->first();
-            $project_data = Projectdata::where('project_id', $project_id)->get();
+            $project = Project::where('slug', $slug)->where('status', 1)->first();
+            $project_data = Projectdata::where('project_id', $project->id)->get();
 
             return response()->json([
                 'data' => [

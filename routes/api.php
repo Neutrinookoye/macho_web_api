@@ -71,7 +71,7 @@ Route::controller(ProjectsController::class)->group(function () {
     {
         Route::get('/', 'index');
         Route::get('/featured-projects', 'featured');
-        Route::get('/{project_id}', 'show');
+        Route::get('/{slug}', 'show');
     });
 });
 
@@ -80,7 +80,7 @@ Route::controller(CaseStudyController::class)->group(function () {
     {
         Route::get('/', 'index');
         Route::get('/featured-casestudy', 'featured');
-        Route::get('/{casestudy_id}', 'show');
+        Route::get('/{slug}', 'show');
     });
 });
 

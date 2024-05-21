@@ -59,11 +59,10 @@ class CaseStudyController extends Controller
         }
     }
     
-    public function show($casestudy_id)
+    public function show($slug)
     {
         try{
-            $caseStudy = CaseStudy::where('id', $casestudy_id)->where('status', 1)->first();
-            dd($caseStudy);
+            $caseStudy = CaseStudy::where('slug', $slug)->where('status', 1)->first();
             $project_images = ProjectImage::where('project_id', $caseStudy->project_id)->get();
 
             return response()->json([
