@@ -37,6 +37,7 @@ class ServiceController extends Controller
                 'description' => 'bail|required|string',
                 'status' => 'nullable|integer',
                 'image' => 'bail|required',
+                'icon' => 'bail|required',
             ]);
 
             $slug = Str::slug($request->name);
@@ -49,7 +50,7 @@ class ServiceController extends Controller
 
             if($request->hasFile('image'))
             {
-                $bg_image_path = public_path("uploads/services/");
+                $bg_image_path = public_path("uploads/services/images");
 
                 $bg_image = $request->file("image");
                 $bg_image_name = Str::random(16).'.'.$bg_image->extension();
@@ -61,6 +62,20 @@ class ServiceController extends Controller
             }else{
                 $bg_image_name = null;
             }
+            if($request->hasFile('icon'))
+            {
+                $icon_path = public_path("uploads/services/icons");
+
+                $icon = $request->file("icon");
+                $icon_name = Str::random(16).'.'.$icon->extension();
+
+                if($icon->move($icon_path, $icon_name))
+                {
+                    $icon_name = $icon_name;
+                }
+            }else{
+                $icon_name = null;
+            }
             
             $service = Service::create([
                 'name' => $request->name,
@@ -68,7 +83,8 @@ class ServiceController extends Controller
                 'slug' => $slug,
                 'status' => $request->status ?? 0,
                 'image' => $bg_image_name,
-                'created_by' => auth()->user()->id,
+                'icon' => $icon_name,
+                // 'created_by' => auth()->user()->id,
             ]);
 
             return redirect()->back()->with('success', 'Service created successfully');
@@ -96,6 +112,7 @@ class ServiceController extends Controller
                 'description' => 'bail|required|string',
                 'status' => 'nullable|integer',
                 'image' => 'nullable',
+                'icon' => 'nullable',
             ]);
 
             $slug = Str::slug($request->name);
@@ -111,11 +128,11 @@ class ServiceController extends Controller
             if($request->hasFile('image'))
             {
 
-                $image_delete_path = public_path("uploads/services/" . $service->bg_image);
+                $image_delete_path = public_path("uploads/services/images" . $service->image);
                 if (File::exists($image_delete_path)) {
                     File::delete($image_delete_path);
                 }
-                $bg_image_path = public_path("uploads/services/");
+                $bg_image_path = public_path("uploads/services/images");
 
                 $bg_image = $request->file("image");
                 $bg_image_name = Str::random(16).'.'.$bg_image->extension();
@@ -125,7 +142,27 @@ class ServiceController extends Controller
                     $bg_image_name = $bg_image_name;
                 }
             }else{
-                $bg_image_name = $service->brand_image;
+                $bg_image_name = $service->image;
+            }
+
+            if($request->hasFile('icon'))
+            {
+
+                $image_delete_path = public_path("uploads/services/icons" . $service->icon);
+                if (File::exists($image_delete_path)) {
+                    File::delete($image_delete_path);
+                }
+                $icon_path = public_path("uploads/services/icons");
+
+                $icon = $request->file("icon");
+                $icon_name = Str::random(16).'.'.$icon->extension();
+
+                if($icon->move($icon_path, $icon_name))
+                {
+                    $icon_name = $icon_name;
+                }
+            }else{
+                $icon_name = $service->icon;
             }
 
             // dd($service);
@@ -136,7 +173,8 @@ class ServiceController extends Controller
                 'slug' => $slug,
                 'status' => $request->status ?? 0,
                 'image' => $bg_image_name,
-                'last_edited_by' => auth()->user()->id,
+                'icon' => $icon_name,
+                // 'last_edited_by' => auth()->user()->id,
             ]);
 
             // dd($service);

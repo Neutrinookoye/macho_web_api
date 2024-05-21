@@ -73,7 +73,7 @@
                                             {{ $cnt++ }}
                                         </td>
                                         <td>
-                                            <img src="{{ asset('uploads/services') }}/{{ $service->image }}" style="width: 75px; height: 70px" alt="Image">
+                                            <img src="{{ asset('uploads/services/images') }}/{{ $service->image }}" style="width: 75px; height: 70px" alt="Image">
                                         </td>
                                         <td>
                                             <div>
@@ -147,6 +147,20 @@
                                         <div class="form-group">
                                             <label>Description <span class="text-danger">*</span></label>
                                             <textarea type="text" rows="4" name="description" class="form-control" required="required">{{ $service->description }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-lg-12">
+                                        <label>Service Icon <span class="text-danger"><b>*</b></span></span> <span class="font-weight-bolder"></span></label>
+                                        <div class="input-group">
+                                            <input type="file" class="form-control form-control-solid" placeholder="" name="icon" accept="image/png,image/gif,image/jpeg,image/jpg" value="{{ old('icon') }}">
+                                            <div class="input-group-append">
+                                                {{-- <span class="input-group-text"> --}}
+                                                    {{-- <i class="la la-map-marker"></i> --}}
+                                                {{-- </span> --}}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -232,6 +246,20 @@
                                     <div class="form-group">
                                         <label>Description <span class="text-danger">*</span></label>
                                         <textarea type="text" rows="4" name="description" class="form-control" value="{{ old('description') }}" required="required"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-lg-12">
+                                    <label>Service Icon <span class="text-danger"><b>*</b></span></span> <span class="font-weight-bolder"></span></label>
+                                    <div class="input-group">
+                                        <input type="file" class="form-control form-control-solid" placeholder="" name="icon" accept="image/png,image/gif,image/jpeg,image/jpg" value="{{ old('icon') }}">
+                                        <div class="input-group-append">
+                                            {{-- <span class="input-group-text"> --}}
+                                                {{-- <i class="la la-map-marker"></i> --}}
+                                            {{-- </span> --}}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
