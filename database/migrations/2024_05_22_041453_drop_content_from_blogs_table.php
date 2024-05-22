@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('leads', function (Blueprint $table) {
+        Schema::table('blogs', function (Blueprint $table) {
             //
-            $table->dropColumn('name');
-            $table->dropColumn('phone');
-            $table->dropColumn('subject');
-            $table->dropColumn('message');
+            $table->dropColumn('content');
         });
     }
 
@@ -25,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('leads', function (Blueprint $table) {
+        Schema::table('blogs', function (Blueprint $table) {
             //
         });
     }
