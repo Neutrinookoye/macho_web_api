@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Models\Projectdata;
+use App\Models\ProjectImage;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -57,11 +58,13 @@ class ProjectsController extends Controller
     {
         try{
             $project = Project::where('slug', $slug)->where('status', 1)->first();
+            $project_images = ProjectImage::where('project_id', $project->id)->get();
             $project_data = Projectdata::where('project_id', $project->id)->get();
 
             return response()->json([
                 'data' => [
                     'project' => $project,
+                    'project_images' => $project_images,
                     'project_data' => $project_data,
                 ]
             ], 200);
