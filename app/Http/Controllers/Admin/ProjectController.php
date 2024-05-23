@@ -51,15 +51,16 @@ class ProjectController extends Controller
                     'service' => 'bail|required|string',
                     'brand' => 'bail|required|string',
                     'location' => 'bail|required|string',
+                    'year' => 'bail|required|integer',
                     'short_description' => 'bail|nullable',
                     'description' => 'bail|required',
                     'status' => 'nullable|integer',
                     'is_featured' => 'nullable|integer',
                     'thumb_image' => 'bail|required',
                     'images' => 'bail|array',
-                    'project_data' => 'bail|required|array|min:1',
-                    'project_data.*.data_name' => 'bail|required',
-                    'project_data.*.data_value' => 'bail|required|string',
+                    'project_data' => 'bail|array|min:1',
+                    'project_data.*.data_name' => 'bail|nullable|string',
+                    'project_data.*.data_value' => 'bail|nullable|string',
                     'created_by' => 'bail|integer',
                 ]);
                 // dd($request);
@@ -84,7 +85,7 @@ class ProjectController extends Controller
                         $thumb_image_name = $thumb_image_name;
                     }
                 }else{
-                    $thumb_image_name = null;
+                    $thumb_image_name = null;  
                 }
 
                 $project = Project::create([
@@ -92,6 +93,7 @@ class ProjectController extends Controller
                     'slug' => $slug,
                     'service_id' => $request->service,
                     'brand_id' => $request->brand,
+                    'year' => $request->year,
                     'location_id' => $request->location,
                     'short_description' => $request->short_description,
                     'description' => $request->description,
@@ -103,32 +105,58 @@ class ProjectController extends Controller
                 // dd($project);
                 // dd($request->project_data);
 
-                foreach($request->project_data as $projectData)
-                {
-                    $projectdata = Projectdata::create([
-                        'project_id' => $project->id,
-                        'data_name' => $projectData['data_name'],
-                        'data_value' => $projectData['data_value'],
-                    ]);
-                    // dd($projectdata);
+                // foreach($request->project_data as $projectData)
+                // {
+                //     if($projectData->data_name === null || $projectData->data_value === null)
+                //     $projectdata = Projectdata::create([
+                //         'project_id' => $project->id,
+                //         'data_name' => $projectData['data_name'],
+                //         'data_value' => $projectData['data_value'],
+                //     ]);
+                //     // dd($projectdata);
+                // }
+
+                if (is_array($request->project_data)) {
+                    foreach ($request->project_data as $projectData) {
+                        if (!is_null($projectData['data_name']) && !is_null($projectData['data_value'])) {
+                            Projectdata::create([
+                                'project_id' => $project->id,
+                                'data_name' => $projectData['data_name'],
+                                'data_value' => $projectData['data_value'],
+                            ]);
+                        }
+                    }
                 }
 
-                foreach($request->images as $k => $image)
-                {
+                // foreach($request->images as $k => $image)
+                // {
 
+                //     $image_path = public_path("uploads/projects/");
+
+                //     $image = $request->file('images')[$k];
+                //     $image_name = Str::random(16).'_'.time().'.'.$image->extension();
+
+                //     if($image->move($image_path, $image_name))
+                //     {
+                //         $file = ProjectImage::create([
+                //             'project_id' => $project->id,
+                //             'image' => $image_name,
+                //         ]);
+                //     }
+
+                // }
+
+                if (is_array($request->images)) {
                     $image_path = public_path("uploads/projects/");
-
-                    $image = $request->file('images')[$k];
-                    $image_name = Str::random(16).'_'.time().'.'.$image->extension();
-
-                    if($image->move($image_path, $image_name))
-                    {
-                        $file = ProjectImage::create([
-                            'project_id' => $project->id,
-                            'image' => $image_name,
-                        ]);
+                    foreach ($request->file('images') as $image) {
+                        $image_name = Str::random(16) . '_' . time() . '.' . $image->extension();
+                        if ($image->move($image_path, $image_name)) {
+                            ProjectImage::create([
+                                'project_id' => $project->id,
+                                'image' => $image_name,
+                            ]);
+                        }
                     }
-
                 }
 
                 return redirect()->back()->with('success', 'Project created successfully');
@@ -143,8 +171,8 @@ class ProjectController extends Controller
         }else{
             try
             {
-                $brands = Brand::all();
-                $services = Service::all();
+                $brands = Brand::where('status', 1)->get();
+                $services = Service::where('status', 1)->get();
                 $locations = Location::all();
                 return view('admin.project.create', compact('brands', 'services', 'locations'));
             } catch(\Exception $e)
@@ -169,6 +197,7 @@ class ProjectController extends Controller
                     'name' => 'bail|required|string',
                     'service' => 'bail|required|string',
                     'brand' => 'bail|required|string',
+                    'year' => 'bail|required|integer',
                     'location' => 'bail|required|string',
                     'short_description' => 'bail|nullable',
                     'description' => 'bail|required',
@@ -176,9 +205,9 @@ class ProjectController extends Controller
                     'is_featured' => 'nullable|integer',
                     'thumb_image' => 'bail|nullable',
                     'images' => 'bail|nullable|array',
-                    'project_data' => 'bail|required|array|min:1',
-                    'project_data.*.data_name' => 'bail|required',
-                    'project_data.*.data_value' => 'bail|required|string',
+                    'project_data' => 'bail|array|min:1',
+                    'project_data.*.data_name' => 'bail|string',
+                    'project_data.*.data_value' => 'bail|string',
                     'edited_by' => 'bail|integer',
 
                 ]);
@@ -214,6 +243,7 @@ class ProjectController extends Controller
                     'service_id' => $request->service,
                     'brand_id' => $request->brand,
                     'location_id' => $request->location,
+                    'year' => $request->year,
                     'short_description' => $request->short_description,
                     'description' => $request->description,
                     'status' => $request->status ?? 0,
@@ -222,54 +252,102 @@ class ProjectController extends Controller
                     'last_edited_by' => auth()->user()->id,
                 ]);
 
-                if (!empty($request->images)) {
-                    foreach($request->images as $k => $image)
-                    {
+                // if (!empty($request->images)) {
+                //     foreach($request->images as $k => $image)
+                //     {
 
-                        $image_path = public_path("uploads/projects/");
+                //         $image_path = public_path("uploads/projects/");
 
-                        $image = $request->file('images')[$k];
-                        $image_name = Str::random(16).'_'.time().'.'.$image->extension();
+                //         $image = $request->file('images')[$k];
+                //         $image_name = Str::random(16).'_'.time().'.'.$image->extension();
 
-                        if($image->move($image_path, $image_name))
-                        {
-                            $file = ProjectImage::create([
+                //         if($image->move($image_path, $image_name))
+                //         {
+                //             $file = ProjectImage::create([
+                //                 'project_id' => $project->id,
+                //                 'image' => $image_name,
+                //             ]);
+                //         }
+
+                //     }
+                // }   
+
+                if ($request->hasFile('images')) {
+                    $currentImageCount = ProjectImage::where('project_id', $project_id)->count();
+                    $newImages = $request->file('images');
+                    $totalImagesCount = $currentImageCount + count($newImages);
+    
+                    if ($totalImagesCount > 10) {
+                        return redirect()->back()->with('danger', 'You can only upload up to 10 images for a project.')->withInput();
+                    }
+    
+                    $image_path = public_path("uploads/projects/");
+                    foreach ($newImages as $image) {
+                        $image_name = Str::random(16) . '_' . time() . '.' . $image->extension();
+                        if ($image->move($image_path, $image_name)) {
+                            ProjectImage::create([
                                 'project_id' => $project->id,
                                 'image' => $image_name,
                             ]);
                         }
-
-                    }
-                }   
-
-                $existingProjectData = $project->projectdata->keyBy('id');
-
-                // Track IDs of project data that need to be kept
-                $dataToKeep = [];
-
-                foreach ($request->project_data as $index => $data) {
-                    $existingData = $existingProjectData->firstWhere('data_name', $data['data_name']);
-
-                    if ($existingData) {
-                        // Update existing data if value has changed
-                        if ($existingData->data_value != $data['data_value']) {
-                            $existingData->update([
-                                'data_value' => $data['data_value'],
-                            ]);
-                        }
-
-                        $dataToKeep[] = $existingData->id;
-                    } else {
-                        // Create new project data if not found in existing data
-                        $newData = Projectdata::create([
-                            'project_id' => $project->id,
-                            'data_name' => $data['data_name'],
-                            'data_value' => $data['data_value'],
-                        ]);
-
-                        $dataToKeep[] = $newData->id;
                     }
                 }
+
+                // $existingProjectData = $project->projectdata->keyBy('id');
+
+                // // Track IDs of project data that need to be kept
+                // $dataToKeep = [];
+
+                // foreach ($request->project_data as $index => $data) {
+                //     $existingData = $existingProjectData->firstWhere('data_name', $data['data_name']);
+
+                //     if ($existingData) {
+                //         // Update existing data if value has changed
+                //         if ($existingData->data_value != $data['data_value']) {
+                //             $existingData->update([
+                //                 'data_value' => $data['data_value'],
+                //             ]);
+                //         }
+
+                //         $dataToKeep[] = $existingData->id;
+                //     } else {
+                //         // Create new project data if not found in existing data
+                //         $newData = Projectdata::create([
+                //             'project_id' => $project->id,
+                //             'data_name' => $data['data_name'],
+                //             'data_value' => $data['data_value'],
+                //         ]);
+
+                //         $dataToKeep[] = $newData->id;
+                //     }
+                // }
+
+                // Update project data entries
+                $existingProjectData = $project->projectdata->keyBy('id');
+                $dataToKeep = [];
+
+                if (is_array($request->project_data)) {
+                    foreach ($request->project_data as $data) {
+                        if (!is_null($data['data_name']) && !is_null($data['data_value'])) {
+                            $existingData = $existingProjectData->firstWhere('data_name', $data['data_name']);
+
+                            if ($existingData) {
+                                if ($existingData->data_value != $data['data_value']) {
+                                    $existingData->update(['data_value' => $data['data_value']]);
+                                }
+                                $dataToKeep[] = $existingData->id;
+                            } else {
+                                $newData = Projectdata::create([
+                                    'project_id' => $project->id,
+                                    'data_name' => $data['data_name'],
+                                    'data_value' => $data['data_value'],
+                                ]);
+                                $dataToKeep[] = $newData->id;
+                            }
+                        }
+                    }
+                }
+
 
                 // Delete any project data that was not in the new input
                 Projectdata::where('project_id', $project_id)->whereNotIn('id', $dataToKeep)->delete();
@@ -286,8 +364,8 @@ class ProjectController extends Controller
         }else{
             try
             {
-                $brands = Brand::all();
-                $services = Service::all();
+                $brands = Brand::where('status', 1)->get();
+                $services = Service::where('status', 1)->get();
                 $locations = Location::all();
                 $project = Project::find($project_id);
                 $project_data = Projectdata::where('project_id', $project_id)->get();

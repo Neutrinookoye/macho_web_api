@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\CaseStudy;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\CaseStudyImage;
 use App\Models\ProjectImage;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -62,13 +63,13 @@ class CaseStudyController extends Controller
     public function show($slug)
     {
         try{
-            $caseStudy = CaseStudy::where('slug', $slug)->where('status', 1)->first();
-            $project_images = ProjectImage::where('project_id', $caseStudy->project_id)->get();
+            $casestudy = CaseStudy::where('slug', $slug)->where('status', 1)->first();
+            $casestudy_images = CaseStudyImage::where('case_study_id', $casestudy->id)->get();
 
             return response()->json([
                 'data' => [
-                    'caseStudy' => $caseStudy,
-                    'images' => $project_images,
+                    'caseStudy' => $casestudy,
+                    'casestudy_images' => $casestudy_images,
                 ]
             ], 200);
 

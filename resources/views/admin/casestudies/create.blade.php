@@ -62,9 +62,13 @@
                                         <label>Name <span class="text-danger"><b>*</b></span></label>
                                         <input type="text" class="form-control" name="name" placeholder="Case Study Name" value="{{ old('name') }}" />
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <label>Caption <span class="text-danger"><b>*</b></span></label>
                                         <input type="text" class="form-control" name="caption" placeholder="Case Study Caption" value="{{ old('caption') }}" />
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <label>Project Year <span class="text-danger"><b>*</b></span></label>
+                                        <input type="text" class="form-control" name="year" placeholder="" value="{{ old('year') }}" />
                                     </div>
                                 </div>
 
@@ -138,24 +142,23 @@
 
                                 <div class="form-group row pt-3">
                                     <div class="col-lg-6">
-                                        <label>First Background Image <span class="font-weight-bolder"></span></label>
+                                        <label>Banner Image <span class="font-weight-bolder"></span></label>
                                         <div class="input-group">
                                             <input type="file" class="form-control form-control-solid" placeholder="" name="first_background_image" accept="image/png,image/jpeg,image/jpg" value="{{ old('first_background_image') }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <label>Second Background Image <span class="font-weight-bolder"></span></label>
+                                        <label>Video Image <span class="font-weight-bolder"></span></label>
                                         <div class="input-group">
                                             <input type="file" class="form-control form-control-solid" placeholder="" name="second_background_image" accept="image/png,image/jpeg,image/jpg" value="{{ old('second_background_image') }}">
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="form-group row pt-3">
                                     <div class="col-lg-6">
-                                        <label>Logo <span class="font-weight-bolder"></span></label>
+                                        <label>Video URL <span class="font-weight-bolder"></span></label>
                                         <div class="input-group">
-                                            <input type="file" class="form-control form-control-solid" placeholder="" name="logo" accept="image/png,image/jpeg,image/jpg" value="{{ old('logo') }}">
+                                        <input type="text" class="form-control form-control-solid" placeholder="Video Url" name="video_url" value="{{ old('video_url') }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -165,6 +168,47 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 mb-2 mt-5 cntinputs add-more-inputs1">
+                                        <div class="d-flex flex-column mb-7 fv-row">
+                                            <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                                <span class="required">Case study Images </span>&emsp;&emsp;
+                                                <button class="btn btn-warning font-weight-bolder font-size-sm mr-3" onclick="addMore(event)">Add more images 
+                                                    <i class="flaticon2-plus"></i>
+                                                </button>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" id="add-more-div">
+                                    <div class="col-md-12 mb-2 mt-5 cntinputs add-more-inputs1">
+                                        <div class="d-flex flex-column mb-7 fv-row">
+                                            <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                                <span class="required">Image 1 </span>&emsp;&emsp;
+                                            </label>
+                                            <div class="row">
+                                                <div class="col-md-10">
+                                                    <input type="file" class="form-control form-control-solid" placeholder="" name="images[]"
+                                                        accept="image/png,image/gif,image/jpeg,image/jpg">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    {{-- <span class="btn btn-danger" onclick="removeInput('add-more-inputs${cnt}')" style="cursor: pointer"><span class="feather icon-trash-2"></span></span> --}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- <div class="form-group row pt-3">
+                                    <div class="col-lg-6">
+                                        <label>Logo <span class="font-weight-bolder"></span></label>
+                                        <div class="input-group">
+                                            <input type="file" class="form-control form-control-solid" placeholder="" name="logo" accept="image/png,image/jpeg,image/jpg" value="{{ old('logo') }}">
+                                        </div>
+                                    </div>
+                                    
+                                </div> --}}
 
                                 <div class="col-md-6 mt-4">
                                     <div class="d-flex flex-stack">
@@ -304,6 +348,55 @@
 
     var input1 = document.querySelector("#kt_tagify_1");
     new Tagify(input1);
+</script>
+
+<script>
+        var cnt = 1;
+    function addMore(e)
+    {
+        cnt += 1;
+        e.preventDefault()
+
+        if($(".cntinputs").length >= 11)
+        {
+            Swal.fire({
+                title: 'Cancelled',
+                text: "Sorry! You cannot add more than 10 images",
+                width: '400px',
+                customClass: {
+                    confirmButton: "btn btn-danger"
+                }
+            })
+            return
+        }
+
+        $("#add-more-div").prepend(`
+            <div class="col-md-12 mb-2 mt-5 cntinputs add-more-inputs${cnt}">
+                <div class="d-flex flex-column mb-7 fv-row">
+                    <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                        <span class="required"> Image ${cnt}</span>
+                    </label>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <input type="file" class="form-control form-control-solid" placeholder="" name="images[]"
+                                accept="image/png,image/gif,image/jpeg,image/jpg">
+                        </div>
+                        <div class="col-md-2">
+                            <span class="btn btn-danger" onclick="removeInput('add-more-inputs${cnt}')" style="cursor: pointer">
+                                <i class="flaticon2-rubbish-bin"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `)
+    }
+
+
+    function removeInput(elem)
+    {
+        $(`#add-more-div .${elem}`).remove()
+    }
 </script>
     
 @endpush

@@ -58,9 +58,13 @@
                             @csrf
                             <div class="card-body">
                                 <div class="form-group row">
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-9">
                                         <label>Name <span class="text-danger"><b>*</b></span></label>
                                         <input type="text" class="form-control" name="name" placeholder="" value="{{ old('name') }}" />
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Project Year <span class="text-danger"><b>*</b></span></label>
+                                        <input type="text" class="form-control" name="year" placeholder="" value="{{ old('year') }}" />
                                     </div>
                                 </div>
                                 <div class="form-group row">

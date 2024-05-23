@@ -143,8 +143,8 @@ Route::group(['middleware' => 'admin_auth'], function()
         {
             Route::get('/', 'index')->name('admin.case.studies.index');
             Route::match(['GET', 'POST'], 'create', 'createCaseStudy')->name('admin.case.studies.create');
-            Route::match(['GET', 'PATCH'], 'edit/{casestudies_id}', 'editCaseStudy')->name('admin.case.studies.edit');
-            // Route::get('remove-project-image/{project_id}/{image_id}', 'removeImage')->name('admin.project.remove.image');
+            Route::match(['GET', 'PATCH'], 'edit/{casestudy_id}', 'editCaseStudy')->name('admin.case.studies.edit');
+            Route::get('remove-casestudy-image/{casestudy_id}/{image_id}', 'removeImage')->name('admin.casestudy.remove.image');
         });
     });
     Route::controller(AwardController::class)->group(function () {

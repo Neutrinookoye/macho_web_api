@@ -9,7 +9,9 @@ use App\Models\Location;
 use App\Models\CaseStudy;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\CaseStudyImage;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use Illuminate\Validation\ValidationException;
 
 class CaseStudyController extends Controller
@@ -45,13 +47,16 @@ class CaseStudyController extends Controller
                     'service' => 'bail|required|string',
                     'brand' => 'bail|required|string',
                     'location' => 'bail|required|string',
+                    'year' => 'bail|required|integer',
                     'about' => 'bail|required',
                     'brief' => 'bail|required',
                     'challenge' => 'bail|required',
                     'approach' => 'bail|required',
                     'outcome' => 'bail|required',
+                    'video_url' => 'bail|string',
                     'status' => 'nullable|integer',
                     'is_featured' => 'nullable|integer',
+                    'images' => 'bail|array',
                     'first_background_image' => 'bail|nullable',
                     'second_background_image' => 'bail|nullable',
                     'logo' => 'bail|nullable',
@@ -138,11 +143,13 @@ class CaseStudyController extends Controller
                     'service_id' => $request->service,
                     'brand_id' => $request->brand,
                     'location_id' => $request->location,
+                    'year' => $request->year,
                     'about' => $request->about,
                     'brief' => $request->brief,
                     'challenge' => $request->challenge,
                     'approach' => $request->approach,
                     'outcome' => $request->outcome,
+                    'video_url' => $request->video_url,
                     'status' => $request->status ?? 0,
                     'is_featured' => $request->is_featured ?? 0,
                     'page_bg' => $first_background,
@@ -151,6 +158,19 @@ class CaseStudyController extends Controller
                     'document' => $document,
                     'created_by' => auth()->user()->id,
                 ]);
+
+                if (is_array($request->images)) {
+                    $image_path = public_path("uploads/case_study/images");
+                    foreach ($request->file('images') as $image) {
+                        $image_name = Str::random(16) . '_' . time() . '.' . $image->extension();
+                        if ($image->move($image_path, $image_name)) {
+                            CaseStudyImage::create([
+                                'case_study_id' => $casestudy->id,
+                                'image' => $image_name,
+                            ]);
+                        }
+                    }
+                }
                 // dd($casestudy);
 
                 return redirect()->back()->with('success', 'Case Study created successfully');
@@ -165,9 +185,9 @@ class CaseStudyController extends Controller
         }else{
             try
             {
-                $brands = Brand::all();
-                $projects = Project::all();
-                $services = Service::all();
+                $brands = Brand::where('status', 1)->get();
+                $projects = Project::where('status', 1)->get();
+                $services = Service::where('status', 1)->get();
                 $locations = Location::all();
                 return view('admin.casestudies.create', compact('brands', 'services', 'locations', 'projects'));
             } catch(\Exception $e)
@@ -191,14 +211,17 @@ class CaseStudyController extends Controller
                  $this->validate($request, [
                     'name' => 'bail|required|string',
                     'caption' => 'bail|required|string',
+                    'project' => 'bail|required|string',
                     'service' => 'bail|required|string',
                     'brand' => 'bail|required|string',
                     'location' => 'bail|required|string',
+                    'year' => 'bail|required|integer',
                     'about' => 'bail|required',
                     'brief' => 'bail|required',
                     'challenge' => 'bail|required',
                     'approach' => 'bail|required',
                     'outcome' => 'bail|required',
+                    'video_url' => 'bail|string',
                     'status' => 'nullable|integer',
                     'is_featured' => 'nullable|integer',
                     'first_background_image' => 'bail|nullable',
@@ -219,6 +242,7 @@ class CaseStudyController extends Controller
                 // dd($request);
 
                 $casestudy = CaseStudy::find($casestudy_id);
+                // dd($casestudy);
 
                 if($request->hasFile('first_background_image'))
                 {
@@ -232,7 +256,7 @@ class CaseStudyController extends Controller
                         $first_background = $first_background_name;
                     }
                 }else{
-                    $first_background = $casestudy->first_background;
+                    $first_background = $casestudy->page_bg;
                 }
 
                 if($request->hasFile('second_background_image'))
@@ -247,7 +271,7 @@ class CaseStudyController extends Controller
                         $second_background = $second_background_name;
                     }
                 }else{
-                    $second_background = $casestudy->second_background;
+                    $second_background = $casestudy->page_bg2;
                 }
 
                 if($request->hasFile('logo'))
@@ -289,11 +313,13 @@ class CaseStudyController extends Controller
                     'service_id' => $request->service,
                     'brand_id' => $request->brand,
                     'location_id' => $request->location,
+                    'year' => $request->year,
                     'about' => $request->about,
                     'brief' => $request->brief,
                     'challenge' => $request->challenge,
                     'approach' => $request->approach,
                     'outcome' => $request->outcome,
+                    'video_url' => $request->video_url,
                     'status' => $request->status ?? 0,
                     'is_featured' => $request->is_featured ?? 0,
                     'page_bg' => $first_background,
@@ -302,6 +328,27 @@ class CaseStudyController extends Controller
                     'document' => $document,
                     'last_edited_by' => auth()->user()->id,
                 ]);
+
+                if ($request->hasFile('images')) {
+                    $currentImageCount = CaseStudyImage::where('case_study_id', $casestudy->id)->count();
+                    $newImages = $request->file('images');
+                    $totalImagesCount = $currentImageCount + count($newImages);
+    
+                    if ($totalImagesCount > 10) {
+                        return redirect()->back()->with('danger', 'You can only upload up to 10 images for a project.')->withInput();
+                    }
+    
+                    $image_path = public_path("uploads/case_study/images");
+                    foreach ($newImages as $image) {
+                        $image_name = Str::random(16) . '_' . time() . '.' . $image->extension();
+                        if ($image->move($image_path, $image_name)) {
+                            CaseStudyImage::create([
+                                'case_study_id' => $casestudy->id,
+                                'image' => $image_name,
+                            ]);
+                        }
+                    }
+                }
                 // dd($casestudy);
 
                 return redirect()->back()->with('success', 'Case study edited successfully');
@@ -316,17 +363,32 @@ class CaseStudyController extends Controller
         }else{
             try
             {
-                $brands = Brand::all();
-                $projects = Project::all();
-                $services = Service::all();
+                $brands = Brand::where('status', 1)->get();
+                $projects = Project::where('status', 1)->get();
+                $services = Service::where('status', 1)->get();
                 $locations = Location::all();
                 $casestudy = CaseStudy::find($casestudy_id);
+                // dd($casestudy);
                 return view('admin.casestudies.edit', compact('brands', 'services', 'locations', 'projects', 'casestudy'));
             } catch(\Exception $e)
             {
                 return redirect()->back()->with('danger', $e->getMessage());
             }
         }
+    }
+
+    public function removeImage($casestudy_id, $image_id)
+    {
+        // dd($project_id);
+        // dd($image_id);
+        $image = CaseStudyImage::where('case_study_id', $casestudy_id)->where('id', $image_id)->first();
+        $image_delete_path = public_path("uploads/case_study/images/".$image->image);
+        if(File::exists($image_delete_path)) {
+            File::delete($image_delete_path);
+        }
+         
+        $image->delete();
+        return redirect()->back()->with('success', 'Case study image deleted successfully');
     }
 
 }
