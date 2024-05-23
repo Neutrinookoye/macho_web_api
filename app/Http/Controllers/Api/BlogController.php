@@ -38,10 +38,10 @@ class BlogController extends Controller
         }
     }
 
-    public function show($blog_id)
+    public function show($slug)
     {
         try{
-            $blog = Blog::where('id', $blog_id)->where('status', 1)->first();
+            $blog = Blog::where('slug', $slug)->where('status', 1)->first();
 
             return response()->json([
                 'data' => [

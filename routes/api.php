@@ -98,7 +98,7 @@ Route::controller(BlogController::class)->group(function () {
     {
         Route::get('/', 'index');
         Route::get('/featured-blogs', 'featured');
-        Route::get('/{blog_id}', 'show');
+        Route::get('/{slug}', 'show');
     });
 });
 
@@ -107,6 +107,6 @@ Route::controller(AwardController::class)->group(function () {
     {
         Route::get('/', 'index');
         Route::get('/featured-awards', 'featured');
-        Route::get('/{award_id}', 'show');
+        Route::get('/{slug}', 'show');
     });
 });

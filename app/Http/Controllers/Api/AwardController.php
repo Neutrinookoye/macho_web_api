@@ -37,10 +37,10 @@ class AwardController extends Controller
         }
     }
 
-    public function show($award_id)
+    public function show($slug)
     {
         try{
-            $award = Award::where('id', $award_id)->where('status', 1)->first();
+            $award = Award::where('slug', $slug)->where('status', 1)->first();
 
             return response()->json([
                 'data' => [
