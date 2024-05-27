@@ -79,6 +79,7 @@ Route::group(['middleware' => 'admin_auth'], function()
         {
             Route::get('/', 'index')->name('admin.career.index');
             Route::match(['GET', 'POST'], 'create-opening', 'createOpening')->name('admin.career.create');
+            Route::match(['GET', 'PATCH'], 'edit/{opening_id}', 'editOpening')->name('admin.career.edit');
             Route::get('show-applications/{opening_id}', 'showApplication')->name('admin.career.show');
         });
     });

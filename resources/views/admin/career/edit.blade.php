@@ -1,5 +1,5 @@
 @extends("layouts.overall")
-@section("page_title", "Create Job Opening")
+@section("page_title", "Edit Job Opening")
 @section('module', 'Careers')
 @section("content")
 
@@ -54,44 +54,45 @@
                             </div>
                         </div>
 
-                        <form class="form" action="{{ route('admin.career.create') }}" method="POST" enctype="multipart/form-data">
+                        <form class="form" action="{{ route('admin.career.edit', $opening->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
+                            @method('PATCH')
                             <div class="card-body">
                                 <div class="form-group row">
                                     <div class="col-lg-6">
                                         <label>Title <span class="text-danger"><b>*</b></span></label>
-                                        <input type="text" class="form-control" name="title" placeholder="IT Manager" value="{{ old('title') }}" />
+                                        <input type="text" class="form-control" name="title" placeholder="IT Manager" value="{{ $opening->title }}" />
                                     </div>
                                     <div class="col-lg-6">
                                         <label>Role <span class="text-danger"><b>*</b></span></label>
-                                        <input type="text" class="form-control" name="role" placeholder="IT Lead" value="{{ old('role') }}" />
+                                        <input type="text" class="form-control" name="role" placeholder="IT Lead" value="{{ $opening->role }}" />
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <div class="col-lg-12">
                                         <label>Description <span class="text-danger"><b>*</b></span></label>
-                                        <textarea rows="2" class="form-control" id="description" name="description" placeholder="Job Description">{!! old('description') !!}</textarea>
+                                        <textarea rows="2" class="form-control" id="description" name="description" placeholder="Job Description">{!! $opening->description !!}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <div class="col-lg-4">
                                         <label>Department <span class="text-danger"><b>*</b></span></label>
-                                        <input type="text" class="form-control" name="department" placeholder="IT" value="{{ old('department') }}" />                                        
+                                        <input type="text" class="form-control" name="department" placeholder="IT" value="{{ $opening->department }}" />                                        
                                     </div>
                                     <div class="col-lg-4">
                                         <label>Location <span class="text-danger"><b>*</b></span></label>
                                         <select id="location" name="location" class="form-control">
                                             <option value="none" selected="" disabled="">Choose a Location</option>
                                             @foreach($locations as $location)
-                                                <option value="{{ $location->id }}" @if($location->id == old('location')) selected @endif>{{ $location->name }}</option>
+                                                <option value="{{ $location->id }}" {{$location->id == $opening->location_id ? 'selected' : ''}}>{{ $location->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="col-lg-4">
                                         <label>Education Requirement <span class="text-danger"><b>*</b></span></label>
-                                        <input type="text" class="form-control" name="education_requirement" placeholder="B.sc" value="{{ old('education_requirement') }}" />                                        
+                                        <input type="text" class="form-control" name="education_requirement" placeholder="B.sc" value="{{ $opening->education_requirement }}" />                                        
                                     </div>
 
                                 </div>
@@ -99,15 +100,15 @@
                                 <div class="form-group row pt-3">
                                     <div class="col-lg-4">
                                         <label>Employment Type <span class="text-danger"><b>*</b></span></label>
-                                        <input type="text" class="form-control" name="employment_type" placeholder="Full-time" value="{{ old('employment_type') }}" />                                        
+                                        <input type="text" class="form-control" name="employment_type" placeholder="Full-time" value="{{ $opening->employment_type }}" />                                        
                                     </div>
                                     <div class="col-lg-4">
                                         <label>Experience Level <span class="text-danger"><b>*</b></span></label>
-                                        <input type="text" class="form-control" name="experience_level" placeholder="Mid-Level" value="{{ old('experience_level') }}" />
+                                        <input type="text" class="form-control" name="experience_level" placeholder="Mid-Level" value="{{ $opening->experience_level }}" />
                                     </div>
                                     <div class="col-lg-4">
                                         <label>Deadline</label>
-                                        <input type="text" class="form-control" name="deadline" placeholder="2 weeks" value="{{ old('deadline') }}" />
+                                        <input type="text" class="form-control" name="deadline" placeholder="2 weeks" value="{{ $opening->deadline }}" />
                                     </div>
                                 </div>
 
@@ -127,7 +128,7 @@
        
                                         <!--begin::Switch-->
                                         <label class="form-check form-switch form-check-custom form-check-solid">
-                                            <input class="form-check-input" type="checkbox" value="1" checked="checked" name="status" />
+                                            <input class="form-check-input" type="checkbox" value="1" @if ($opening->status == 1) checked @endif name="status" />
                                             <span class="form-check-label fw-semibold text-muted">Active</span>
                                         </label>
                                         <!--end::Switch-->
@@ -172,53 +173,6 @@
         ['view', ['fullscreen']]
       ]
     });
-
-    var cnt = 1;
-    function addMore(e)
-    {
-        cnt += 1;
-        e.preventDefault()
-
-        if($(".cntinputs").length >= 11)
-        {
-            Swal.fire({
-                title: 'Cancelled',
-                text: "Sorry! You cannot add more than 10 images",
-                width: '400px',
-                customClass: {
-                    confirmButton: "btn btn-danger"
-                }
-            })
-            return
-        }
-
-        $("#add-more-div").prepend(`
-            <div class="col-md-12 mb-2 mt-5 cntinputs add-more-inputs${cnt}">
-                <div class="d-flex flex-column mb-7 fv-row">
-                    <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
-                        <span class="required"> Image ${cnt}</span>
-                    </label>
-                    <div class="row">
-                        <div class="col-md-10">
-                            <input type="file" class="form-control form-control-solid" placeholder="" name="images[]"
-                                accept="image/png,image/gif,image/jpeg,image/jpg">
-                        </div>
-                        <div class="col-md-2">
-                            <span class="btn btn-danger" onclick="removeInput('add-more-inputs${cnt}')" style="cursor: pointer">
-                                <i class="flaticon2-rubbish-bin"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `)
-    }
-
-
-    function removeInput(elem)
-    {
-        $(`#add-more-div .${elem}`).remove()
-    }
 
 </script>
 @endpush

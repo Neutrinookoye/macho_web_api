@@ -116,6 +116,9 @@
                                             <a href="{{ route('admin.career.show', $opening->id) }}" class="btn btn-warning font-weight-bolder font-size-sm mr-3">
                                                 <i class="flaticon-eye"></i> View Applications
                                             </a>
+                                            <a href="{{ route('admin.career.edit', $opening->id) }}" class="btn btn-warning font-weight-bolder font-size-sm mr-3">
+                                                <i class="flaticon2-edit"></i> 
+                                            </a>
                                         </td>
                                     </tr>
                                     @endforeach
