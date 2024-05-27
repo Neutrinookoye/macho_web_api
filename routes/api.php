@@ -49,6 +49,7 @@ Route::controller(ServicesController::class)->group(function () {
     Route::group(["prefix" => "services"], function ()
     {
         Route::get('/', 'index');
+        Route::get('/{slug}', 'show');
     });
 });
 
@@ -63,6 +64,7 @@ Route::controller(BrandsController::class)->group(function () {
     Route::group(["prefix" => "brands"], function ()
     {
         Route::get('/', 'index');
+        Route::get('/{slug}', 'show');
     });
 });
 

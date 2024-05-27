@@ -105,6 +105,13 @@
                                         </div>
                                     </div>
 
+                                    <div class="form-group row">
+                                        <div class="col-lg-12">
+                                            <label>Tags (comma-separated)</label>
+                                            <input type="text" class="form-control" name="tags" placeholder="Ideation, Surveys, Merchandising etc" value="{{ implode(',', $blog->tags->pluck('name')->toArray()) }}" />
+                                        </div>
+                                    </div>
+
                                     <div class="col-md-6 mt-4">
                                         <div class="d-flex flex-stack">
         

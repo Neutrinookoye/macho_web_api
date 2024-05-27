@@ -100,7 +100,7 @@
                                     <div class="form-group row">
                                         <div class="col-lg-12">
                                             <label>Tags (comma-separated)</label>
-                                            <input type="text" class="form-control" name="tags" placeholder="Ideation, Surveys, Merchandising etc" value="{{ old('tags') }}" />
+                                            <input type="text" class="form-control" name="tags" placeholder="Ideation,Surveys,Merchandising etc" value="{{ old('tags') }}" />
                                         </div>
                                     </div>
 

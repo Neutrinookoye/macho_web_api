@@ -30,4 +30,25 @@ class ServicesController extends Controller
 
         }
     }
+
+    public function show($slug)
+    {
+        try{
+            $service = Service::where('slug', $slug)->where('status', 1)->first();
+
+            return response()->json([
+                'data' => [
+                    'service' => $service,
+                ]
+            ], 200);
+
+
+        } catch (\Exception $e)
+        {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+
+        }
+    }
 }

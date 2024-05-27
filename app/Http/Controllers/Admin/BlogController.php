@@ -183,6 +183,19 @@ class BlogController extends Controller
                     'last_edited_by' => auth()->user()->id,
                 ]);
 
+                if ($request->tags) {
+                    $tagNames = explode(',', $request->tags);
+                    $tagIds = [];
+                    foreach ($tagNames as $tagName) {
+                        $tagName = trim($tagName);
+                        if (!empty($tagName)) {
+                            $tag = Tag::firstOrCreate(['name' => $tagName]);
+                            $tagIds[] = $tag->id;
+                        }
+                    }
+                    $blog->tags()->sync($tagIds);
+                }
+
                 return redirect()->back()->with('success', 'Blog updated successfully');
 
             } catch (ValidationException $e)
@@ -198,6 +211,7 @@ class BlogController extends Controller
                 // $categories = Category::all();
                 $categories = Category::where('type', 'blog')->get();
                 $blog = Blog::find($blog_id);
+                // dd($blog);
                 return view('admin.blog.edit', compact('categories', 'blog'));
             } catch(\Exception $e)
             {
