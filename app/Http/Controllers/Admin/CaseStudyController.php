@@ -72,6 +72,13 @@ class CaseStudyController extends Controller
                 {
                     return redirect()->back()->with('danger', 'Sorry! you have already added this case study.')->withInput();
                 }
+
+                if ($request->is_featured) {
+                    $featuredCaseStudyCount = CaseStudy::where('is_featured', 1)->count();
+                    if ($featuredCaseStudyCount >= 3) {
+                        return redirect()->back()->with('danger', 'Sorry! Only 3 case studies can be featured at a time.');
+                    }
+                }
                 // dd($request);
 
                 if($request->hasFile('first_background_image'))

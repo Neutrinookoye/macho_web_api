@@ -73,6 +73,13 @@ class ProjectController extends Controller
                     return redirect()->back()->with('danger', 'Sorry! you have already added this project.')->withInput();
                 }
 
+                if ($request->is_featured) {
+                    $featuredProjectsCount = Project::where('is_featured', 1)->count();
+                    if ($featuredProjectsCount >= 3) {
+                        return redirect()->back()->with('danger', 'Sorry! Only 3 projects can be featured at a time.');
+                    }
+                }
+
                 if($request->hasFile('thumb_image'))
                 {
                     $thumb_image_path = public_path("uploads/projects/");

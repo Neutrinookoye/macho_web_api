@@ -58,6 +58,13 @@ class AwardController extends Controller
                 return redirect()->back()->with('danger', 'Sorry! You have already created this Award.');
             }
 
+            if ($request->is_featured) {
+                $featuredAwardsCount = Award::where('is_featured', 1)->count();
+                if ($featuredAwardsCount >= 3) {
+                    return redirect()->back()->with('danger', 'Sorry! Only 3 awards can be featured at a time.');
+                }
+            }
+
             if($request->hasFile('award_image'))
             {
                 $award_image_path = public_path("uploads/awards/");

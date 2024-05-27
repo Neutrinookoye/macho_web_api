@@ -14,11 +14,12 @@ class BlogController extends Controller
     {
         try{
             $blogs = QueryBuilder::for(Blog::class)
-            ->allowedIncludes(['category'])
+            ->allowedIncludes(['category', 'tags'])
             ->allowedFilters([
                 'category.type',
             ])
             ->where('status', 1)
+            ->with(['category', 'tags'])
             ->paginate(10);
 
             // dd($blogs);
@@ -41,7 +42,10 @@ class BlogController extends Controller
     public function show($slug)
     {
         try{
-            $blog = Blog::where('slug', $slug)->where('status', 1)->first();
+            $blog = Blog::where('slug', $slug)
+            ->where('status', 1)
+            ->with(['tags'])
+            ->first();
 
             return response()->json([
                 'data' => [
@@ -62,7 +66,9 @@ class BlogController extends Controller
     public function featured()
     {
         try{
-            $blog = Blog::where('is_featured', 1)->get();
+            $blog = Blog::where('is_featured', 1)
+            ->with(['tags'])
+            ->get();
 
             return response()->json([
                 'data' => [

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Tag;
 use App\Models\Blog;
 use App\Models\Category;
 use Illuminate\Support\Str;
@@ -49,6 +50,7 @@ class BlogController extends Controller
                 'featured_image' => 'bail|nullable|image',
                 'status' => 'nullable|integer',
                 'is_featured' => 'nullable|integer',
+                'tags' => 'nullable|string' // validate tags as a string
             ]);
 
             $slug = Str::slug($request->title);
@@ -56,6 +58,13 @@ class BlogController extends Controller
             if($checkblog)
             {
                 return redirect()->back()->with('danger', 'Sorry! You have already created this Blog.');
+            }
+
+            if ($request->is_featured) {
+                $featuredBlogsCount = Blog::where('is_featured', 1)->count();
+                if ($featuredBlogsCount >= 3) {
+                    return redirect()->back()->with('danger', 'Sorry! Only 3 blogs can be featured at a time.');
+                }
             }
 
             if($request->hasFile('featured_image'))
@@ -86,6 +95,19 @@ class BlogController extends Controller
                 'is_featured' => $request->is_featured ?? 0,
                 'created_by' => auth()->user()->id,
             ]);
+
+            if ($request->tags) {
+                $tagNames = explode(',', $request->tags);
+                $tagIds = [];
+                foreach ($tagNames as $tagName) {
+                    $tagName = trim($tagName);
+                    if (!empty($tagName)) {
+                        $tag = Tag::firstOrCreate(['name' => $tagName]);
+                        $tagIds[] = $tag->id;
+                    }
+                }
+                $blog->tags()->sync($tagIds);
+            }
 
             return redirect()->back()->with('success', 'Blog created successfully');
         }else{

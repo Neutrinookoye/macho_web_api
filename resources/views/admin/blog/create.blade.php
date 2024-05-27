@@ -99,6 +99,13 @@
 
                                     <div class="form-group row">
                                         <div class="col-lg-12">
+                                            <label>Tags (comma-separated)</label>
+                                            <input type="text" class="form-control" name="tags" placeholder="Ideation, Surveys, Merchandising etc" value="{{ old('tags') }}" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-lg-12">
                                             <label> Content <span class="text-danger"><b>*</b></span></label>
                                             <textarea rows="10" type="text" id="description" class="form-control" name="content" placeholder="">{{ old('content') }}</textarea>
                                         </div>
