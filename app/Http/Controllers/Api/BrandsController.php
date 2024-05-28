@@ -14,7 +14,9 @@ class BrandsController extends Controller
     {
         try{
 
-            $brands = Brand::where('status', 1)->paginate(10);
+            $brands = Brand::where('status', 1)
+            ->orderBy('created_at', 'DESC')
+            ->paginate(10);
 
             return response()->json([
                 'data' => [

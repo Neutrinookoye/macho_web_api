@@ -38,6 +38,7 @@ class ProjectsController extends Controller
             }
             $projects = $query
             ->with(['brand', 'service', 'location'])
+            ->orderBy('created_at', 'DESC')
             ->paginate(10);
 
             return response()->json([

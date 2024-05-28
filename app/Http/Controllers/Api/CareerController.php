@@ -20,6 +20,7 @@ class CareerController extends Controller
                 ->allowedIncludes(['location'])
                 ->allowedFilters(['title', 'role', 'location.slug'])
                 ->where('status', 1)
+                ->with(['location'])
                 ->orderBy('created_at', 'DESC')
                 ->paginate(10);
 
@@ -41,7 +42,9 @@ class CareerController extends Controller
     public function show($opening_id)
     {
         try{
-            $opening = Opening::where('id', $opening_id)->where('status', 1)->first();
+            $opening = Opening::where('id', $opening_id)->where('status', 1)
+            ->with(['location'])
+            ->first();
 
             return response()->json([
                 'data' => [

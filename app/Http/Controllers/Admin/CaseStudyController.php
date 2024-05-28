@@ -75,8 +75,8 @@ class CaseStudyController extends Controller
 
                 if ($request->is_featured) {
                     $featuredCaseStudyCount = CaseStudy::where('is_featured', 1)->count();
-                    if ($featuredCaseStudyCount >= 3) {
-                        return redirect()->back()->with('danger', 'Sorry! Only 3 case studies can be featured at a time.');
+                    if ($featuredCaseStudyCount >= 1) {
+                        return redirect()->back()->with('danger', 'Sorry! Only 1 case study can be featured at a time.');
                     }
                 }
                 // dd($request);
@@ -244,8 +244,16 @@ class CaseStudyController extends Controller
                 $checkcasestudy = CaseStudy::where('slug', $slug)->where('id', '!=', $casestudy_id)->first();
                 if($checkcasestudy)
                 {
-                    return redirect()->back()->with('danger', 'Sorry! you have already added this case study.')->withInput();
+                    return redirect()->back()->with('danger', 'Sorry! A case study already exists with this name.')->withInput();
                 }
+
+                if ($request->is_featured) {
+                    $featuredCaseStudyCount = CaseStudy::where('is_featured', 1)->count();
+                    if ($featuredCaseStudyCount >= 1) {
+                        return redirect()->back()->with('danger', 'Sorry! Only 1 case study can be featured at a time.');
+                    }
+                }
+
                 // dd($request);
 
                 $casestudy = CaseStudy::find($casestudy_id);

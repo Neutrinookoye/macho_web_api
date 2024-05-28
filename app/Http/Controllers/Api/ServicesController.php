@@ -13,7 +13,9 @@ class ServicesController extends Controller
     {
         try{
 
-            $services = Service::where('status', 1)->paginate(10);
+            $services = Service::where('status', 1)
+            ->orderBy('created_at', 'DESC')
+            ->paginate(10);
 
             return response()->json([
                 'data' => [

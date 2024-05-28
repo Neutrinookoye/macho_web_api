@@ -1,5 +1,5 @@
 @extends("layouts.overall")
-@section("page_title", "Create Blog")
+@section("page_title", "Edit Blog")
 @section('module', 'Blog')
 @section("content")
 

@@ -62,8 +62,8 @@ class BlogController extends Controller
 
             if ($request->is_featured) {
                 $featuredBlogsCount = Blog::where('is_featured', 1)->count();
-                if ($featuredBlogsCount >= 3) {
-                    return redirect()->back()->with('danger', 'Sorry! Only 3 blogs can be featured at a time.');
+                if ($featuredBlogsCount >= 1) {
+                    return redirect()->back()->with('danger', 'Sorry! Only 1 blogs can be featured at a time.');
                 }
             }
 
@@ -145,7 +145,20 @@ class BlogController extends Controller
                     'is_featured' => 'nullable|integer',
                 ]);
 
-                $slug = Str::slug($request->name);
+                $slug = Str::slug($request->title);
+
+                $checkblog = Blog::where('slug', $slug)->where('id', '!=', $blog_id)->first();
+                if($checkblog)
+                {
+                    return redirect()->back()->with('danger', 'Sorry! A blog already exists with this title.');
+                }
+
+                if ($request->is_featured) {
+                    $featuredBlogsCount = Blog::where('is_featured', 1)->count();
+                    if ($featuredBlogsCount >= 1) {
+                        return redirect()->back()->with('danger', 'Sorry! Only 1 blog can be featured at a time.');
+                    }
+                }
 
                 $blog = Blog::find($blog_id);
 

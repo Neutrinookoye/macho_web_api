@@ -75,8 +75,8 @@ class ProjectController extends Controller
 
                 if ($request->is_featured) {
                     $featuredProjectsCount = Project::where('is_featured', 1)->count();
-                    if ($featuredProjectsCount >= 3) {
-                        return redirect()->back()->with('danger', 'Sorry! Only 3 projects can be featured at a time.');
+                    if ($featuredProjectsCount >= 1) {
+                        return redirect()->back()->with('danger', 'Sorry! Only 1 project can be featured at a time.');
                     }
                 }
 
@@ -224,7 +224,14 @@ class ProjectController extends Controller
                 $checkproject = Project::where('slug', $slug)->where('id', '!=', $project_id)->first();
                 if($checkproject)
                 {
-                    return redirect()->back()->with('danger', 'Sorry! you have already added this project.')->withInput();
+                    return redirect()->back()->with('danger', 'Sorry! An project alredy exists with this name.')->withInput();
+                }
+
+                if ($request->is_featured) {
+                    $featuredProjectsCount = Project::where('is_featured', 1)->count();
+                    if ($featuredProjectsCount >= 1) {
+                        return redirect()->back()->with('danger', 'Sorry! Only 1 project can be featured at a time.');
+                    }
                 }
 
                 $project = Project::find($project_id);

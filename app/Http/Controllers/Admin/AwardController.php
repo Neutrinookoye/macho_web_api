@@ -60,8 +60,8 @@ class AwardController extends Controller
 
             if ($request->is_featured) {
                 $featuredAwardsCount = Award::where('is_featured', 1)->count();
-                if ($featuredAwardsCount >= 3) {
-                    return redirect()->back()->with('danger', 'Sorry! Only 3 awards can be featured at a time.');
+                if ($featuredAwardsCount >= 1) {
+                    return redirect()->back()->with('danger', 'Sorry! Only 1 awards can be featured at a time.');
                 }
             }
 
@@ -129,6 +129,19 @@ class AwardController extends Controller
                 ]);
 
                 $slug = Str::slug($request->name);
+
+                $checkaward = Award::where('slug', $slug)->where('id', '!=', $award_id)->first();
+                if($checkaward)
+                {
+                    return redirect()->back()->with('danger', 'Sorry! An award alredy exists with this name.');
+                }
+
+                if ($request->is_featured) {
+                    $featuredAwardsCount = Award::where('is_featured', 1)->count();
+                    if ($featuredAwardsCount >= 1) {
+                        return redirect()->back()->with('danger', 'Sorry! Only 1 award can be featured at a time.');
+                    }
+                }
 
                 $award = Award::find($award_id);
                 // dd($award);

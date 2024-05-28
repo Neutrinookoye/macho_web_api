@@ -10,34 +10,63 @@ use Spatie\QueryBuilder\QueryBuilder;
 class BlogController extends Controller
 {
     //
-    public function index()
-    {
-        try{
-            $blogs = QueryBuilder::for(Blog::class)
-            ->allowedIncludes(['category', 'tags'])
-            ->allowedFilters([
-                'category.type',
-            ])
-            ->where('status', 1)
-            ->with(['category', 'tags'])
-            ->paginate(10);
+    // public function index()
+    // {
+    //     try{
+    //         $blogs = QueryBuilder::for(Blog::class)
+    //         ->allowedIncludes(['category', 'tags'])
+    //         ->allowedFilters([
+    //             'category.type',
+    //         ])
+    //         ->where('status', 1)
+    //         ->with(['category', 'tags'])
+    //         ->orderBy('created_at', 'DESC')
+    //         ->paginate(10);
 
-            // dd($blogs);
+    //         // dd($blogs);
+    //         return response()->json([
+    //             'data' => [
+    //                 'blogs' => $blogs,
+    //             ]
+    //         ], 200);
+
+
+    //     } catch (\Exception $e)
+    //     {
+    //         return response()->json([
+    //             'message' => $e->getMessage()
+    //         ], 500);
+
+    //     }
+    // }
+
+    public function index(Request $request)
+    {
+        try {
+            $blogs = QueryBuilder::for(Blog::class)
+                ->allowedIncludes(['category', 'tags'])
+                ->allowedFilters(['category.type'])
+                ->where('status', 1)
+                ->with(['category', 'tags'])
+                ->orderBy('created_at', 'desc') // Corrected 'DSEC' to 'desc'
+                ->paginate(10);
+
             return response()->json([
-                'data' => [
-                    'blogs' => $blogs,
+                'data' => $blogs->items(),
+                'meta' => [
+                    'current_page' => $blogs->currentPage(),
+                    'last_page' => $blogs->lastPage(),
+                    'per_page' => $blogs->perPage(),
+                    'total' => $blogs->total(),
                 ]
             ], 200);
-
-
-        } catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             return response()->json([
                 'message' => $e->getMessage()
             ], 500);
-
         }
     }
+
 
     public function show($slug)
     {
