@@ -42,7 +42,9 @@ class CaseStudyController extends Controller
                     $q->where('name', $request->input('location'));
                 });
             }
-            $caseStudy = $query->paginate(10);
+            $caseStudy = $query
+            ->with(['brand', 'project', 'service', 'location'])
+            ->paginate(10);
 
             return response()->json([
                 'data' => [
@@ -63,9 +65,11 @@ class CaseStudyController extends Controller
     public function show($slug)
     {
         try{
-            $casestudy = CaseStudy::where('slug', $slug)->where('status', 1)->first();
+            $casestudy = CaseStudy::where('slug', $slug)->where('status', 1)
+            ->with(['brand', 'project', 'service', 'location'])
+            ->first();
             $casestudy_images = CaseStudyImage::where('case_study_id', $casestudy->id)->get();
-
+            
             return response()->json([
                 'data' => [
                     'caseStudy' => $casestudy,
@@ -86,7 +90,9 @@ class CaseStudyController extends Controller
     public function featured()
     {
         try{
-            $caseStudy = CaseStudy::where('is_featured', 1)->get();
+            $caseStudy = CaseStudy::where('is_featured', 1)
+            ->with(['brand', 'project', 'service', 'location'])
+            ->get();
 
             return response()->json([
                 'data' => [

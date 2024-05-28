@@ -36,7 +36,9 @@ class ProjectsController extends Controller
                     $q->where('name', $request->input('location'));
                 });
             }
-            $projects = $query->paginate(10);
+            $projects = $query
+            ->with(['brand', 'service', 'location'])
+            ->paginate(10);
 
             return response()->json([
                 'data' => [
@@ -57,7 +59,9 @@ class ProjectsController extends Controller
     public function show($slug)
     {
         try{
-            $project = Project::where('slug', $slug)->where('status', 1)->first();
+            $project = Project::where('slug', $slug)->where('status', 1)
+            ->with(['brand', 'service', 'location'])
+            ->first();
             $project_images = ProjectImage::where('project_id', $project->id)->get();
             $project_data = Projectdata::where('project_id', $project->id)->get();
 
@@ -82,7 +86,9 @@ class ProjectsController extends Controller
     public function featured()
     {
         try{
-            $projects = Project::where('is_featured', 1)->get();
+            $projects = Project::where('is_featured', 1)
+            ->with(['brand', 'service', 'location'])
+            ->get();
 
             return response()->json([
                 'data' => [

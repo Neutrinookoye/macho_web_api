@@ -19,6 +19,7 @@ class AwardController extends Controller
                 'category.type',
             ])
             ->where('status', 1)
+            ->with(['category'])
             ->paginate(10);
 
             return response()->json([
@@ -40,7 +41,9 @@ class AwardController extends Controller
     public function show($slug)
     {
         try{
-            $award = Award::where('slug', $slug)->where('status', 1)->first();
+            $award = Award::where('slug', $slug)->where('status', 1)
+            ->with(['category'])            
+            ->first();
 
             return response()->json([
                 'data' => [
@@ -61,7 +64,9 @@ class AwardController extends Controller
     public function featured()
     {
         try{
-            $award = Award::where('is_featured', 1)->get();
+            $award = Award::where('is_featured', 1)
+            ->with(['category'])
+            ->get();
 
             return response()->json([
                 'data' => [

@@ -44,7 +44,7 @@ class BlogController extends Controller
         try{
             $blog = Blog::where('slug', $slug)
             ->where('status', 1)
-            ->with(['tags'])
+            ->with(['category', 'tags'])
             ->first();
 
             return response()->json([
@@ -67,7 +67,7 @@ class BlogController extends Controller
     {
         try{
             $blog = Blog::where('is_featured', 1)
-            ->with(['tags'])
+            ->with(['category', 'tags'])
             ->get();
 
             return response()->json([
