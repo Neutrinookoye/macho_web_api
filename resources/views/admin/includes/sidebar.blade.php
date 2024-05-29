@@ -141,7 +141,7 @@
             @if (checkPermissions(['view_locations']))
 
                 <li class="menu-section">
-                    <h4 class="menu-text">Careers</h4>
+                    <h4 class="menu-text">Locations</h4>
                     <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
                 </li>
             @endif

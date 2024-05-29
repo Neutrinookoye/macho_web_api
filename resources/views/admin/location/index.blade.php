@@ -58,7 +58,7 @@
                                     <tr>
                                         <th></th>
                                         <th>Company Name</th>
-                                        <th>Address</th>
+                                        {{-- <th>Address</th> --}}
                                         <th>Email</th>
                                         <th>Phone Number</th>
                                         <th>Country</th>
@@ -82,13 +82,13 @@
                                                 </span>
                                             </div>
                                         </td>
-                                        <td>
+                                        {{-- <td>
                                             <div>
                                                 <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
                                                     {{ $location->address }}
                                                 </span>
                                             </div>
-                                        </td>
+                                        </td> --}}
                                         <td>
                                             <div>
                                                 <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
