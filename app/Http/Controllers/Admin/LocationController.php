@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Location;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\ValidationException;
 
 class LocationController extends Controller
 {
@@ -15,13 +17,13 @@ class LocationController extends Controller
         {
             return redirect()->back()->with('danger', 'Access Forbidden');
         }
-        $locations = Location::orderBy('created_at', 'DESC')->where('staatus', 1)->get();
-        return view('admin.location.index', compact('openings'));
+        $locations = Location::orderBy('created_at', 'DESC')->get();
+        return view('admin.location.index', compact('locations'));
     }
 
     public function createLocation(Request $request)
     {
-        if(!checkPermission('create_locations'))
+        if(!checkPermission('create_location'))
         {
             return redirect()->back()->with('danger', 'Access Forbidden');
         }
@@ -31,33 +33,32 @@ class LocationController extends Controller
             {
                 // dd($request);
                  $this->validate($request, [
-                    'title' => 'bail|required|string',
-                    'description' => 'bail|nullable|string',
-                    'role' => 'bail|nullable|string',
-                    'location' => 'bail|nullable|string',
-                    'department' => 'bail|required|string',
-                    'experience_level' => 'bail|required|string',
-                    'education_requirement' => 'bail|required|string',
-                    'employment_type' => 'bail|required|string',
-                    'deadline' => 'bail|string',
+                    'company_name' => 'bail|required|string',
+                    'address' => 'bail|required|string',
+                    'email' => 'bail|required|string|email',
+                    'phone_number' => 'bail|required|string',
+                    'country_name' => 'bail|required|string',
+                    'lat' => 'bail|required|string',
+                    'lng' => 'bail|required|string',
                     'status' => 'nullable|integer',
                 ]);
 
-                $opening = Opening::create([
-                    'title' => $request->title,
-                    'description' => $request->description,
-                    'role' => $request->role,
-                    'location_id' => $request->location,
-                    'department' => $request->department,
-                    'experience_level' => $request->experience_level,
-                    'education_requirement' => $request->education_requirement,
-                    'employment_type' => $request->employment_type,
-                    'deadline' => $request->deadline,
+                $slug = Str::slug($request->country_name);
+
+                $location = Location::create([
+                    'name' => $request->country_name,
+                    'company_name' => $request->company_name,
+                    'address' => $request->address,
+                    'email' => $request->email,
+                    'lat' => $request->lat,
+                    'lng' => $request->lng,
+                    'phone_number' => $request->phone_number,
+                    'slug' => $slug,
                     'status' => $request->status ?? 0,
                     'created_by' => auth()->user()->id,
                 ]);
 
-                return redirect()->back()->with('success', 'Job Opening created successfully');
+                return redirect()->back()->with('success', 'Location created successfully');
 
             } catch (ValidationException $e)
             {
@@ -78,9 +79,9 @@ class LocationController extends Controller
         }
     }
 
-    public function editOpening(Request $request, $opening_id)
+    public function editLocation(Request $request, $location_id)
     {
-        if(!checkPermission('edit_job_opening'))
+        if(!checkPermission('edit_location'))
         {
             return redirect()->back()->with('danger', 'Access Forbidden');
         }
@@ -90,34 +91,40 @@ class LocationController extends Controller
             {
                 // dd($request);
                  $this->validate($request, [
-                    'title' => 'bail|required|string',
-                    'description' => 'bail|nullable|string',
-                    'role' => 'bail|nullable|string',
-                    'location' => 'bail|nullable|string',
-                    'department' => 'bail|required|string',
-                    'experience_level' => 'bail|required|string',
-                    'education_requirement' => 'bail|required|string',
-                    'employment_type' => 'bail|required|string',
-                    'deadline' => 'bail|string',
+                    'company_name' => 'bail|required|string',
+                    'address' => 'bail|required|string',
+                    'email' => 'bail|required|string|email',
+                    'phone_number' => 'bail|required|string',
+                    'country_name' => 'bail|required|string',
+                    'lat' => 'bail|required|string',
+                    'lng' => 'bail|required|string',
                     'status' => 'nullable|integer',
                 ]);
-                $opening = Opening::find($opening_id);
 
-                $opening->update([
-                    'title' => $request->title,
-                    'description' => $request->description,
-                    'role' => $request->role,
-                    'location_id' => $request->location,
-                    'department' => $request->department,
-                    'experience_level' => $request->experience_level,
-                    'education_requirement' => $request->education_requirement,
-                    'employment_type' => $request->employment_type,
-                    'deadline' => $request->deadline,
+                $slug = Str::slug($request->country_name);
+
+                $checklocation = Location::where('slug', $slug)->where('id', '!=', $location_id)->first();
+                if($checklocation)
+                {
+                    return redirect()->back()->with('danger', 'Sorry! A location already exists with this country name.');
+                }
+
+                $location = Location::find($location_id);
+
+                $location->update([
+                    'name' => $request->country_name,
+                    'company_name' => $request->company_name,
+                    'address' => $request->address,
+                    'email' => $request->email,
+                    'lat' => $request->lat,
+                    'lng' => $request->lng,
+                    'phone_number' => $request->phone_number,
+                    'slug' => $slug,
                     'status' => $request->status ?? 0,
                     'last_edited_by' => auth()->user()->id,
                 ]);
 
-                return redirect()->back()->with('success', 'Job Opening updated successfully');
+                return redirect()->back()->with('success', 'Location updated successfully');
 
             } catch (ValidationException $e)
             {
@@ -129,9 +136,8 @@ class LocationController extends Controller
         }else{
             try
             {
-                $locations = Location::all();
-                $opening = Opening::find($opening_id);
-                return view('admin.career.edit', compact('locations', 'opening'));
+                $location = Location::find($location_id);
+                return view('admin.location.edit', compact('location'));
             } catch(\Exception $e)
             {
                 return redirect()->back()->with('danger', $e->getMessage());

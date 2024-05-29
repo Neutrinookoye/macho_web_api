@@ -13,7 +13,9 @@ class LocationController extends Controller
     {
         try{
 
-            $locations = Location::paginate(10);
+            $locations = Location::where('status', 1)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
 
             return response()->json([
                 'data' => [

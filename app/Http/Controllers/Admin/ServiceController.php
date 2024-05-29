@@ -93,7 +93,7 @@ class ServiceController extends Controller
                 'status' => $request->status ?? 0,
                 'image' => $imageUrl,
                 'icon' => $iconUrl,
-                // 'created_by' => auth()->user()->id,
+                'created_by' => auth()->user()->id,
             ]);
 
             return redirect()->back()->with('success', 'Service created successfully');
@@ -189,7 +189,7 @@ class ServiceController extends Controller
                 'status' => $request->status ?? 0,
                 'image' => $imageUrl,
                 'icon' => $iconUrl,
-                // 'last_edited_by' => auth()->user()->id,
+                'last_edited_by' => auth()->user()->id,
             ]);
 
             // dd($service);

@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('blogs', function (Blueprint $table) {
+        Schema::table('locations', function (Blueprint $table) {
             //
-            $table->dropColumn('content');
+            $table->integer('created_by');
+            $table->integer('last_edited_by')->nullable();
         });
     }
 
@@ -22,7 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('blogs', function (Blueprint $table) {
+        Schema::table('locations', function (Blueprint $table) {
             //
         });
     }

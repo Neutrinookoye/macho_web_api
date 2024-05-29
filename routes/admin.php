@@ -72,7 +72,7 @@ Route::group(['middleware' => 'admin_auth'], function()
         {
             Route::get('/', 'index')->name('admin.location.index');
             Route::match(['GET', 'POST'], 'create-location', 'createLocation')->name('admin.location.create');
-            Route::match(['GET', 'PATCH'], 'edit/{location_id}', 'editLoction')->name('admin.location.edit');
+            Route::match(['GET', 'PATCH'], 'edit/{location_id}', 'editLocation')->name('admin.location.edit');
         });
     });
 
