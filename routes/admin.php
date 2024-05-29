@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CaseStudyController;
+use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\PublicationController;
 
@@ -63,6 +64,15 @@ Route::group(['middleware' => 'admin_auth'], function()
             Route::post('create', 'createRole')->name('admin.roles.create');
             Route::put('edit/{role_id}', 'updateRole')->name('admin.roles.edit');
             // Route::put('delete-role', 'deleteRole')->name('admin.roles.delete');
+        });
+    });
+
+    Route::controller(LocationController::class)->group(function () {
+        Route::group(["prefix" => "locations"], function ()
+        {
+            Route::get('/', 'index')->name('admin.location.index');
+            Route::match(['GET', 'POST'], 'create-location', 'createLocation')->name('admin.location.create');
+            Route::match(['GET', 'PATCH'], 'edit/{location_id}', 'editLoction')->name('admin.location.edit');
         });
     });
 

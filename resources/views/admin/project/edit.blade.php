@@ -100,8 +100,8 @@
 
                                 <div class="form-group row">
                                     <div class="col-lg-12">
-                                        <label>Short Description </label>
-                                        <textarea rows="3" type="text" id="short_description" class="form-control" name="short_description" placeholder="">{{ $project->short_description }}</textarea>
+                                        <label>Short Description <small class="muted">(200 characters max)</small></label>
+                                        <textarea rows="3" type="text" maxlength="200" class="form-control" name="short_description" placeholder="">{{ $project->short_description }}</textarea>
                                     </div>
                                 </div>
 
@@ -288,10 +288,10 @@
                                 <div class="card-xl-stretch me-md-6">
                                     <!--begin::Overlay-->
                                     <a class="d-block overlay" data-fslightbox="lightbox-hot-sales"
-                                        href="{{ asset('uploads/projects') }}/{{ $project->thumb_image }}" target="_blank">
+                                        href="{{ $project->thumb_image }}" target="_blank">
                                         <!--begin::Image-->
                                         <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px"
-                                            style="background-image:url('{{ asset('uploads/projects') }}/{{ $project->thumb_image }}')">
+                                            style="background-image:url('{{ $project->thumb_image }}')">
                                         </div>
                                         <!--end::Image-->
                                         <!--begin::Action-->

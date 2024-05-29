@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Validation\ValidationException;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class BlogController extends Controller
 {
@@ -69,17 +70,21 @@ class BlogController extends Controller
 
             if($request->hasFile('featured_image'))
             {
-                $featured_image_path = public_path("uploads/blogs/");
+                $uploadedFileUrl = Cloudinary::upload($request->file('featured_image')->getRealPath(),
+                [
+                    'folder' => 'blogs',
+                ])->getSecurePath();
+                // $featured_image_path = public_path("uploads/blogs/");
 
-                $featured_image = $request->file("featured_image");
-                $featured_image_name = Str::random(16).'.'.$featured_image->extension();
+                // $featured_image = $request->file("featured_image");
+                // $featured_image_name = Str::random(16).'.'.$featured_image->extension();
 
-                if($featured_image->move($featured_image_path, $featured_image_name))
-                {
-                    $featured_image_name = $featured_image_name;
-                }
+                // if($featured_image->move($featured_image_path, $featured_image_name))
+                // {
+                //     $featured_image_name = $featured_image_name;
+                // }
             }else{
-                $featured_image_name = null;
+                $uploadedFileUrl = null;
             }
 
             $blog = Blog::create([
@@ -90,7 +95,7 @@ class BlogController extends Controller
                 'content' => $request->content,
                 'author' => $request->author,
                 'publication_date' => $request->publication_date,
-                'featured_image' => $featured_image_name,
+                'featured_image' => $uploadedFileUrl,
                 'status' => $request->status ?? 0,
                 'is_featured' => $request->is_featured ?? 0,
                 'created_by' => auth()->user()->id,
@@ -164,22 +169,25 @@ class BlogController extends Controller
 
                 if($request->hasFile('featured_image'))
                 {
+                    $uploadedFileUrl = Cloudinary::upload($request->file('featured_image')->getRealPath(),
+                    [
+                        'folder' => 'blogs',
+                    ])->getSecurePath();
+                    // $featured_image_delete_path = public_path("uploads/blogs/" . $blog->featured_image);
+                    // if (File::exists($featured_image_delete_path)) {
+                    //     File::delete($featured_image_delete_path);
+                    // }
+                    // $featured_image_path = public_path("uploads/blogs/");
 
-                    $featured_image_delete_path = public_path("uploads/blogs/" . $blog->featured_image);
-                    if (File::exists($featured_image_delete_path)) {
-                        File::delete($featured_image_delete_path);
-                    }
-                    $featured_image_path = public_path("uploads/blogs/");
+                    // $featured_image = $request->file("featured_image");
+                    // $featured_image_name = Str::random(16).'.'.$featured_image->extension();
 
-                    $featured_image = $request->file("featured_image");
-                    $featured_image_name = Str::random(16).'.'.$featured_image->extension();
-
-                    if($featured_image->move($featured_image_path, $featured_image_name))
-                    {
-                        $featured_image_name = $featured_image_name;
-                    }
+                    // if($featured_image->move($featured_image_path, $featured_image_name))
+                    // {
+                    //     $featured_image_name = $featured_image_name;
+                    // }
                 }else{
-                    $featured_image_name = $blog->featured_image;
+                    $uploadedFileUrl = $blog->featured_image;
                 }
 
                 $blog->update([
@@ -190,7 +198,7 @@ class BlogController extends Controller
                     'content' => $request->content,
                     'author' => $request->author,
                     'publication_date' => $request->publication_date,
-                    'featured_image' => $featured_image_name,
+                    'featured_image' => $uploadedFileUrl,
                     'status' => $request->status ?? 0,
                     'is_featured' => $request->is_featured ?? 0,
                     'last_edited_by' => auth()->user()->id,

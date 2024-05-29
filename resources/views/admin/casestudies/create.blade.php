@@ -113,6 +113,13 @@
 
                                 <div class="form-group row">
                                     <div class="col-lg-12">
+                                        <label>Short Description <small class="muted">(200 characters max)</small></label>
+                                        <textarea rows="3" type="text" maxlength="200" class="form-control" name="short_description" placeholder="">{{ old('short_description') }}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-lg-12">
                                         <label>About Section </label>
                                         <textarea type="text" id="about" class="form-control" name="about" placeholder="">{{ old('about') }}</textarea>
                                     </div>
@@ -220,7 +227,7 @@
                                         </label>
 
                                         <label class="form-check form-switch form-check-custom form-check-solid">
-                                            <input class="form-check-input" type="checkbox" value="0" name="is_featured" />
+                                            <input class="form-check-input" type="checkbox" value="1" checked="checked" name="is_featured" />
                                             <span class="form-check-label fw-semibold text-muted">Featured</span>
                                         </label>
                                         <!--end::Switch-->

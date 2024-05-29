@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Validation\ValidationException;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class ServiceController extends Controller
 {
@@ -50,31 +51,39 @@ class ServiceController extends Controller
 
             if($request->hasFile('image'))
             {
-                $bg_image_path = public_path("uploads/services/images");
+                $imageUrl = Cloudinary::upload($request->file('image')->getRealPath(),
+                [
+                    'folder' => 'services/images',
+                ])->getSecurePath();
+                // $bg_image_path = public_path("uploads/services/images");
 
-                $bg_image = $request->file("image");
-                $bg_image_name = Str::random(16).'.'.$bg_image->extension();
+                // $bg_image = $request->file("image");
+                // $bg_image_name = Str::random(16).'.'.$bg_image->extension();
 
-                if($bg_image->move($bg_image_path, $bg_image_name))
-                {
-                    $bg_image_name = $bg_image_name;
-                }
+                // if($bg_image->move($bg_image_path, $bg_image_name))
+                // {
+                //     $bg_image_name = $bg_image_name;
+                // }
             }else{
-                $bg_image_name = null;
+                $imageUrl = null;
             }
             if($request->hasFile('icon'))
             {
-                $icon_path = public_path("uploads/services/icons");
+                $iconUrl = Cloudinary::upload($request->file('icon')->getRealPath(),
+                [
+                    'folder' => 'services/icons',
+                ])->getSecurePath();
+                // $icon_path = public_path("uploads/services/icons");
 
-                $icon = $request->file("icon");
-                $icon_name = Str::random(16).'.'.$icon->extension();
+                // $icon = $request->file("icon");
+                // $icon_name = Str::random(16).'.'.$icon->extension();
 
-                if($icon->move($icon_path, $icon_name))
-                {
-                    $icon_name = $icon_name;
-                }
+                // if($icon->move($icon_path, $icon_name))
+                // {
+                //     $icon_name = $icon_name;
+                // }
             }else{
-                $icon_name = null;
+                $iconUrl = null;
             }
             
             $service = Service::create([
@@ -82,8 +91,8 @@ class ServiceController extends Controller
                 'description' => $request->description,
                 'slug' => $slug,
                 'status' => $request->status ?? 0,
-                'image' => $bg_image_name,
-                'icon' => $icon_name,
+                'image' => $imageUrl,
+                'icon' => $iconUrl,
                 // 'created_by' => auth()->user()->id,
             ]);
 
@@ -127,42 +136,48 @@ class ServiceController extends Controller
 
             if($request->hasFile('image'))
             {
+                $imageUrl = Cloudinary::upload($request->file('image')->getRealPath(),
+                [
+                    'folder' => 'services/images',
+                ])->getSecurePath();
+                // $image_delete_path = public_path("uploads/services/images" . $service->image);
+                // if (File::exists($image_delete_path)) {
+                //     File::delete($image_delete_path);
+                // }
+                // $bg_image_path = public_path("uploads/services/images");
 
-                $image_delete_path = public_path("uploads/services/images" . $service->image);
-                if (File::exists($image_delete_path)) {
-                    File::delete($image_delete_path);
-                }
-                $bg_image_path = public_path("uploads/services/images");
+                // $bg_image = $request->file("image");
+                // $bg_image_name = Str::random(16).'.'.$bg_image->extension();
 
-                $bg_image = $request->file("image");
-                $bg_image_name = Str::random(16).'.'.$bg_image->extension();
-
-                if($bg_image->move($bg_image_path, $bg_image_name))
-                {
-                    $bg_image_name = $bg_image_name;
-                }
+                // if($bg_image->move($bg_image_path, $bg_image_name))
+                // {
+                //     $bg_image_name = $bg_image_name;
+                // }
             }else{
-                $bg_image_name = $service->image;
+                $imageUrl = $service->image;
             }
 
             if($request->hasFile('icon'))
             {
+                $iconUrl = Cloudinary::upload($request->file('icon')->getRealPath(),
+                [
+                    'folder' => 'services/images',
+                ])->getSecurePath();
+                // $image_delete_path = public_path("uploads/services/icons" . $service->icon);
+                // if (File::exists($image_delete_path)) {
+                //     File::delete($image_delete_path);
+                // }
+                // $icon_path = public_path("uploads/services/icons");
 
-                $image_delete_path = public_path("uploads/services/icons" . $service->icon);
-                if (File::exists($image_delete_path)) {
-                    File::delete($image_delete_path);
-                }
-                $icon_path = public_path("uploads/services/icons");
+                // $icon = $request->file("icon");
+                // $icon_name = Str::random(16).'.'.$icon->extension();
 
-                $icon = $request->file("icon");
-                $icon_name = Str::random(16).'.'.$icon->extension();
-
-                if($icon->move($icon_path, $icon_name))
-                {
-                    $icon_name = $icon_name;
-                }
+                // if($icon->move($icon_path, $icon_name))
+                // {
+                //     $icon_name = $icon_name;
+                // }
             }else{
-                $icon_name = $service->icon;
+                $iconUrl = $service->icon;
             }
 
             // dd($service);
@@ -172,8 +187,8 @@ class ServiceController extends Controller
                 'description' => $request->description,
                 'slug' => $slug,
                 'status' => $request->status ?? 0,
-                'image' => $bg_image_name,
-                'icon' => $icon_name,
+                'image' => $imageUrl,
+                'icon' => $iconUrl,
                 // 'last_edited_by' => auth()->user()->id,
             ]);
 

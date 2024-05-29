@@ -7,13 +7,14 @@ use App\Models\Brand;
 use App\Models\Project;
 use App\Models\Service;
 use App\Models\Location;
+use App\Models\Projectdata;
 use Illuminate\Support\Str;
 use App\Models\ProjectImage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Projectdata;
 use Illuminate\Support\Facades\File;
 use Illuminate\Validation\ValidationException;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class ProjectController extends Controller
 {
@@ -82,17 +83,21 @@ class ProjectController extends Controller
 
                 if($request->hasFile('thumb_image'))
                 {
-                    $thumb_image_path = public_path("uploads/projects/");
+                    $uploadedFileUrl = Cloudinary::upload($request->file('thumb_image')->getRealPath(),
+                    [
+                        'folder' => 'projects',
+                    ])->getSecurePath();
+                    // $thumb_image_path = public_path("uploads/projects/");
 
-                    $thumb_image = $request->file("thumb_image");
-                    $thumb_image_name = Str::random(16).'.'.$thumb_image->extension();
+                    // $thumb_image = $request->file("thumb_image");
+                    // $thumb_image_name = Str::random(16).'.'.$thumb_image->extension();
 
-                    if($thumb_image->move($thumb_image_path, $thumb_image_name))
-                    {
-                        $thumb_image_name = $thumb_image_name;
-                    }
+                    // if($thumb_image->move($thumb_image_path, $thumb_image_name))
+                    // {
+                    //     $thumb_image_name = $thumb_image_name;
+                    // }
                 }else{
-                    $thumb_image_name = null;  
+                    $uploadedFileUrl = null;  
                 }
 
                 $project = Project::create([
@@ -106,7 +111,7 @@ class ProjectController extends Controller
                     'description' => $request->description,
                     'status' => $request->status ?? 0,
                     'is_featured' => $request->is_featured ?? 0,
-                    'thumb_image' => $thumb_image_name,
+                    'thumb_image' => $uploadedFileUrl,
                     'created_by' => auth()->user()->id,
                 ]);
                 // dd($project);
@@ -238,17 +243,21 @@ class ProjectController extends Controller
 
                 if($request->hasFile('thumb_image'))
                 {
-                    $thumb_image_path = public_path("uploads/projects/");
+                    $uploadedFileUrl = Cloudinary::upload($request->file('thumb_image')->getRealPath(),
+                    [
+                        'folder' => 'projects',
+                    ])->getSecurePath();
+                    // $thumb_image_path = public_path("uploads/projects/");
 
-                    $thumb_image = $request->file("thumb_image");
-                    $thumb_image_name = Str::random(16).'.'.$thumb_image->extension();
+                    // $thumb_image = $request->file("thumb_image");
+                    // $thumb_image_name = Str::random(16).'.'.$thumb_image->extension();
 
-                    if($thumb_image->move($thumb_image_path, $thumb_image_name))
-                    {
-                        $thumb_image_name = $thumb_image_name;
-                    }
+                    // if($thumb_image->move($thumb_image_path, $thumb_image_name))
+                    // {
+                    //     $thumb_image_name = $thumb_image_name;
+                    // }
                 }else{
-                    $thumb_image_name = $project->thumb_image;
+                    $uploadedFileUrl = $project->thumb_image;
                 }
 
                 $project->update([
@@ -262,7 +271,7 @@ class ProjectController extends Controller
                     'description' => $request->description,
                     'status' => $request->status ?? 0,
                     'is_featured' => $request->is_featured ?? 0,
-                    'thumb_image' => $thumb_image_name,
+                    'thumb_image' => $uploadedFileUrl,
                     'last_edited_by' => auth()->user()->id,
                 ]);
 

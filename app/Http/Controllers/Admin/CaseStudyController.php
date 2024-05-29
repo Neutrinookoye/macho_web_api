@@ -13,6 +13,7 @@ use App\Models\CaseStudyImage;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Validation\ValidationException;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class CaseStudyController extends Controller
 {
@@ -48,6 +49,7 @@ class CaseStudyController extends Controller
                     'brand' => 'bail|required|string',
                     'location' => 'bail|required|string',
                     'year' => 'bail|required|integer',
+                    'short_description' => 'bail|required|string',
                     'about' => 'bail|required',
                     'brief' => 'bail|required',
                     'challenge' => 'bail|required',
@@ -83,51 +85,67 @@ class CaseStudyController extends Controller
 
                 if($request->hasFile('first_background_image'))
                 {
-                    $background_image_path = public_path("uploads/case_study/backgrounds");
+                    $firstBackgroundImageUrl = Cloudinary::upload($request->file('first_background_image')->getRealPath(),
+                    [
+                        'folder' => 'case_study/backgrounds',
+                    ])->getSecurePath();
+                    // $background_image_path = public_path("uploads/case_study/backgrounds");
 
-                    $first_background = $request->file("first_background_image");
-                    $first_background_name = Str::random(16).'.'.$first_background->extension();
+                    // $first_background = $request->file("first_background_image");
+                    // $first_background_name = Str::random(16).'.'.$first_background->extension();
 
-                    if($first_background->move($background_image_path, $first_background_name))
-                    {
-                        $first_background = $first_background_name;
-                    }
+                    // if($first_background->move($background_image_path, $first_background_name))
+                    // {
+                    //     $first_background = $first_background_name;
+                    // }
                 }else{
-                    $first_background = null;
+                    $firstBackgroundImageUrl = null;
                 }   
 
                 if($request->hasFile('second_background_image'))
                 {
-                    $background_image_path = public_path("uploads/case_study/backgrounds");
+                    $secondBackgroundImageUrl = Cloudinary::upload($request->file('second_background_image')->getRealPath(),
+                    [
+                        'folder' => 'case_study/backgrounds',
+                    ])->getSecurePath();
+                    // $background_image_path = public_path("uploads/case_study/backgrounds");
 
-                    $second_background = $request->file("second_background_image");
-                    $second_background_name = Str::random(16).'.'.$second_background->extension();
+                    // $second_background = $request->file("second_background_image");
+                    // $second_background_name = Str::random(16).'.'.$second_background->extension();
 
-                    if($second_background->move($background_image_path, $second_background_name))
-                    {
-                        $second_background = $second_background_name;
-                    }
+                    // if($second_background->move($background_image_path, $second_background_name))
+                    // {
+                    //     $second_background = $second_background_name;
+                    // }
                 }else{
-                    $second_background = null;
+                    $secondBackgroundImageUrl = null;
                 }
 
                 if($request->hasFile('logo'))
                 {
-                    $logo_path = public_path("uploads/case_study/logos");
+                    $logoUrl = Cloudinary::upload($request->file('logo')->getRealPath(),
+                    [
+                        'folder' => 'case_study/logos',
+                    ])->getSecurePath();
+                    // $logo_path = public_path("uploads/case_study/logos");
 
-                    $logo = $request->file("logo");
-                    $logo_name = Str::random(16).'.'.$logo->extension();
+                    // $logo = $request->file("logo");
+                    // $logo_name = Str::random(16).'.'.$logo->extension();
 
-                    if($logo->move($logo_path, $logo_name))
-                    {
-                        $logo = $logo_name;
-                    }
+                    // if($logo->move($logo_path, $logo_name))
+                    // {
+                    //     $logo = $logo_name;
+                    // }
                 }else{
-                    $logo = null;
+                    $logoUrl = null;
                 }
 
                 if($request->hasFile('document'))
                 {
+                    // $documentUrl = Cloudinary::uploadFile($request->file('document')->getRealPath(), 
+                    // [
+                    //     'folder' => 'case_study/document',
+                    // ])->getSecurePath();
                     $document_path = public_path("uploads/case_study/document");
 
                     $document = $request->file("document");
@@ -151,6 +169,7 @@ class CaseStudyController extends Controller
                     'brand_id' => $request->brand,
                     'location_id' => $request->location,
                     'year' => $request->year,
+                    'short_description' => $request->short_description,
                     'about' => $request->about,
                     'brief' => $request->brief,
                     'challenge' => $request->challenge,
@@ -159,9 +178,9 @@ class CaseStudyController extends Controller
                     'video_url' => $request->video_url,
                     'status' => $request->status ?? 0,
                     'is_featured' => $request->is_featured ?? 0,
-                    'page_bg' => $first_background,
-                    'page_bg2' => $second_background,
-                    'logo' => $logo,
+                    'page_bg' => $firstBackgroundImageUrl,
+                    'page_bg2' => $secondBackgroundImageUrl,
+                    'logo' => $logoUrl,
                     'document' => $document,
                     'created_by' => auth()->user()->id,
                 ]);
@@ -223,6 +242,7 @@ class CaseStudyController extends Controller
                     'brand' => 'bail|required|string',
                     'location' => 'bail|required|string',
                     'year' => 'bail|required|integer',
+                    'short_description' => 'bail|required|string',
                     'about' => 'bail|required',
                     'brief' => 'bail|required',
                     'challenge' => 'bail|required',
@@ -261,47 +281,59 @@ class CaseStudyController extends Controller
 
                 if($request->hasFile('first_background_image'))
                 {
-                    $background_image_path = public_path("uploads/case_study/backgrounds");
+                    $firstBackgroundImageUrl = Cloudinary::upload($request->file('first_background_image')->getRealPath(),
+                    [
+                        'folder' => 'case_study/backgrounds',
+                    ])->getSecurePath();
+                    // $background_image_path = public_path("uploads/case_study/backgrounds");
 
-                    $first_background = $request->file("first_background_image");
-                    $first_background_name = Str::random(16).'.'.$first_background->extension();
+                    // $first_background = $request->file("first_background_image");
+                    // $first_background_name = Str::random(16).'.'.$first_background->extension();
 
-                    if($first_background->move($background_image_path, $first_background_name))
-                    {
-                        $first_background = $first_background_name;
-                    }
+                    // if($first_background->move($background_image_path, $first_background_name))
+                    // {
+                    //     $first_background = $first_background_name;
+                    // }
                 }else{
-                    $first_background = $casestudy->page_bg;
+                    $firstBackgroundImageUrl = $casestudy->page_bg;
                 }
 
                 if($request->hasFile('second_background_image'))
                 {
-                    $background_image_path = public_path("uploads/case_study/backgrounds");
+                    $secondBackgroundImageUrl = Cloudinary::upload($request->file('second_background_image')->getRealPath(),
+                    [
+                        'folder' => 'case_study/backgrounds',
+                    ])->getSecurePath();
+                    // $background_image_path = public_path("uploads/case_study/backgrounds");
 
-                    $second_background = $request->file("second_background_image");
-                    $second_background_name = Str::random(16).'.'.$second_background->extension();
+                    // $second_background = $request->file("second_background_image");
+                    // $second_background_name = Str::random(16).'.'.$second_background->extension();
 
-                    if($second_background->move($background_image_path, $second_background_name))
-                    {
-                        $second_background = $second_background_name;
-                    }
+                    // if($second_background->move($background_image_path, $second_background_name))
+                    // {
+                    //     $second_background = $second_background_name;
+                    // }
                 }else{
-                    $second_background = $casestudy->page_bg2;
+                    $secondBackgroundImageUrl = $casestudy->page_bg2;
                 }
 
                 if($request->hasFile('logo'))
                 {
-                    $logo_path = public_path("uploads/case_study/logos");
+                    $logoUrl = Cloudinary::upload($request->file('logo')->getRealPath(),
+                    [
+                        'folder' => 'case_study/logos',
+                    ])->getSecurePath();
+                    // $logo_path = public_path("uploads/case_study/logos");
 
-                    $logo = $request->file("logo");
-                    $logo_name = Str::random(16).'.'.$logo->extension();
+                    // $logo = $request->file("logo");
+                    // $logo_name = Str::random(16).'.'.$logo->extension();
 
-                    if($logo->move($logo_path, $logo_name))
-                    {
-                        $logo = $logo_name;
-                    }
+                    // if($logo->move($logo_path, $logo_name))
+                    // {
+                    //     $logo = $logo_name;
+                    // }
                 }else{
-                    $logo = $casestudy->logo;
+                    $logoUrl = $casestudy->logo;
                 }
 
                 if($request->hasFile('document'))
@@ -329,6 +361,7 @@ class CaseStudyController extends Controller
                     'brand_id' => $request->brand,
                     'location_id' => $request->location,
                     'year' => $request->year,
+                    'short_description' => $request->short_description,
                     'about' => $request->about,
                     'brief' => $request->brief,
                     'challenge' => $request->challenge,
@@ -337,9 +370,9 @@ class CaseStudyController extends Controller
                     'video_url' => $request->video_url,
                     'status' => $request->status ?? 0,
                     'is_featured' => $request->is_featured ?? 0,
-                    'page_bg' => $first_background,
-                    'page_bg2' => $second_background,
-                    'logo' => $logo,
+                    'page_bg' => $firstBackgroundImageUrl,
+                    'page_bg2' => $secondBackgroundImageUrl,
+                    'logo' => $logoUrl,
                     'document' => $document,
                     'last_edited_by' => auth()->user()->id,
                 ]);

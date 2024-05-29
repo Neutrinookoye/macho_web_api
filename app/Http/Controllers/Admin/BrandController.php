@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Validation\ValidationException;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class BrandController extends Controller
 {
@@ -52,17 +53,21 @@ class BrandController extends Controller
             // dd($request->content);
             if($request->hasFile('brand_image'))
             {
-                $bg_image_path = public_path("uploads/brands/");
+                $uploadedFileUrl = Cloudinary::upload($request->file('brand_image')->getRealPath(),
+                [
+                    'folder' => 'brands',
+                ])->getSecurePath();
+            //     $bg_image_path = public_path("uploads/brands/");
 
-                $bg_image = $request->file("brand_image");
-                $bg_image_name = Str::random(16).'.'.$bg_image->extension();
+            //     $bg_image = $request->file("brand_image");
+            //     $bg_image_name = Str::random(16).'.'.$bg_image->extension();
 
-                if($bg_image->move($bg_image_path, $bg_image_name))
-                {
-                    $bg_image_name = $bg_image_name;
-                }
+            //     if($bg_image->move($bg_image_path, $bg_image_name))
+            //     {
+            //         $bg_image_name = $bg_image_name;
+            //     }
             }else{
-                $bg_image_name = null;
+                $uploadedFileUrl = null;
             }
 
             $brand = Brand::create([
@@ -70,7 +75,7 @@ class BrandController extends Controller
                 'slug' => $slug,
                 'description' => $request->description,
                 'status' => $request->status ?? 0,
-                'brand_image' => $bg_image_name,
+                'brand_image' => $uploadedFileUrl,
                 'created_by' => auth()->user()->id,
             ]);
 
@@ -115,22 +120,25 @@ class BrandController extends Controller
 
             if($request->hasFile('brand_image'))
             {
+                $uploadedFileUrl = Cloudinary::upload($request->file('brand_image')->getRealPath(),
+                [
+                    'folder' => 'brands',
+                ])->getSecurePath();
+                // $image_delete_path = public_path("uploads/brands/" . $brand->bg_image);
+                // if (File::exists($image_delete_path)) {
+                //     File::delete($image_delete_path);
+                // }
+                // $bg_image_path = public_path("uploads/brands/");
 
-                $image_delete_path = public_path("uploads/brands/" . $brand->bg_image);
-                if (File::exists($image_delete_path)) {
-                    File::delete($image_delete_path);
-                }
-                $bg_image_path = public_path("uploads/brands/");
+                // $bg_image = $request->file("brand_image");
+                // $bg_image_name = Str::random(16).'.'.$bg_image->extension();
 
-                $bg_image = $request->file("brand_image");
-                $bg_image_name = Str::random(16).'.'.$bg_image->extension();
-
-                if($bg_image->move($bg_image_path, $bg_image_name))
-                {
-                    $bg_image_name = $bg_image_name;
-                }
+                // if($bg_image->move($bg_image_path, $bg_image_name))
+                // {
+                //     $bg_image_name = $bg_image_name;
+                // }
             }else{
-                $bg_image_name = $brand->brand_image;
+                $uploadedFileUrl = $brand->brand_image;
             }
 
             $brand->update([
@@ -138,7 +146,7 @@ class BrandController extends Controller
                 'slug' => $slug,
                 'description' => $request->description,
                 'status' => $request->status ?? 0,
-                'brand_image' => $bg_image_name,
+                'brand_image' => $uploadedFileUrl,
                 'last_edited_by' => auth()->user()->id,
             ]);
 

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Validation\ValidationException;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class AwardController extends Controller
 {
@@ -42,7 +43,7 @@ class AwardController extends Controller
             // dd($request);
                 $this->validate($request, [
                 'name' => 'bail|required|string',
-                'description' => 'bail|string',
+                'description' => 'bail|nullable|string',
                 'category' => 'bail|integer|string',
                 'year' => 'bail|required|string',
                 'issuer' => 'bail|required|string',
@@ -67,17 +68,21 @@ class AwardController extends Controller
 
             if($request->hasFile('award_image'))
             {
-                $award_image_path = public_path("uploads/awards/");
+                $uploadedFileUrl = Cloudinary::upload($request->file('award_image')->getRealPath(),
+                [
+                    'folder' => 'awards',
+                ])->getSecurePath();
+                // $award_image_path = public_path("uploads/awards/");
 
-                $award_image = $request->file("award_image");
-                $award_image_name = Str::random(16).'.'.$award_image->extension();
+                // $award_image = $request->file("award_image");
+                // $award_image_name = Str::random(16).'.'.$award_image->extension();
 
-                if($award_image->move($award_image_path, $award_image_name))
-                {
-                    $award_image_name = $award_image_name;
-                }
+                // if($award_image->move($award_image_path, $award_image_name))
+                // {
+                //     $award_image_name = $award_image_name;
+                // }
             }else{
-                $award_image_name = null;
+                $uploadedFileUrl = null;
             }
 
             $award = Award::create([
@@ -87,7 +92,7 @@ class AwardController extends Controller
                 'category_id' => $request->category,
                 'year' => $request->year,
                 'issuer' => $request->issuer,
-                'image' => $award_image_name,
+                'image' => $uploadedFileUrl,
                 'status' => $request->status ?? 0,
                 'is_featured' => $request->is_featured ?? 0,
                 'created_by' => auth()->user()->id,
@@ -119,7 +124,7 @@ class AwardController extends Controller
                 // dd($request);
                 $this->validate($request, [
                     'name' => 'bail|required|string',
-                    'description' => 'bail|string',
+                    'description' => 'bail|nullable|string',
                     'category' => 'bail|integer|string',
                     'year' => 'bail|required|string',
                     'issuer' => 'bail|required|string',
@@ -148,22 +153,25 @@ class AwardController extends Controller
 
                 if($request->hasFile('award_image'))
                 {
+                    $uploadedFileUrl = Cloudinary::upload($request->file('award_image')->getRealPath(),
+                    [
+                        'folder' => 'awards',
+                    ])->getSecurePath();
+                    // $award_image_delete_path = public_path("uploads/awards/" . $award->award_image);
+                    // if (File::exists($award_image_delete_path)) {
+                    //     File::delete($award_image_delete_path);
+                    // }
+                    // $award_image_path = public_path("uploads/awards/");
 
-                    $award_image_delete_path = public_path("uploads/awards/" . $award->award_image);
-                    if (File::exists($award_image_delete_path)) {
-                        File::delete($award_image_delete_path);
-                    }
-                    $award_image_path = public_path("uploads/awards/");
+                    // $award_image = $request->file("award_image");
+                    // $award_image_name = Str::random(16).'.'.$award_image->extension();
 
-                    $award_image = $request->file("award_image");
-                    $award_image_name = Str::random(16).'.'.$award_image->extension();
-
-                    if($award_image->move($award_image_path, $award_image_name))
-                    {
-                        $award_image_name = $award_image_name;
-                    }
+                    // if($award_image->move($award_image_path, $award_image_name))
+                    // {
+                    //     $award_image_name = $award_image_name;
+                    // }
                 }else{
-                    $award_image_name = $award->image;
+                    $uploadedFileUrl = $award->image;
                 }
 
                 $award->update([
@@ -173,7 +181,7 @@ class AwardController extends Controller
                     'category_id' => $request->category,
                     'year' => $request->year,
                     'issuer' => $request->issuer,
-                    'image' => $award_image_name,
+                    'image' => $uploadedFileUrl,
                     'status' => $request->status ?? 0,
                     'is_featured' => $request->is_featured ?? 0,
                     'last_edited_by' => auth()->user()->id,

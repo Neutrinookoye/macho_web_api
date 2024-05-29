@@ -74,7 +74,8 @@
                                             {{ $cnt++ }}
                                         </td>
                                         <td>
-                                            <img src="{{ asset('uploads/brands') }}/{{ $brand->brand_image }}" style="width: 75px; height: 42px" alt="Icon">
+                                            {{-- <img src="{{ asset('uploads/brands') }}/{{ $brand->brand_image }}" style="width: 75px; height: 42px" alt="Icon"> --}}
+                                            <img src="{{ $brand->brand_image }}" style="width: 75px; height: 42px" alt="Icon"></img>
                                         </td>
                                         <td>
                                             <div>
@@ -153,8 +154,8 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>Description <span class="text-danger">*</span></label>
-                                            <textarea type="text" name="description" class="form-control" required="required">{{ $brand->description }}</textarea>
+                                            <label>Description</label>
+                                            <textarea type="text" name="description" class="form-control">{{ $brand->description }}</textarea>
                                         </div>
                                     </div>
                                 </div>

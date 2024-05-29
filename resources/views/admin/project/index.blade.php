@@ -56,9 +56,9 @@
                                     <div class="col-md-4 mb-5">
                                         <div class="card-xl-stretch me-md-6">
                                             <a class="d-block overlay" data-fslightbox="lightbox-hot-sales"
-                                                href="{{ asset('uploads/projects') }}/{{ $project->thumb_image }}" target="_blank">
+                                                href="{{ $project->thumb_image }}" target="_blank">
                                                 <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px"
-                                                    style="background-image:url('{{ asset('uploads/projects') }}/{{ $project->thumb_image }}')">
+                                                    style="background-image:url('{{ $project->thumb_image }}')">
                                                 </div>
                                             </a>
 

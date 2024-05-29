@@ -114,6 +114,13 @@
 
                                 <div class="form-group row">
                                     <div class="col-lg-12">
+                                        <label>Short Description <small class="muted">(200 characters max)</small></label>
+                                        <textarea rows="3" type="text" maxlength="200" class="form-control" name="short_description" placeholder="">{{ $casestudy->short_description }}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-lg-12">
                                         <label>About Section </label>
                                         <textarea type="text" id="about" class="form-control" name="about" placeholder="">{{ $casestudy->about }}</textarea>
                                     </div>
@@ -310,10 +317,10 @@
                                 <div class="card-xl-stretch me-md-6">
                                     <!--begin::Overlay-->
                                     <a class="d-block overlay" data-fslightbox="lightbox-hot-sales"
-                                        href="{{ asset('uploads/case_study/backgrounds/') }}/{{ $casestudy->page_bg }}" target="_blank">
+                                        href="{{ $casestudy->page_bg }}" target="_blank">
                                         <!--begin::Image-->
                                         <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px"
-                                            style="background-image:url('{{ asset('uploads/case_study/backgrounds/') }}/{{ $casestudy->page_bg }}')">
+                                            style="background-image:url('{{ $casestudy->page_bg }}')">
                                         </div>
                                         <!--end::Image-->
                                         <!--begin::Action-->
@@ -348,10 +355,10 @@
                                 <div class="card-xl-stretch me-md-6">
                                     <!--begin::Overlay-->
                                     <a class="d-block overlay" data-fslightbox="lightbox-hot-sales"
-                                        href="{{ asset('uploads/case_study/backgrounds/') }}/{{ $casestudy->page_bg2 }}" target="_blank">
+                                        href="{{ $casestudy->page_bg2 }}" target="_blank">
                                         <!--begin::Image-->
                                         <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px"
-                                            style="background-image:url('{{ asset('uploads/case_study/backgrounds/') }}/{{ $casestudy->page_bg2 }}')">
+                                            style="background-image:url('{{ $casestudy->page_bg2 }}')">
                                         </div>
                                         <!--end::Image-->
                                         <!--begin::Action-->
