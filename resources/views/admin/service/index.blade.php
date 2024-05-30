@@ -153,7 +153,7 @@
 
                                 <div class="form-group row">
                                     <div class="col-lg-12">
-                                        <label>Service Icon <span class="text-danger"><b>*</b></span></span> <span class="font-weight-bolder"></span></label>
+                                        <label>Service Icon <span class="text-danger"><b>*</b></span> <small>(71px X 71px)</small> <span class="font-weight-bolder"></span></label>
                                         <div class="input-group">
                                             <input type="file" class="form-control form-control-solid" placeholder="" name="icon" accept="image/png,image/gif,image/jpeg,image/jpg" value="{{ old('icon') }}">
                                             <div class="input-group-append">
@@ -167,7 +167,7 @@
 
                                 <div class="form-group row">
                                     <div class="col-lg-12">
-                                        <label>Service Image <span class="text-danger"><b>*</b></span></span> <span class="font-weight-bolder"></span></label>
+                                        <label>Service Image <span class="text-danger"><b>*</b></span> <small>(625px X 414px)</small> <span class="font-weight-bolder"></span></label>
                                         <div class="input-group">
                                             <input type="file" class="form-control form-control-solid" placeholder="" name="image" accept="image/png,image/gif,image/jpeg,image/jpg" value="{{ old('image') }}">
                                             <div class="input-group-append">
@@ -252,7 +252,7 @@
 
                             <div class="form-group row">
                                 <div class="col-lg-12">
-                                    <label>Service Icon <span class="text-danger"><b>*</b></span></span> <span class="font-weight-bolder"></span></label>
+                                    <label>Service Icon <span class="text-danger"><b>*</b></span> <small>(71px X 71px)</small> <span class="font-weight-bolder"></span></label>
                                     <div class="input-group">
                                         <input type="file" class="form-control form-control-solid" placeholder="" name="icon" accept="image/png,image/gif,image/jpeg,image/jpg" value="{{ old('icon') }}">
                                         <div class="input-group-append">
@@ -266,7 +266,7 @@
 
                             <div class="form-group row">
                                 <div class="col-lg-12">
-                                    <label>Service Image <span class="text-danger"><b>*</b></span></span> <span class="font-weight-bolder"></span></label>
+                                    <label>Service Image <span class="text-danger"><b>*</b></span> <small>(625px X 414px)</small> <span class="font-weight-bolder"></span></label>
                                     <div class="input-group">
                                         <input type="file" class="form-control form-control-solid" placeholder="" name="image" accept="image/png,image/gif,image/jpeg,image/jpg" value="{{ old('image') }}">
                                         <div class="input-group-append">

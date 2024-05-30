@@ -65,7 +65,7 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <label>Caption <span class="text-danger"><b>*</b></span></label>
-                                        <input type="text" class="form-control" name="caption" placeholder="Case Study Caption" value="{{ $casestudy->caption }}" />
+                                        <input type="text" class="form-control" maxlength="40" name="caption" placeholder="Case Study Caption" value="{{ $casestudy->caption }}" />
                                     </div>
                                     <div class="col-lg-2">
                                         <label>Project Year <span class="text-danger"><b>*</b></span></label>
@@ -114,14 +114,14 @@
 
                                 <div class="form-group row">
                                     <div class="col-lg-12">
-                                        <label>Short Description <small class="muted">(200 characters max)</small></label>
+                                        <label>Short Description <span class="text-danger"><b>*</b></span> <small class="muted">(200 characters max)</small></label>
                                         <textarea rows="3" type="text" maxlength="200" class="form-control" name="short_description" placeholder="">{{ $casestudy->short_description }}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <div class="col-lg-12">
-                                        <label>About Section </label>
+                                        <label>About Section <span class="text-danger"><b>*</b></span></label>
                                         <textarea type="text" id="about" class="form-control" name="about" placeholder="">{{ $casestudy->about }}</textarea>
                                     </div>
                                 </div>
@@ -132,7 +132,7 @@
                                         <textarea type="text" id="brief" class="form-control" name="brief" placeholder="">{{ $casestudy->brief }}</textarea>
                                     </div>
                                     <div class="col-lg-6">
-                                        <label>Challenge Section </label>
+                                        <label>Challenge Section <span class="text-danger"><b>*</b></span></label>
                                         <textarea type="text" id="challenge" class="form-control" name="challenge" placeholder="">{{ $casestudy->challenge }}</textarea>
                                     </div>
                                 </div>
@@ -150,13 +150,13 @@
 
                                 <div class="form-group row pt-3">
                                     <div class="col-lg-6">
-                                        <label>First Background Image <span class="text-danger"><b>*</b></span></span> <span class="font-weight-bolder"></span></label>
+                                        <label>Banner Image <span class="text-danger"><b>*</b></span></span> <small>(1440px x 580px)</small> <span class="font-weight-bolder"></span></label>
                                         <div class="input-group">
                                             <input type="file" class="form-control form-control-solid" placeholder="" name="first_background_image" accept="image/png,image/jpeg,image/jpg" value="{{ old('first_background_image') }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <label>Video Image <span class="text-danger"><b>*</b></span></span> <span class="font-weight-bolder"></span></label>
+                                        <label>Video Image <span class="text-danger"><b>*</b></span></span> <small>(1279px x 628px)</small> <span class="font-weight-bolder"></span></label>
                                         <div class="input-group">
                                             <input type="file" class="form-control form-control-solid" placeholder="" name="second_background_image" accept="image/png,image/jpeg,image/jpg" value="{{ old('second_background_image') }}">
                                         </div>
@@ -197,7 +197,7 @@
                                     <div class="col-md-12 mb-2 mt-5 cntinputs add-more-inputs1">
                                         <div class="d-flex flex-column mb-7 fv-row">
                                             <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
-                                                <span class="required">Image 1 </span>&emsp;&emsp;
+                                                <span class="required">Image 1 <small>(627px x 417px)</small> </span>&emsp;&emsp;
                                             </label>
                                             <div class="row">
                                                 <div class="col-md-10">
@@ -526,7 +526,7 @@
             <div class="col-md-12 mb-2 mt-5 cntinputs add-more-inputs${cnt}">
                 <div class="d-flex flex-column mb-7 fv-row">
                     <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
-                        <span class="required"> Image ${cnt}</span>
+                        <span class="required"> Image ${cnt} <small>(627px x 417px)</small></span>
                     </label>
                     <div class="row">
                         <div class="col-md-10">

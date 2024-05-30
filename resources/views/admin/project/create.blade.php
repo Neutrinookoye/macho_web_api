@@ -113,7 +113,7 @@
 
                                 <div class="form-group row pt-3">
                                     <div class="col-lg-6">
-                                        <label>Thumb Image <span class="text-danger"><b>*</b></span></span> <span class="font-weight-bolder"></span></label>
+                                        <label>Thumb Image <span class="text-danger"><b>*</b></span> <small>(1440px x 580px)</small> <span class="font-weight-bolder"></span></label>
                                         <div class="input-group">
                                             <input type="file" class="form-control form-control-solid" placeholder="" name="thumb_image" accept="image/png,image/gif,image/jpeg,image/jpg" value="{{ old('thumb_image') }}">
                                         </div>
@@ -162,7 +162,7 @@
                                     <div class="col-md-12 mb-2 mt-5 cntinputs add-more-inputs1">
                                         <div class="d-flex flex-column mb-7 fv-row">
                                             <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
-                                                <span class="required">Image 1 </span>&emsp;&emsp;
+                                                <span class="required">Image 1 <small>(627px x 417px)</small></span>&emsp;&emsp;
                                             </label>
                                             <div class="row">
                                                 <div class="col-md-10">
@@ -275,7 +275,7 @@
             <div class="col-md-12 mb-2 mt-5 cntinputs add-more-inputs${cnt}">
                 <div class="d-flex flex-column mb-7 fv-row">
                     <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
-                        <span class="required"> Image ${cnt}</span>
+                        <span class="required"> Image ${cnt} <small>(627px x 417px)</small></span>
                     </label>
                     <div class="row">
                         <div class="col-md-10">

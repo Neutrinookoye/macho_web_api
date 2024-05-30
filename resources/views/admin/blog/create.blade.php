@@ -79,18 +79,18 @@
                                             </select>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label>Author<span class="text-danger"><b>*</b></span></label>
+                                            <label>Author <span class="text-danger"><b>*</b></span></label>
                                             <input type="text" class="form-control" name="author" placeholder="" value="{{ old('author') }}" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <div class="col-lg-6">
-                                            <label>Publication Date<span class="text-danger"><b>*</b></span></label>
+                                            <label>Publication Date <span class="text-danger"><b>*</b></span></label>
                                             <input type="date" class="form-control" name="publication_date" placeholder="" value="{{ old('publication_date') }}" />
                                         </div>
                                         <div class="col-lg-6">
-                                            <label>Featured Image<span class="text-danger"><b>*</b></span></label>
+                                            <label>Featured Image <span class="text-danger"><b>*</b></span> <small>(1280px x 615px)</small> </label>
                                             <div class="input-group">
                                                 <input type="file" class="form-control form-control-solid" placeholder="" name="featured_image" accept=".png, .jpg, .jpeg .gif" value="{{ old('featured_image') }}">
                                             </div>
@@ -99,7 +99,7 @@
 
                                     <div class="form-group row">
                                         <div class="col-lg-12">
-                                            <label>Tags (comma-separated)<span class="text-danger"><b>*</b></span></label>
+                                            <label>Tags (comma-separated) <span class="text-danger"><b>*</b></span></label>
                                             <input type="text" class="form-control" name="tags" placeholder="Ideation,Surveys,Merchandising etc" value="{{ old('tags') }}" />
                                         </div>
                                     </div>

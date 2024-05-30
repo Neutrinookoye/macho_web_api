@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CaseStudyController;
 use App\Http\Controllers\Admin\LocationController;
+use App\Http\Controllers\Admin\NewsletterController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\PublicationController;
 
@@ -81,6 +82,14 @@ Route::group(['middleware' => 'admin_auth'], function()
         {
             Route::get('/', 'index')->name('admin.lead.index');
             Route::post('export-leads', 'exportLead')->name('admin.leads.export');
+        });
+    });
+
+    Route::controller(NewsletterController::class)->group(function () {
+        Route::group(["prefix" => "newsletters"], function ()
+        {
+            Route::get('/', 'index')->name('admin.newsletter.index');
+            Route::post('export-newsletters', 'exportNewsletter')->name('admin.newsletter.export');
         });
     });
 

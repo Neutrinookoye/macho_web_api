@@ -118,6 +118,18 @@
                 </li>
             @endif
 
+            @if (checkPermissions(['view_leads']))
+
+                <li class="menu-item @if(in_array(Route::currentRouteName(), ['admin.users.admins'])) menu-item-active @endif" aria-haspopup="true">
+                    <a href="{{ route('admin.newsletter.index') }}" class="menu-link">
+                        <span class="svg-icon menu-icon">
+                            <i class="fa-solid fa-address-book"></i>
+                        </span>
+                        <span class="menu-text">Newsletter Emails</span>
+                    </a>
+                </li>
+            @endif
+
             @if (checkPermissions(['view_job_applications']))
 
                 <li class="menu-section">

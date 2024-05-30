@@ -80,18 +80,18 @@
                                             </select>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label>Author<span class="text-danger"><b>*</b></span></label>
+                                            <label>Author <span class="text-danger"><b>*</b></span></label>
                                             <input type="text" class="form-control" name="author" placeholder="" value="{{ $blog->author }}" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <div class="col-lg-6">
-                                            <label>Publication Date<span class="text-danger"><b>*</b></span></label>
+                                            <label>Publication Date <span class="text-danger"><b>*</b></span></label>
                                             <input type="date" class="form-control" name="publication_date" placeholder="" value="{{ $blog->publication_date }}" />
                                         </div>
                                         <div class="col-lg-6">
-                                            <label>Featured Image</label>
+                                            <label>Featured Image <small>(1280px x 615px)</small></label>
                                             <div class="input-group">
                                                 <input type="file" class="form-control form-control-solid" placeholder="" name="featured_image" accept=".png, .jpg, .jpeg .gif" value="{{ old('featured_image') }}">
                                             </div>

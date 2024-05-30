@@ -87,11 +87,11 @@
 
                                     <div class="form-group row">
                                         <div class="col-lg-6">
-                                            <label>Issuer<span class="text-danger"><b>*</b></span></label>
+                                            <label>Issuer <span class="text-danger"><b>*</b></span></label>
                                             <input type="text" class="form-control" name="issuer" placeholder="" value="{{ $award->issuer }}" />
                                         </div>
                                         <div class="col-lg-6">
-                                            <label>Award Image</label>
+                                            <label>Award Image <small>(222px x 220px)</small></label>
                                             <div class="input-group">
                                                 <input type="file" class="form-control form-control-solid" placeholder="" name="award_image" accept=".png, .jpg, .jpeg .gif" value="{{ old('award_image') }}">
                                             </div>
