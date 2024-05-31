@@ -43,13 +43,13 @@ class ProjectsController extends Controller
 
             return response()->json([
                 'data' => [
-                    'projects' => $projects->items(),
-                    'meta' => [
-                        'current_page' => $projects->currentPage(),
-                        'last_page' => $projects->lastPage(),
-                        'per_page' => $projects->perPage(),
-                        'total' => $projects->total(),
-                    ]
+                    'projects' => $projects,
+                    // 'meta' => [
+                    //     'current_page' => $projects->currentPage(),
+                    //     'last_page' => $projects->lastPage(),
+                    //     'per_page' => $projects->perPage(),
+                    //     'total' => $projects->total(),
+                    // ]
                 ]
             ], 200);
 

@@ -22,13 +22,13 @@ class BlogController extends Controller
                 ->paginate(10);
 
             return response()->json([
-                'data' => $blogs->items(),
-                'meta' => [
-                    'current_page' => $blogs->currentPage(),
-                    'last_page' => $blogs->lastPage(),
-                    'per_page' => $blogs->perPage(),
-                    'total' => $blogs->total(),
-                ]
+                'data' => $blogs,
+                // 'meta' => [
+                //     'current_page' => $blogs->currentPage(),
+                //     'last_page' => $blogs->lastPage(),
+                //     'per_page' => $blogs->perPage(),
+                //     'total' => $blogs->total(),
+                // ]
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
