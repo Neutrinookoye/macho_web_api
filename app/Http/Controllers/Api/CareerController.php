@@ -12,15 +12,28 @@ use Spatie\QueryBuilder\QueryBuilder;
 class CareerController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
         try{
 
-            $openings = QueryBuilder::for(Opening::class)
-                ->allowedIncludes(['location'])
+            $query = QueryBuilder::for(Opening::class)
+                ->allowedIncludes(['location', 'department'])
                 ->allowedFilters(['title', 'role', 'location.slug'])
-                ->where('status', 1)
-                ->with(['location'])
+                ->where('status', 1);
+
+                if ($request->has('location')) {
+                    $query->whereHas('location', function ($q) use ($request) {
+                        $q->where('name', $request->input('location'));
+                    });
+                }
+
+                if ($request->has('department')) {
+                    $query->whereHas('department', function ($q) use ($request) {
+                        $q->where('name', $request->input('department'));
+                    });
+                }
+                 $openings = $query
+                ->with(['location', 'department'])
                 ->orderBy('created_at', 'DESC')
                 ->paginate(10);
 
@@ -75,11 +88,13 @@ class CareerController extends Controller
             }
 
             $validated = $request->validate([
-                'full_name' => 'bail|required|string',
+                'first_name' => 'bail|required|string',
+                'last_name' => 'bail|required|string',
                 'email' => 'bail|required|email|string',
                 'phone' => 'bail|required|numeric',
                 'cv' => 'bail|required',
-                'cover_letter' => 'bail|required',
+                'cover_letter' => 'bail|nullable',
+                'location' => 'bail|required|string',
             ]);
 
             if($request->hasFile('cv'))
@@ -114,11 +129,13 @@ class CareerController extends Controller
             
             $apply = Application::create([
                 'opening_id' => $id,
-                'full_name' => $validated['full_name'],
+                'first_name' => $validated['first_name'],
+                'last_name' => $validated['last_name'],
                 'email' => $validated['email'],
                 'phone' => $validated['phone'],
                 'cv' => $cv_file_name,
                 'cover_letter' => $cover_letter_file_name,
+                'location' => $validated['location'],
             ]);
 
             return response()->json([

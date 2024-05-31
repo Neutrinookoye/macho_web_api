@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\BrandsController;
 use App\Http\Controllers\Api\CareerController;
 use App\Http\Controllers\Api\CaseStudyController;
 use App\Http\Controllers\Api\CategoryController as ApiCategoryController;
+use App\Http\Controllers\Api\DepartmentController;
 use App\Http\Controllers\Api\LeadController as ApiLeadController;
 use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\NewsletterController;
@@ -50,6 +51,13 @@ Route::middleware('throttle:api')->group(function () {
         Route::group(["prefix" => "newsletters"], function ()
         {
             Route::post('/', 'submit');
+        });
+    });
+
+    Route::controller(DepartmentController::class)->group(function () {
+        Route::group(["prefix" => "departments"], function ()
+        {
+            Route::get('/', 'index');
         });
     });
 

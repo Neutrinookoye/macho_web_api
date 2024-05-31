@@ -49,7 +49,13 @@ class CaseStudyController extends Controller
 
             return response()->json([
                 'data' => [
-                    'caseStudy' => $caseStudy,
+                    'caseStudy' => $caseStudy->items(),
+                    'meta' => [
+                        'current_page' => $caseStudy->currentPage(),
+                        'last_page' => $caseStudy->lastPage(),
+                        'per_page' => $caseStudy->perPage(),
+                        'total' => $caseStudy->total(),
+                    ]
                 ]
             ], 200);
 

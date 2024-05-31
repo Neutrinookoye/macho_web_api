@@ -84,7 +84,7 @@
                                         <td>
                                             <div>
                                                 <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
-                                                    {{ $opening->department }}
+                                                    {{ $opening->department->name }}
                                                 </span>
                                             </div>
                                         </td>

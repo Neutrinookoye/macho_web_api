@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Application;
+use App\Models\Department;
 use App\Models\Location;
 use Illuminate\Validation\ValidationException;
 
@@ -21,6 +22,7 @@ class CareerController extends Controller
             return redirect()->back()->with('danger', 'Access Forbidden');
         }
         $openings = Opening::orderBy('created_at', 'DESC')->get();
+        // dd($openings);
         return view('admin.career.index', compact('openings'));
     }
 
@@ -48,12 +50,22 @@ class CareerController extends Controller
                     'status' => 'nullable|integer',
                 ]);
 
+                $slug = Str::slug($request->department);
+
+                $department = Department::firstOrCreate(
+                    ['name' => $request->department],
+                    [
+                        'name' => $request->department, 
+                        'slug' => $slug
+                    ]
+                );
+
                 $opening = Opening::create([
                     'title' => $request->title,
                     'description' => $request->description,
                     'role' => $request->role,
                     'location_id' => $request->location,
-                    'department' => $request->department,
+                    'department_id' => $department->id,
                     'experience_level' => $request->experience_level,
                     'education_requirement' => $request->education_requirement,
                     'employment_type' => $request->employment_type,
