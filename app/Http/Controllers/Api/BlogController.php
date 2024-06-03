@@ -23,12 +23,6 @@ class BlogController extends Controller
 
             return response()->json([
                 'data' => $blogs,
-                // 'meta' => [
-                //     'current_page' => $blogs->currentPage(),
-                //     'last_page' => $blogs->lastPage(),
-                //     'per_page' => $blogs->perPage(),
-                //     'total' => $blogs->total(),
-                // ]
             ], 200);
         } catch (\Exception $e) {
             return response()->json([

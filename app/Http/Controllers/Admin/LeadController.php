@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Models\Lead;
 use App\Exports\ExportLead;
 use Illuminate\Http\Request;
@@ -69,8 +70,11 @@ class LeadController extends Controller
                     'end_date' => 'required|date|after_or_equal:start_date',
                 ]);
 
-                $startDate = $request->start_date;
-                $endDate = $request->end_date;
+                // $startDate = $request->start_date;
+                // $endDate = $request->end_date;
+
+                $startDate = Carbon::parse($request->start_date)->startOfDay();
+                $endDate = Carbon::parse($request->end_date)->endOfDay();
 
                 $query->whereBetween('created_at', [$startDate, $endDate]);
             }

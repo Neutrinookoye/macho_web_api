@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Exports\NewsLetterExport;
+use Carbon\Carbon;
 use App\Models\Newsletter;
 use Illuminate\Http\Request;
+use App\Exports\NewsLetterExport;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Validation\ValidationException;
@@ -37,13 +38,16 @@ class NewsletterController extends Controller
                     'end_date' => 'required|date|after_or_equal:start_date',
                 ]);
 
-                $startDate = $request->start_date;
-                $endDate = $request->end_date;
+                // $startDate = $request->start_date;
+                // $endDate = $request->end_date;
+
+                $startDate = Carbon::parse($request->start_date)->startOfDay();
+                $endDate = Carbon::parse($request->end_date)->endOfDay();
 
                 $query->whereBetween('created_at', [$startDate, $endDate]);
             }
 
-            $newsletters = $query->orderByDesc('created_at')->get();
+            $newsletters = $query->orderByDesc('created_at', 'desc')->get();
 
             return Excel::download(new NewsLetterExport($newsletters), 'newsletters.xlsx');
         } catch (ValidationException $e) {

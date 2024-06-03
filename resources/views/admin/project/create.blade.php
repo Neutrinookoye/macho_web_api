@@ -116,6 +116,9 @@
                                         <label>Thumb Image <span class="text-danger"><b>*</b></span> <small>(1440px x 580px)</small> <span class="font-weight-bolder"></span></label>
                                         <div class="input-group">
                                             <input type="file" class="form-control form-control-solid" placeholder="" name="thumb_image" accept="image/png,image/gif,image/jpeg,image/jpg" value="{{ old('thumb_image') }}">
+                                            {{-- @error('thumb_image')
+                                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                            @enderror --}}
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -130,17 +133,44 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr class="project-row">
+                                                {{-- <tr class="project-row">
                                                     <td>
-                                                        <input type="text" class="form-control" name="project_data[0][data_name]" placeholder="" />
+                                                        <input type="text" class="form-control" name="project_data[0][data_name]" placeholder="" value="{{ old('project_data.0.data_name') }}"/>
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control" name="project_data[0][data_value]" placeholder=""/>
+                                                        <input type="text" class="form-control" name="project_data[0][data_value]" placeholder="" value="{{ old('project_data.0.data_value') }}"/>
                                                     </td>
                                                     <td>
                                                         <button type="button" class="btn btn-danger btn-remove" onclick="removeRow(this)">Remove</button>
                                                     </td>
-                                                </tr>
+                                                </tr> --}}
+                                                @if(old('project_data'))
+                                                    @foreach(old('project_data') as $index => $data)
+                                                        <tr class="project-row">
+                                                            <td>
+                                                                <input type="text" class="form-control" name="project_data[{{ $index }}][data_name]" placeholder="" value="{{ old('project_data.' . $index . '.data_name') }}"/>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control" name="project_data[{{ $index }}][data_value]" placeholder="" value="{{ old('project_data.' . $index . '.data_value') }}"/>
+                                                            </td>
+                                                            <td>
+                                                                <button type="button" class="btn btn-danger btn-remove" onclick="removeRow(this)">Remove</button>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @else
+                                                    <tr class="project-row">
+                                                        <td>
+                                                            <input type="text" class="form-control" name="project_data[0][data_name]" placeholder="" value=""/>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="project_data[0][data_value]" placeholder="" value=""/>
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-danger btn-remove" onclick="removeRow(this)">Remove</button>
+                                                        </td>
+                                                    </tr>
+                                                @endif
                                             </tbody>
                                         </table>
                                     </div>
@@ -302,30 +332,39 @@
 </script>
 
 <script>
-    // Function to add a new row
     function addRow() {
         var table = document.getElementById("projectTable").getElementsByTagName('tbody')[0];
-        var newRow = table.insertRow(table.rows.length);
-        var newRowHtml = `
-            <tr class="project-row">
-                <td>
-                    <input type="text" class="form-control" name="project_data[${table.rows.length - 1}][data_name]" placeholder="" />
-                </td>
-                <td>
-                    <input type="text" class="form-control" name="project_data[${table.rows.length - 1}][data_value]" placeholder=""/>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-danger btn-remove" onclick="removeRow(this)">Remove</button>
-                </td>
-            </tr>`;
-        newRow.innerHTML = newRowHtml;
+        var rowCount = table.rows.length;
+        var newRow = table.insertRow(rowCount);
+        newRow.className = 'project-row';
+        newRow.innerHTML = `
+            <td>
+                <input type="text" class="form-control" name="project_data[${rowCount}][data_name]" placeholder="" />
+            </td>
+            <td>
+                <input type="text" class="form-control" name="project_data[${rowCount}][data_value]" placeholder="" />
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger btn-remove" onclick="removeRow(this)">Remove</button>
+            </td>
+        `;
     }
 
-    // Function to remove a row
     function removeRow(button) {
         var row = button.parentNode.parentNode;
         row.parentNode.removeChild(row);
+        updateRowIndices();
     }
+
+    function updateRowIndices() {
+        var table = document.getElementById("projectTable").getElementsByTagName('tbody')[0];
+        var rows = table.getElementsByClassName('project-row');
+        for (var i = 0; i < rows.length; i++) {
+            rows[i].querySelector('input[name^="project_data"]').setAttribute('name', `project_data[${i}][data_name]`);
+            rows[i].querySelector('input[name^="project_data"]').setAttribute('name', `project_data[${i}][data_value]`);
+        }
+    }
+
 </script>
     
 @endpush
