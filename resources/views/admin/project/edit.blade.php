@@ -219,7 +219,7 @@
                 <!--begin::Header-->
                 <div class="card-header border-0 pt-5">
                     <h3 class="card-title align-items-start flex-column">
-                        <span class="card-label fw-bold fs-3">Projet Images</span>
+                        <span class="card-label fw-bold fs-3">Project Images</span>
                         {{-- <span class="text-muted mt-1 fw-semibold fs-7">Over 500 new products</span> --}}
                        
                     </h3>
@@ -240,10 +240,10 @@
                                 <div class="card-xl-stretch me-md-6">
                                     <!--begin::Overlay-->
                                     <a class="d-block overlay" data-fslightbox="lightbox-hot-sales"
-                                        href="{{ asset('uploads/projects') }}/{{ $image->image }}" target="_blank">
+                                        href="{{ $image->image }}" target="_blank">
                                         <!--begin::Image-->
                                         <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px"
-                                            style="background-image:url('{{ asset('uploads/projects') }}/{{ $image->image }}')">
+                                            style="background-image:url('{{ $image->image }}')">
                                         </div>
                                         <!--end::Image-->
                                         <!--begin::Action-->

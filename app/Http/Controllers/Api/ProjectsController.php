@@ -63,6 +63,39 @@ class ProjectsController extends Controller
         }
     }
 
+    public function allProjects(Request $request)
+    {
+        try{
+            $projects = QueryBuilder::for(Project::class)
+            ->allowedIncludes(['brand', 'service', 'location'])
+            ->where('status', 1)
+            ->with(['brand', 'service', 'location'])
+            ->orderBy('created_at', 'DESC')
+            ->get();
+
+            return response()->json([
+                'data' => [
+                    'projects' => $projects,
+                    // 'meta' => [
+                    //     'current_page' => $projects->currentPage(),
+                    //     'last_page' => $projects->lastPage(),
+                    //     'per_page' => $projects->perPage(),
+                    //     'total' => $projects->total(),
+                    // ]
+                ]
+            ], 200);
+
+
+        } catch (\Exception $e)
+        {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+
+        }
+    }
+
+
     public function show($slug)
     {
         try{

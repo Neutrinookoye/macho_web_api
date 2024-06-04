@@ -80,6 +80,7 @@ Route::middleware('throttle:api')->group(function () {
         Route::group(["prefix" => "brands"], function ()
         {
             Route::get('/', 'index');
+            Route::get('/all', 'allBrands');
             Route::get('/{slug}', 'show');
         });
     });
@@ -88,6 +89,7 @@ Route::middleware('throttle:api')->group(function () {
         Route::group(["prefix" => "projects"], function ()
         {
             Route::get('/', 'index');
+            Route::get('/all', 'allProjects');
             Route::get('/featured-projects', 'featured');
             Route::get('/{slug}', 'show');
         });

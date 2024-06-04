@@ -34,6 +34,30 @@ class BrandsController extends Controller
         }
     }
 
+    public function allBrands()
+    {
+        try{
+
+            $brands = Brand::where('status', 1)
+            ->orderBy('created_at', 'DESC')
+            ->get();
+
+            return response()->json([
+                'data' => [
+                    'brands' => $brands,
+                ]
+            ], 200);
+
+
+        } catch (\Exception $e)
+        {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+
+        }
+    }
+
     public function show($slug)
     {
         try{

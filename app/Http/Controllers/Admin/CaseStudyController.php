@@ -186,13 +186,28 @@ class CaseStudyController extends Controller
                 ]);
 
                 if (is_array($request->images)) {
-                    $image_path = public_path("uploads/case_study/images");
+                    // $image_path = public_path("uploads/case_study/images");
+                    // foreach ($request->file('images') as $image) {
+                    //     $uploadedImageUrl = Cloudinary::upload($request->file($image)->getRealPath(),
+                    //     [
+                    //         'folder' => 'case_study/images',
+                    //     ])->getSecurePath();
+                    //     // $image_name = Str::random(16) . '_' . time() . '.' . $image->extension();
+                    //     // if ($image->move($image_path, $image_name)) {
+                    //         CaseStudyImage::create([
+                    //             'case_study_id' => $casestudy->id,
+                    //             'image' => $uploadedImageUrl,
+                    //         ]);
+                    //     // }
+                    // }
                     foreach ($request->file('images') as $image) {
-                        $image_name = Str::random(16) . '_' . time() . '.' . $image->extension();
-                        if ($image->move($image_path, $image_name)) {
+                        if ($image->isValid()) {
+                            $uploadedImageUrl = Cloudinary::upload($image->getRealPath(), [
+                                'folder' => 'case_study/images',
+                            ])->getSecurePath();
                             CaseStudyImage::create([
-                                'case_study_id' => $casestudy->id,
-                                'image' => $image_name,
+                                'project_id' => $casestudy->id,
+                                'image' => $uploadedImageUrl,
                             ]);
                         }
                     }
@@ -386,13 +401,25 @@ class CaseStudyController extends Controller
                         return redirect()->back()->with('danger', 'You can only upload up to 10 images for a project.')->withInput();
                     }
     
-                    $image_path = public_path("uploads/case_study/images");
+                    // $image_path = public_path("uploads/case_study/images");
+                    // foreach ($newImages as $image) {
+                    //     $image_name = Str::random(16) . '_' . time() . '.' . $image->extension();
+                    //     if ($image->move($image_path, $image_name)) {
+                    //         CaseStudyImage::create([
+                    //             'case_study_id' => $casestudy->id,
+                    //             'image' => $uploadedImageUrl,
+                    //         ]);
+                    //     }
+                    // }
+
                     foreach ($newImages as $image) {
-                        $image_name = Str::random(16) . '_' . time() . '.' . $image->extension();
-                        if ($image->move($image_path, $image_name)) {
+                        if ($image->isValid()) {
+                            $uploadedImageUrl = Cloudinary::upload($image->getRealPath(), [
+                                'folder' => 'projects/images',
+                            ])->getSecurePath();
                             CaseStudyImage::create([
                                 'case_study_id' => $casestudy->id,
-                                'image' => $image_name,
+                                'image' => $uploadedImageUrl,
                             ]);
                         }
                     }

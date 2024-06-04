@@ -269,10 +269,10 @@
                                 <div class="card-xl-stretch me-md-6">
                                     <!--begin::Overlay-->
                                     <a class="d-block overlay" data-fslightbox="lightbox-hot-sales"
-                                        href="{{ asset('uploads/case_study/images/') }}/{{ $image->image }}" target="_blank">
+                                        href="{{ $image->image }}" target="_blank">
                                         <!--begin::Image-->
                                         <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px"
-                                            style="background-image:url('{{ asset('uploads/case_study/images/') }}/{{ $image->image }}')">
+                                            style="background-image:url('{{ $image->image }}')">
                                         </div>
                                         <!--end::Image-->
                                         <!--begin::Action-->
