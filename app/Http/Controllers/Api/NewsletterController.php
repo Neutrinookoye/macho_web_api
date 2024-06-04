@@ -14,7 +14,7 @@ class NewsletterController extends Controller
         // dd($request);
         try{
             $validated = $request->validate([
-                'email' => 'bail|required|email|string',
+                'email' => 'bail|required|email|string|unique:newsletters,email',
             ]);
             
             $newsletter = Newsletter::create([
