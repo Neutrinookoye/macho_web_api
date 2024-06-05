@@ -19,7 +19,7 @@ class BlogController extends Controller
                 ->where('status', 1)
                 ->with(['category', 'tags'])
                 ->orderBy('created_at', 'desc') // Corrected 'DSEC' to 'desc'
-                ->paginate(10);
+                ->paginate(1);
 
             return response()->json([
                 'data' => $blogs,

@@ -45,7 +45,7 @@ class CaseStudyController extends Controller
             $caseStudy = $query
             ->with(['brand', 'project', 'service', 'location'])
             ->orderBy('created_at', 'DESC')
-            ->paginate(10);
+            ->paginate(1);
 
             return response()->json([
                 'data' => [
