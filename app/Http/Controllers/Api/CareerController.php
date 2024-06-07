@@ -139,6 +139,8 @@ class CareerController extends Controller
                 'location' => $validated['location'],
             ]);
 
+            dd($cv_file_name);
+
             return response()->json([
                 'data' => [
                     'message' => 'Application sent successfully',
