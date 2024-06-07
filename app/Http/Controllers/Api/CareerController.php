@@ -126,7 +126,7 @@ class CareerController extends Controller
             // }else{
             //     $cover_letter_file_name = null;
             // }
-            dd($cv_file_name);
+            // dd($cv_file_name);
             
             $apply = Application::create([
                 'opening_id' => $id,
