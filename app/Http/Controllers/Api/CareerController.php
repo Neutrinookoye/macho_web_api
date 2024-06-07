@@ -7,6 +7,7 @@ use App\Models\Application;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class CareerController extends Controller
@@ -127,6 +128,7 @@ class CareerController extends Controller
             //     $cover_letter_file_name = null;
             // }
             // dd($cv_file_name);
+            Log::info($cv_file_name);
             
             $apply = Application::create([
                 'opening_id' => $id,
@@ -138,8 +140,7 @@ class CareerController extends Controller
                 'cover_letter' => $validated['cover_letter'],
                 'location' => $validated['location'],
             ]);
-
-            dd($cv_file_name);
+            // dd($cv_file_name);
 
             return response()->json([
                 'data' => [
