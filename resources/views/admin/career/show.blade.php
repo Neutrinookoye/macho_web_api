@@ -97,7 +97,7 @@
                                         <td>
                                             <div>
                                                 <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
-                                                    <a href="{{ asset('uploads/cv') }}/{{ $application->cv }}" class="btn font-weight-bolder btn-sm btn-warning mr-2" target="_blank">View</a>
+                                                    <a href="{{ asset('uploads/cvs') }}/{{ $application->cv }}" class="btn font-weight-bolder btn-sm btn-warning mr-2" target="_blank">View</a>
                                                     {{-- {{ $application->name }} --}}
                                                 </span>
                                             </div>
