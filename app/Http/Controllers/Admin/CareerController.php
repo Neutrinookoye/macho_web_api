@@ -101,7 +101,7 @@ class CareerController extends Controller
         {
             return redirect()->back()->with('danger', 'Access Forbidden');
         }
-        $applications = Application::where('opening_id', '=', $id)->get();
+        $applications = Application::where('opening_id', '=', $id)->orderBy('created_at', 'DESC')->get();
         // dd($applications);
         return view('admin.career.show', compact('applications'));
     }

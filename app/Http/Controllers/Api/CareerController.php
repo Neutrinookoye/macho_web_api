@@ -79,6 +79,7 @@ class CareerController extends Controller
     public function apply(Request $request, $id)
     {
         // dd($request);
+        Log::info($request);
         try{
             $opening = Opening::find($id);
         
@@ -97,7 +98,6 @@ class CareerController extends Controller
                 'cover_letter' => 'bail|nullable',
                 'location' => 'bail|required|string',
             ]);
-
             if($request->hasFile('cv'))
             {
                 $cv_file_path = public_path("uploads/cvs/");
