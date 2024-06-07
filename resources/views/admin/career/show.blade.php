@@ -76,7 +76,7 @@
                                         <td>
                                             <div>
                                                 <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
-                                                    {{ $application->full_name }}
+                                                    {{ $application->last_name }} {{ $application->first_name }}
                                                 </span>
                                             </div>
                                         </td>
@@ -97,7 +97,7 @@
                                         <td>
                                             <div>
                                                 <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
-                                                    <a href="{{ asset('uploads/cv') }}/{{ $application->cv }}" class="btn font-weight-bolder btn-sm btn-primary mr-2" target="_blank">View</a>
+                                                    <a href="{{ asset('uploads/cv') }}/{{ $application->cv }}" class="btn font-weight-bolder btn-sm btn-warning mr-2" target="_blank">View</a>
                                                     {{-- {{ $application->name }} --}}
                                                 </span>
                                             </div>
@@ -105,7 +105,10 @@
                                         <td>
                                             <div>
                                                 <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
-                                                    <a href="{{ asset('uploads/cover_letter') }}/{{ $application->cover_letter }}" class="btn font-weight-bolder btn-sm btn-primary mr-2" target="_blank">View</a>
+                                                    {{-- <a href="{{ asset('uploads/cover_letter') }}/{{ $application->cover_letter }}" class="btn font-weight-bolder btn-sm btn-primary mr-2" target="_blank">View</a> --}}
+                                                    <a href="#" class="btn font-weight-bolder btn-sm btn-warning mr-2" data-toggle="modal" data-target="#add-admin{{ $application->id }}">
+                                                        View 
+                                                    </a>
                                                     {{-- {{ $application->name }} --}}
                                                 </span>
                                             </div>
@@ -128,5 +131,36 @@
     </div>
     <!--end::Entry-->
 </div>
+
+@foreach ($applications as $application)
+<div class="modal fade" id="add-admin{{ $application->id }}" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="exampleModalLabel"><b>Cover Letter</b></h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{-- <div class="card card-custom"> --}}
+
+                    <div>
+
+                    </div>
+                    <!--begin::Form-->
+                        {{ $application->cover_letter }}
+                    
+                    <!--end::Form-->
+                {{-- </div> --}}
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+@endforeach
+
 
 @endsection

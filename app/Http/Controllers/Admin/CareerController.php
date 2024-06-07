@@ -131,12 +131,22 @@ class CareerController extends Controller
                 ]);
                 $opening = Opening::find($opening_id);
 
+                $slug = Str::slug($request->department);
+                
+                $department = Department::firstOrCreate(
+                ['name' => $request->department],
+                [
+                    'name' => $request->department,
+                    'slug' => $slug
+                ]
+            );
+
                 $opening->update([
                     'title' => $request->title,
                     'description' => $request->description,
                     'role' => $request->role,
                     'location_id' => $request->location,
-                    'department' => $request->department,
+                    'department_id' => $department->id,
                     'experience_level' => $request->experience_level,
                     'education_requirement' => $request->education_requirement,
                     'employment_type' => $request->employment_type,

@@ -112,20 +112,20 @@ class CareerController extends Controller
                 $cv_file_name = null;
             }
 
-            if($request->hasFile('cover_letter'))
-            {
-                $cover_letter_file_path = public_path("uploads/cover_letter/");
+            // if($request->hasFile('cover_letter'))
+            // {
+            //     $cover_letter_file_path = public_path("uploads/cover_letter/");
 
-                $cover_letter_file = $request->file("cover_letter");
-                $cover_letter_file_name = 'Cover Letter'.'.'.$cover_letter_file->extension();
+            //     $cover_letter_file = $request->file("cover_letter");
+            //     $cover_letter_file_name = 'Cover Letter'.'.'.$cover_letter_file->extension();
 
-                if($cover_letter_file->move($cover_letter_file_path, $cover_letter_file_name))
-                {
-                    $cover_letter_file_name = $cover_letter_file_name;
-                }
-            }else{
-                $cover_letter_file_name = null;
-            }
+            //     if($cover_letter_file->move($cover_letter_file_path, $cover_letter_file_name))
+            //     {
+            //         $cover_letter_file_name = $cover_letter_file_name;
+            //     }
+            // }else{
+            //     $cover_letter_file_name = null;
+            // }
             
             $apply = Application::create([
                 'opening_id' => $id,
@@ -134,7 +134,7 @@ class CareerController extends Controller
                 'email' => $validated['email'],
                 'phone' => $validated['phone'],
                 'cv' => $cv_file_name,
-                'cover_letter' => $cover_letter_file_name,
+                'cover_letter' => $validated['cover_letter'],
                 'location' => $validated['location'],
             ]);
 
