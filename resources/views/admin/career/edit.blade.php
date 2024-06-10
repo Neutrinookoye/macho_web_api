@@ -79,7 +79,7 @@
                                 <div class="form-group row">
                                     <div class="col-lg-4">
                                         <label>Department <span class="text-danger"><b>*</b></span></label>
-                                        <input type="text" class="form-control" name="department" placeholder="IT" value="{{ $opening->department }}" />                                        
+                                        <input type="text" class="form-control" name="department" placeholder="IT" value="{{ $opening->department->name }}" />                                        
                                     </div>
                                     <div class="col-lg-4">
                                         <label>Location <span class="text-danger"><b>*</b></span></label>
