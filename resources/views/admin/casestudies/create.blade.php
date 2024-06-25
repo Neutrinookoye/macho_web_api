@@ -169,7 +169,7 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <label>Case Study Document <span class="text-danger"><b>*</b></span> <span class="font-weight-bolder"></span></label>
+                                        <label>Case Study Document <span class="font-weight-bolder"></span></label>
                                         <div class="input-group">
                                             <input type="file" class="form-control form-control-solid" placeholder="" name="document" accept=".pdf,.doc,.docx,.txt" value="{{ old('document') }}">
                                         </div>

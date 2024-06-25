@@ -24,7 +24,7 @@
                 </ul>
             </div>
             <a href="{{ route('admin.project.create') }}" class="btn btn-warning font-weight-bolder font-size-sm mr-3">
-                <i class="flaticon2-pen"></i> Create Project
+                <i class="flaticon2-pen"></i> Create Project    
             </a>
         </div>
     </div>
@@ -68,7 +68,24 @@
                                                     <b>{{ Str::limit(($project->name), '35')}}</b>
                                                 </p>                                                
 
-                                                <div class="fs-6 d-flex flex-stack">
+                                                <div class="fs-6 fw-bold d-flex flex-stack">
+                                                    <small>
+                                                        @if ($project->status == 1)
+                                                        <span class="text-white-100 font-weight-bolder font-size-sm mr-2 badge bg-success">Active</span>
+                                                        @endif
+                                                        @if ($project->is_featured == 1)
+                                                        <span class="text-white-100 font-weight-bolder font-size-sm mr-2 badge bg-primary">Featured</span>
+                                                        @endif
+                                                        @if ($project->status == 0)
+                                                        <span class="text-white-100 font-weight-bolder font-size-sm mr-2 badge bg-danger">Inactive</span>
+                                                        @endif
+                                                        @if ($project->is_featured == 0)
+                                                        <span class="text-white-100 font-weight-bolder font-size-sm mr-2 badge bg-secondary">Not Featured</span>
+                                                        @endif
+                                                    </small>
+                                                </div>
+
+                                                {{-- <div class="fs-6 d-flex flex-stack">
                                                     <small>
                                                         @if ($project->is_featured == 1)
                                                         <span class="text-dark-75 font-weight-bold d-block font-size-lg">Featured</span>
@@ -77,9 +94,9 @@
                                                         <span class="text-dark-75 font-weight-bold d-block font-size-lg">Not Featured</span>
                                                         @endif
                                                     </small>
-                                                </div>
+                                                </div> --}}
 
-                                                <div class="fs-6 mt-3 d-flex flex-stack">
+                                                <div class="fs-6 mt-1 d-flex flex-stack">
                                                     <p>
                                                         Created on {{ date('d M, Y', strtotime($project->created_at)) }} by {{ $project->created_by_name }}
                                                     </p>
@@ -87,7 +104,7 @@
 
                                                 <div class="fs-6 fw-bold mt-2 d-flex flex-stack">
                                                     
-                                                        <a href="{{ route('admin.project.edit', $project->id) }}" class="btn btn-primary font-weight-bolder font-size-sm mr-3">
+                                                        <a href="{{ route('admin.project.edit', $project->id) }}" class="btn btn-warning font-weight-bolder font-size-sm mr-3">
                                                             <i class="flaticon2-edit"></i> Edit
                                                         </a>
                                                 </div>

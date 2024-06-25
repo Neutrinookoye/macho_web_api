@@ -6,8 +6,10 @@ use App\Models\Opening;
 use App\Models\Application;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use App\Mail\ApplicationSuccess;
+use Illuminate\Support\Facades\Mail;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class CareerController extends Controller
@@ -140,7 +142,23 @@ class CareerController extends Controller
                 'cover_letter' => $validated['cover_letter'],
                 'location' => $validated['location'],
             ]);
+
+                $first_name = $apply->first_name;
+                $last_name = $apply->last_name;
+                $email = $validated['email'];
+                $job_title = $opening->title;
+                $applicant_name = $first_name . ' ' . $last_name;
             // dd($cv_file_name);
+
+            try{
+                Mail::to($email)->queue(new ApplicationSuccess($email, $job_title, $applicant_name));
+
+            } catch (\Exception $e)
+            {
+                Log::info($e);
+    
+            }
+            // dd('123');
 
             return response()->json([
                 'data' => [
