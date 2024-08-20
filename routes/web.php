@@ -15,5 +15,5 @@ use App\Http\Controllers\Auth\AuthController;
 |
 */
 
-Route::get('/login', [HomeController::class, 'home'])->name('home');
+Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::post('admin-login', [AuthController::class, 'login'])->name('admin.login');
