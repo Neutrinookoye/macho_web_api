@@ -5,7 +5,7 @@
 	<head><base href="../../../../">
 		<meta charset="utf-8" />
 		<title>{{ config('app.name') }} - Login</title>
-		<meta name="description" content="Singin page example" />
+		<meta name="description" content="Ideas House Admin" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 		<link rel="canonical" href="https://keenthemes.com/metronic" />
 		<!--begin::Fonts-->
