@@ -16,7 +16,7 @@ class BrandsController extends Controller
 
             $brands = Brand::where('status', 1)
             ->orderBy('created_at', 'DESC')
-            ->paginate(10);
+            ->get();
 
             return response()->json([
                 'data' => [

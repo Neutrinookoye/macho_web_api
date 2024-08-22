@@ -21,7 +21,7 @@ class AwardController extends Controller
             ->where('status', 1)
             ->with(['category'])
             ->orderBy('created_at', 'DESC')
-            ->paginate(10);
+            ->get();
 
             return response()->json([
                 'data' => [
