@@ -57,15 +57,15 @@ class BrandController extends Controller
                 [
                     'folder' => 'brands',
                 ])->getSecurePath();
-            //     $bg_image_path = public_path("uploads/brands/");
+                $bg_image_path = public_path("uploads/brands/");
 
-            //     $bg_image = $request->file("brand_image");
-            //     $bg_image_name = Str::random(16).'.'.$bg_image->extension();
+                $bg_image = $request->file("brand_image");
+                $bg_image_name = Str::random(16).'.'.$bg_image->extension();
 
-            //     if($bg_image->move($bg_image_path, $bg_image_name))
-            //     {
-            //         $bg_image_name = $bg_image_name;
-            //     }
+                if($bg_image->move($bg_image_path, $bg_image_name))
+                {
+                    $bg_image_name = $bg_image_name;
+                }
             }else{
                 $uploadedFileUrl = null;
             }
