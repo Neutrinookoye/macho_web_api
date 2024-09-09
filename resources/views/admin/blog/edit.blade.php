@@ -100,6 +100,13 @@
 
                                     <div class="form-group row">
                                         <div class="col-lg-12">
+                                            <label> Short Description <span class="text-danger"><b>*</b></span></label>
+                                            <textarea rows="3" type="text" id="short_description" class="form-control" name="short_description" placeholder="">{{ $blog->short_description }}</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-lg-12">
                                             <label> Content <span class="text-danger"><b>*</b></span></label>
                                             <textarea rows="10" type="text" id="description" class="form-control" name="content" placeholder="">{{ $blog->content }}</textarea>
                                         </div>
@@ -154,9 +161,29 @@
 @push('js')
 <script>
     $('#description').summernote({
-      placeholder: 'Enter description here...',
+      placeholder: 'Enter content here...',
       tabsize: 2,
       height: 300,
+      toolbar: [
+        ['style', ['style']],
+        ['font', ['bold', 'underline', 'clear']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['table', ['table']],
+        ['insert', ['link', 'picture', 'video']],
+        ['view', ['fullscreen']]
+      ]
+    });
+
+    var input1 = document.querySelector("#kt_tagify_1");
+    new Tagify(input1);
+</script>
+
+<script>
+    $('#short_description').summernote({
+      placeholder: 'Enter short description here...',
+      tabsize: 2,
+      height: 100,
       toolbar: [
         ['style', ['style']],
         ['font', ['bold', 'underline', 'clear']],
