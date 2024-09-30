@@ -62,6 +62,7 @@ class CaseStudyController extends Controller
                     'first_background_image' => 'bail|nullable',
                     'second_background_image' => 'bail|nullable',
                     'logo' => 'bail|nullable',
+                    'threeD_icon' => 'bail|required',
                     'document' => 'bail|nullable',
                     'created_by' => 'bail|integer',
                 ]);
@@ -139,6 +140,24 @@ class CaseStudyController extends Controller
                 }else{
                     $logoUrl = null;
                 }
+                if($request->hasFile('threeD_icon'))
+                {
+                    $iconurl = Cloudinary::upload($request->file('threeD_icon')->getRealPath(),
+                    [
+                        'folder' => 'case_study/3D_icon',
+                    ])->getSecurePath();
+                    // $logo_path = public_path("uploads/case_study/logos");
+
+                    // $logo = $request->file("logo");
+                    // $logo_name = Str::random(16).'.'.$logo->extension();
+
+                    // if($logo->move($logo_path, $logo_name))
+                    // {
+                    //     $logo = $logo_name;
+                    // }
+                }else{
+                    $iconurl = null;
+                }
 
                 if($request->hasFile('document'))
                 {
@@ -158,6 +177,25 @@ class CaseStudyController extends Controller
                 }else{
                     $document = null;
                 }
+                
+                // if($request->hasFile('threeD_icon'))
+                // {
+                //     // $documentUrl = Cloudinary::uploadFile($request->file('document')->getRealPath(), 
+                //     // [
+                //     //     'folder' => 'case_study/document',
+                //     // ])->getSecurePath();
+                //     $icon_path = public_path("uploads/case_study/3D_icon");
+
+                //     $icon = $request->file("threeD_icon");
+                //     $icon_name = Str::random(16).'.'.$icon->extension();
+
+                //     if($document->move($icon_path, $icon_name))
+                //     {
+                //         $threeD_icon = $icon_name;
+                //     }
+                // }else{
+                //     $threeD_icon = null;
+                // }
                 // dd($request);
 
                 $casestudy = CaseStudy::create([
@@ -182,6 +220,7 @@ class CaseStudyController extends Controller
                     'page_bg2' => $secondBackgroundImageUrl,
                     'logo' => $logoUrl,
                     'document' => $document,
+                    'threeD_icon' => $iconurl,
                     'created_by' => auth()->user()->id,
                 ]);
 
@@ -269,6 +308,7 @@ class CaseStudyController extends Controller
                     'first_background_image' => 'bail|nullable',
                     'second_background_image' => 'bail|nullable',
                     'logo' => 'bail|nullable',
+                    'threeD_icon' => 'bail|nullable',
                     'document' => 'bail|nullable',
                     'edited_by' => 'bail|integer',
                 ]);
@@ -350,6 +390,24 @@ class CaseStudyController extends Controller
                 }else{
                     $logoUrl = $casestudy->logo;
                 }
+                if($request->hasFile('threeD_icon'))
+                {
+                    $iconurl = Cloudinary::upload($request->file('threeD_icon')->getRealPath(),
+                    [
+                        'folder' => 'case_study/3D_icon',
+                    ])->getSecurePath();
+                    // $logo_path = public_path("uploads/case_study/logos");
+
+                    // $logo = $request->file("logo");
+                    // $logo_name = Str::random(16).'.'.$logo->extension();
+
+                    // if($logo->move($logo_path, $logo_name))
+                    // {
+                    //     $logo = $logo_name;
+                    // }
+                }else{
+                    $iconurl = $casestudy->threeD_icon;
+                }
 
                 if($request->hasFile('document'))
                 {
@@ -388,6 +446,7 @@ class CaseStudyController extends Controller
                     'page_bg' => $firstBackgroundImageUrl,
                     'page_bg2' => $secondBackgroundImageUrl,
                     'logo' => $logoUrl,
+                    'threeD_icon' => $iconurl,
                     'document' => $document,
                     'last_edited_by' => auth()->user()->id,
                 ]);

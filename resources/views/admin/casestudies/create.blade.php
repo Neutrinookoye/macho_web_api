@@ -148,16 +148,22 @@
                                 </div>
 
                                 <div class="form-group row pt-3">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <label>Banner Image <span class="text-danger"><b>*</b></span> <small>(1440px x 580px)</small> <span class="font-weight-bolder"></span></label>
                                         <div class="input-group">
                                             <input type="file" class="form-control form-control-solid" placeholder="" name="first_background_image" accept="image/png,image/jpeg,image/jpg" value="{{ old('first_background_image') }}">
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <label>Video Image <span class="text-danger"><b>*</b></span> <small>(1279px x 628px)</small> <span class="font-weight-bolder"></span></label>
                                         <div class="input-group">
                                             <input type="file" class="form-control form-control-solid" placeholder="" name="second_background_image" accept="image/png,image/jpeg,image/jpg" value="{{ old('second_background_image') }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label>3D Icon <span class="text-danger"><b>*</b></span> <span class="font-weight-bolder"></span></label>
+                                        <div class="input-group">
+                                            <input type="file" class="form-control form-control-solid" placeholder="" name="threeD_icon" accept="image/png,image/jpeg,image/jpg" value="{{ old('threeD_icon') }}">
                                         </div>
                                     </div>
                                 </div>
