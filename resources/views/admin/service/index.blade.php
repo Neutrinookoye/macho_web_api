@@ -178,6 +178,20 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="form-group row">
+                                    <div class="col-lg-12">
+                                        <label>Service 3D icon <span class="text-danger"><b>*</b></span> <span class="font-weight-bolder"></span></label>
+                                        <div class="input-group">
+                                            <input type="file" class="form-control form-control-solid" placeholder="" name="threeD_icon" accept="image/png,image/gif,image/jpeg,image/jpg" value="{{ old('threeD_icon') }}">
+                                            <div class="input-group-append">
+                                                {{-- <span class="input-group-text"> --}}
+                                                    {{-- <i class="la la-map-marker"></i> --}}
+                                                {{-- </span> --}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <hr>
 
                                 <div class="row">
@@ -269,6 +283,20 @@
                                     <label>Service Image <span class="text-danger"><b>*</b></span> <small>(625px X 414px)</small> <span class="font-weight-bolder"></span></label>
                                     <div class="input-group">
                                         <input type="file" class="form-control form-control-solid" placeholder="" name="image" accept="image/png,image/gif,image/jpeg,image/jpg" value="{{ old('image') }}">
+                                        <div class="input-group-append">
+                                            {{-- <span class="input-group-text"> --}}
+                                                {{-- <i class="la la-map-marker"></i> --}}
+                                            {{-- </span> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-lg-12">
+                                    <label>Service 3D icon <span class="text-danger"><b>*</b></span> <span class="font-weight-bolder"></span></label>
+                                    <div class="input-group">
+                                        <input type="file" class="form-control form-control-solid" placeholder="" name="threeD_icon" accept="image/png,image/gif,image/jpeg,image/jpg" value="{{ old('threeD_icon') }}">
                                         <div class="input-group-append">
                                             {{-- <span class="input-group-text"> --}}
                                                 {{-- <i class="la la-map-marker"></i> --}}

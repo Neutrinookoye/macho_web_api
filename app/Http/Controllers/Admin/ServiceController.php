@@ -39,6 +39,7 @@ class ServiceController extends Controller
                 'status' => 'nullable|integer',
                 'image' => 'bail|required',
                 'icon' => 'bail|required',
+                'threeD_icon' => 'bail|required',
             ]);
 
             $slug = Str::slug($request->name);
@@ -85,6 +86,24 @@ class ServiceController extends Controller
             }else{
                 $iconUrl = null;
             }
+            if($request->hasFile('threeD_icon'))
+                {
+                    $threeDurl = Cloudinary::upload($request->file('threeD_icon')->getRealPath(),
+                    [
+                        'folder' => 'services/3D_icon',
+                    ])->getSecurePath();
+                    // $logo_path = public_path("uploads/case_study/logos");
+
+                    // $logo = $request->file("logo");
+                    // $logo_name = Str::random(16).'.'.$logo->extension();
+
+                    // if($logo->move($logo_path, $logo_name))
+                    // {
+                    //     $logo = $logo_name;
+                    // }
+                }else{
+                    $threeDurl = null;
+                }
             
             $service = Service::create([
                 'name' => $request->name,
@@ -93,6 +112,7 @@ class ServiceController extends Controller
                 'status' => $request->status ?? 0,
                 'image' => $imageUrl,
                 'icon' => $iconUrl,
+                'threeD_icon' => $threeDurl,
                 'created_by' => auth()->user()->id,
             ]);
 
@@ -119,9 +139,10 @@ class ServiceController extends Controller
             $this->validate($request, [
                 'name' => 'bail|required|string',
                 'description' => 'bail|required|string',
-                'status' => 'nullable|integer',
-                'image' => 'nullable',
-                'icon' => 'nullable',
+                'status' => 'bail|nullable|integer',
+                'image' => 'bail|nullable',
+                'icon' => 'bail|nullable',
+                'threeD_icon' => 'bail|nullable',
             ]);
 
             $slug = Str::slug($request->name);
@@ -179,6 +200,24 @@ class ServiceController extends Controller
             }else{
                 $iconUrl = $service->icon;
             }
+            if($request->hasFile('threeD_icon'))
+                {
+                    $threeDurl = Cloudinary::upload($request->file('threeD_icon')->getRealPath(),
+                    [
+                        'folder' => 'services/3D_icon',
+                    ])->getSecurePath();
+                    // $logo_path = public_path("uploads/case_study/logos");
+
+                    // $logo = $request->file("logo");
+                    // $logo_name = Str::random(16).'.'.$logo->extension();
+
+                    // if($logo->move($logo_path, $logo_name))
+                    // {
+                    //     $logo = $logo_name;
+                    // }
+                }else{
+                    $threeDurl = $service->threeD_icon;
+                }
 
             // dd($service);
 
@@ -189,6 +228,7 @@ class ServiceController extends Controller
                 'status' => $request->status ?? 0,
                 'image' => $imageUrl,
                 'icon' => $iconUrl,
+                'threeD_icon' => $threeDurl,
                 'last_edited_by' => auth()->user()->id,
             ]);
 
