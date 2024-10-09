@@ -115,7 +115,7 @@
                                 <div class="form-group row">
                                     <div class="col-lg-12">
                                         <label>Short Description <span class="text-danger"><b>*</b></span> <small class="muted">(200 characters max)</small></label>
-                                        <textarea rows="3" type="text" maxlength="200" class="form-control" name="short_description" placeholder="">{{ $casestudy->short_description }}</textarea>
+                                        <textarea rows="3" type="text" minlength="200" maxlength="300" class="form-control" name="short_description" placeholder="">{{ $casestudy->short_description }}</textarea>
                                     </div>
                                 </div>
 
