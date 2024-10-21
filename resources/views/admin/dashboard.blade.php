@@ -37,7 +37,7 @@
 											<div class="col-xl-4">
 												<div class="card card-custom bg-primary gutter-b" style="height: 130px">
 													<!--begin::Body-->
-													<a href="{{ route('admin.lead.index') }}" style="text-decoration: none;">
+													<a href="{{ route('admin.newsletter.index') }}" style="text-decoration: none;">
 														<div class="card-body d-flex flex-column p-0">
 															<!--begin::Stats-->
 															<div class="flex-grow-1 card-spacer-x pt-6">
@@ -56,7 +56,7 @@
 											<div class="col-xl-4">
 												<div class="card card-custom bg-secondary gutter-b" style="height: 130px">
 													<!--begin::Body-->
-													<a href="{{ route('admin.lead.index') }}" style="text-decoration: none;">
+													<a href="{{ route('admin.career.index') }}" style="text-decoration: none;">
 														<div class="card-body d-flex flex-column p-0">
 															<!--begin::Stats-->
 															<div class="flex-grow-1 card-spacer-x pt-6">
