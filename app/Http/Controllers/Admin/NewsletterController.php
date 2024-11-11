@@ -26,7 +26,7 @@ class NewsletterController extends Controller
 
     public function exportNewsletter(Request $request)
     {
-        if (!checkPermission('export_leads')) {
+        if (!checkPermission('export_newsletters')) {
             return redirect()->back()->with('danger', 'Access Forbidden');
         }
         try {
