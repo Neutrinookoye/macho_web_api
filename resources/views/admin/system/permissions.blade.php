@@ -30,11 +30,11 @@
 
                             <div class="card-toolbar">
                                 <!--begin::Dropdown-->
-                                @if(checkPermission('add_permission'))
+                                {{-- @if(checkPermission('add_permission'))
                                     <a href="{{ route('admin.permissions.create') }}" class="btn btn-warning font-weight-bolder font-size-sm mr-3" data-toggle="modal" data-target="#addCustomer">
                                         <i class="ki-duotone ki-add-folder"></i> Create Permissions
                                     </a>
-                                @endif
+                                @endif --}}
                             </div>
 
                         </div>
@@ -47,7 +47,7 @@
                                     <tr class="fw-bold text-white bg-warning">
                                         <th>Name</th>
                                         <th>Status</th>
-                                        <th>Edit</th>
+                                        {{-- <th>Edit</th> --}}
                                     </tr>
                                 </thead>
                                 <!--end::Table head-->
@@ -71,13 +71,13 @@
                                             <span class="text-dark-75 font-weight-bolder d-block font-size-lg">Inactive</span>
                                             @endif
                                         </td>
-                                        <td>
+                                        {{-- <td>
                                             @if(checkPermission('edit_permission'))
                                                 <button href="#" class="btn btn-icon btn-warning" data-toggle="modal" data-target="#edit-customer{{ $permission->id }}">
                                                     <i class="flaticon-edit"></i>
                                                 </button>
                                             @endif
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                    @endforeach
                                 </tbody>
