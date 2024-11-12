@@ -18,10 +18,10 @@ class AccountController extends Controller
     //
     public function dashboard()
     {
-        if(!checkPermission('view_dashboard'))
-        {
-            return redirect()->back()->with('danger', 'Access Forbidden');
-        }
+        // if(!checkPermission('view_dashboard'))
+        // {
+        //     return redirect()->back()->with('danger', 'Access Forbidden');
+        // }
         try
         {
             $no_of_leads = Lead::get()->count();
