@@ -168,7 +168,7 @@
                                                                 <!--begin::Actions-->
                                                                     <div class="col-md-12 mb-2">
                                                                         <div class="text-center pt-15">
-                                                                            <button data-bs-dismiss="modal" type="button" class="btn btn-light me-3">Discard</button>
+                                                                            <button data-dismiss="modal" type="button" class="btn btn-light me-3">Discard</button>
                                                                             <button type="submit" class="btn btn-primary">
                                                                                 <span class="indicator-label">Save</span>
                                                                             </button>
@@ -277,7 +277,7 @@
                             <!--end::Input group-->
                             <!--begin::Actions-->
                             <div class="text-center pt-15">
-                                {{-- <button data-bs-dismiss="modal" type="button" class="btn btn-light me-3">Discard</button> --}}
+                                <button data-dismiss="modal" type="button" class="btn btn-light me-3">Discard</button>
                                 <button type="submit" class="btn btn-primary">
                                     <span class="indicator-label">Save</span>
                                 </button>
