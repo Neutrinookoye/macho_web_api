@@ -107,7 +107,7 @@
                                     <div class="form-group row">
                                         <div class="col-lg-12">
                                             <label> Short Description <span class="text-danger"><b>*</b></span></label>
-                                            <textarea rows="3" minlength="200" maxlength="300" type="text" class="form-control" name="short_description" placeholder="">{{ old('short_description') }}</textarea>
+                                            <textarea rows="3" type="text" class="form-control" name="short_description" placeholder="">{{ old('short_description') }}</textarea>
                                         </div>
                                     </div>
 
@@ -135,7 +135,7 @@
 
                                         <div class="d-flex flex-stack md-6 mt-4">
                                             <button type="submit" class="btn btn-primary mr-2">Save</button>
-                                            <a href="{{ route('admin.career.index') }}" class="btn btn-secondary">Cancel</a>
+                                            <a href="{{ route('admin.blog.index') }}" class="btn btn-secondary">Cancel</a>
                                         </div>
                                     </div>
                                 </div>

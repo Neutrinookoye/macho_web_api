@@ -13,15 +13,10 @@ class CategoryController extends Controller
     //
     public function index(Request $request)
     {
-        if(!checkPermission('view_categories'))
-        {
-            return redirect()->back()->with('danger', 'Access Forbidden');
-        }
         try{
             $categories = Category::where('type', $request->type)->orderBy('created_at', 'DESC')->get();
 
             $type = $request->type ?? 'All';
-            // dd($type);
             return view('admin.category.index', compact('categories', 'type'));
 
         } catch (\Exception $e)
@@ -33,14 +28,9 @@ class CategoryController extends Controller
 
     public function createCategory(Request $request)
     {
-        if(!checkPermission('create_category'))
-        {
-            return redirect()->back()->with('danger', 'Access Forbidden');
-        }
         try
         {
-            // dd($request->all());
-            $this->validate($request, [
+            $request->validate([
                 'name' => 'bail|required|string',
                 'description' => 'bail|nullable|string',
                 'status' => 'nullable|integer',
@@ -61,7 +51,7 @@ class CategoryController extends Controller
                 'slug' => $slug,
                 'status' => $request->status ?? 0,
                 'type' => $request->type,
-                'created_by' => auth()->user()->id,
+                // 'created_by' => auth()->user()->id,
             ]);
 
             return redirect()->back()->with('success', 'Category added successfully');
@@ -77,14 +67,10 @@ class CategoryController extends Controller
 
     public function editCategory(Request $request, $category_id)
     {
-        if(!checkPermission('edit_category'))
-        {
-            return redirect()->back()->with('danger', 'Access Forbidden');
-        }
         try
         {
             // dd($request->all());
-            $this->validate($request, [
+            $request->validate([
                 'name' => 'bail|required|string',
                 'description' => 'bail|nullable|string',
                 'status' => 'nullable|integer',
@@ -92,12 +78,6 @@ class CategoryController extends Controller
             ]);
 
             $slug = Str::slug($request->name);
-
-            // $category = Category::where('slug', $slug)->first();
-            // if($category)
-            // {
-            //     return redirect()->back()->with('danger', 'Sorry! you have already added this category');
-            // }
 
             $category = Category::find($category_id);
 
@@ -107,7 +87,7 @@ class CategoryController extends Controller
                 'slug' => $slug,
                 'status' => $request->status ?? 0,
                 'type' => $request->type,
-                'last_edited_by' => auth()->user()->id,
+                // 'last_edited_by' => auth()->user()->id,
             ]);
 
             return redirect()->back()->with('success', 'Category added successfully');
@@ -120,5 +100,4 @@ class CategoryController extends Controller
             return redirect()->back()->with('danger', $e->getMessage())->withInput();
         }
     }
-    
 }

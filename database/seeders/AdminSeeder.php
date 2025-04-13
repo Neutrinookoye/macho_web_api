@@ -19,7 +19,7 @@ class AdminSeeder extends Seeder
         DB::table('users')->insert([
             [
                 "name" => 'Super Admin',
-                "email" => 'admin@super.com',
+                "email" => 'admin@g.com',
                 "admin" => "1",
                 "account" => "9",
                 "suspend" => "0",

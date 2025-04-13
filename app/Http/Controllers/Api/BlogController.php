@@ -18,19 +18,19 @@ class BlogController extends Controller
                 ->allowedFilters(['category.type'])
                 ->where('status', 1)
                 ->with(['category', 'tags'])
-                ->orderBy('created_at', 'desc') // Corrected 'DSEC' to 'desc'
-                ->paginate(3);
+                ->orderBy('created_at', 'desc')
+                ->get();
 
             return response()->json([
-                'data' => $blogs,
+                'blogs' => $blogs,
             ], 200);
+
         } catch (\Exception $e) {
             return response()->json([
                 'message' => $e->getMessage()
             ], 500);
         }
     }
-
 
     public function show($slug)
     {
@@ -41,11 +41,8 @@ class BlogController extends Controller
             ->first();
 
             return response()->json([
-                'data' => [
-                    'blog' => $blog,
-                ]
+                'blog' => $blog,
             ], 200);
-
 
         } catch (\Exception $e)
         {
@@ -64,11 +61,8 @@ class BlogController extends Controller
             ->get();
 
             return response()->json([
-                'data' => [
-                    'blog' => $blog,
-                ]
+                'blog' => $blog,
             ], 200);
-
 
         } catch (\Exception $e)
         {

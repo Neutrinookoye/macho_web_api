@@ -1,24 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BlogController;
-use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Admin\LeadController;
-use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\BrandController;
-use App\Http\Controllers\Admin\CareerController;
-use App\Http\Controllers\Admin\AccountController;
-use App\Http\Controllers\Admin\AwardController;
-use App\Http\Controllers\Admin\BlogController as AdminBlogController;
-use App\Http\Controllers\Admin\ProjectController;
-use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\Admin\AchievementController;
+use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\TeamController;
+use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\CaseStudyController;
-use App\Http\Controllers\Admin\LocationController;
-use App\Http\Controllers\Admin\NewsletterController;
-use App\Http\Controllers\Admin\PermissionController;
-use App\Http\Controllers\Admin\PublicationController;
+use App\Http\Controllers\Admin\TestimonialController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,71 +26,24 @@ use App\Http\Controllers\Admin\PublicationController;
 Route::group(['middleware' => 'admin_auth'], function()
 {
     Route::get('dashboard', [AccountController::class, 'dashboard'])->name('admin.dashboard');
-
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
-    Route::controller(AdminController::class)->group(function () {
-        Route::group(["prefix" => "admin"], function ()
+    Route::controller(EventController::class)->group(function () {
+        Route::group(["prefix" => "events"], function ()
         {
-            Route::get('/index', 'index')->name('admin.users.admins');
-            Route::post('create-admin', 'createAdmin')->name('admin.admins.create');
-            Route::put('edit-admin/{user_id}', 'updateAdmin')->name('admin.admins.edit');
-            // Route::delete('delete-admin/{user_id}', 'deleteAdmin')->name('admin.admins.delete');
+            Route::get('/', 'index')->name('admin.event.index');
+            Route::match(['GET', 'POST'], 'create', 'createEvent')->name('admin.event.create');
+            Route::match(['GET', 'PATCH'], 'edit/{event_id}', 'editEvent')->name('admin.event.edit');
+            Route::get('remove-event-image/{event_id}/{image_id}', 'removeImage')->name('admin.event.remove.image');
         });
     });
 
-    Route::controller(PermissionController::class)->group(function () {
-        Route::group(["prefix" => "permissions"], function ()
+    Route::controller(BlogController::class)->group(function () {
+        Route::group(["prefix" => "blogs"], function ()
         {
-            Route::get('/', 'index')->name('admin.permissions.index');
-            Route::post('create', 'createPermission')->name('admin.permissions.create');
-            Route::put('edit/{permission_id}', 'updatePermission')->name('admin.permissions.edit');
-            // Route::put('delete-permission', 'deletePermission')->name('admin.permissions.delete');
-        });
-    });
-    
-    Route::controller(RoleController::class)->group(function () {
-        Route::group(["prefix" => "roles"], function ()
-        {
-            Route::get('/', 'index')->name('admin.roles.index');
-            Route::post('create', 'createRole')->name('admin.roles.create');
-            Route::put('edit/{role_id}', 'updateRole')->name('admin.roles.edit');
-            // Route::put('delete-role', 'deleteRole')->name('admin.roles.delete');
-        });
-    });
-
-    Route::controller(LocationController::class)->group(function () {
-        Route::group(["prefix" => "locations"], function ()
-        {
-            Route::get('/', 'index')->name('admin.location.index');
-            Route::match(['GET', 'POST'], 'create-location', 'createLocation')->name('admin.location.create');
-            Route::match(['GET', 'PATCH'], 'edit/{location_id}', 'editLocation')->name('admin.location.edit');
-        });
-    });
-
-    Route::controller(LeadController::class)->group(function () {
-        Route::group(["prefix" => "leads"], function ()
-        {
-            Route::get('/', 'index')->name('admin.lead.index');
-            Route::post('export-leads', 'exportLead')->name('admin.leads.export');
-        });
-    });
-
-    Route::controller(NewsletterController::class)->group(function () {
-        Route::group(["prefix" => "newsletters"], function ()
-        {
-            Route::get('/', 'index')->name('admin.newsletter.index');
-            Route::post('export-newsletters', 'exportNewsletter')->name('admin.newsletter.export');
-        });
-    });
-
-    Route::controller(CareerController::class)->group(function () {
-        Route::group(["prefix" => "careers"], function ()
-        {
-            Route::get('/', 'index')->name('admin.career.index');
-            Route::match(['GET', 'POST'], 'create-opening', 'createOpening')->name('admin.career.create');
-            Route::match(['GET', 'PATCH'], 'edit/{opening_id}', 'editOpening')->name('admin.career.edit');
-            Route::get('show-applications/{opening_id}', 'showApplication')->name('admin.career.show');
+            Route::get('/', 'index')->name('admin.blog.index');
+            Route::match(['GET', 'POST'], 'create', 'createBlog')->name('admin.blog.create');
+            Route::match(['GET', 'PATCH'], 'edit/{blog_id}', 'editBlog')->name('admin.blog.edit');
         });
     });
 
@@ -112,69 +56,43 @@ Route::group(['middleware' => 'admin_auth'], function()
         });
     });
 
-    Route::controller(PublicationController::class)->group(function () {
-        Route::group(["prefix" => "publications"], function ()
+    Route::controller(TeamController::class)->group(function () {
+        Route::group(["prefix" => "teams"], function ()
         {
-            Route::get('/', 'index')->name('admin.publication.index');
-            Route::match(['GET', 'POST'], 'create', 'createPublication')->name('admin.publication.create');
-            Route::match(['GET', 'PATCH'], 'edit/{publication_id}', 'editPublication')->name('admin.publication.edit');
+            Route::get('/', 'index')->name('admin.team.index');
+            Route::post('create', 'createTeam')->name('admin.team.create');
+            Route::put('edit/{team_id}', 'editTeam')->name('admin.team.edit');
         });
     });
 
-    Route::controller(AdminBlogController::class)->group(function () {
-        Route::group(["prefix" => "blogs"], function ()
+    Route::controller(TestimonialController::class)->group(function () {
+        Route::group(["prefix" => "testimonials"], function ()
         {
-            Route::get('/', 'index')->name('admin.blog.index');
-            Route::match(['GET', 'POST'], 'create', 'createBlog')->name('admin.blog.create');
-            Route::match(['GET', 'PATCH'], 'edit/{blog_id}', 'editBlog')->name('admin.blog.edit');
+            Route::get('/', 'index')->name('admin.testimonial.index');
+            Route::post('create', 'createTestimonial')->name('admin.testimonial.create');
+            Route::put('edit/{testimonial_id}', 'editTestimonial')->name('admin.testimonial.edit');
         });
     });
 
-    Route::controller(BrandController::class)->group(function () {
-        Route::group(["prefix" => "brands"], function ()
+    Route::controller(AchievementController::class)->group(function () {
+        Route::group(["prefix" => "achievements"], function ()
         {
-            Route::get('/', 'index')->name('admin.brand.index');
-            Route::post('create', 'createBrand')->name('admin.brand.create');
-            Route::put('edit/{brand_id}', 'editBrand')->name('admin.brand.edit');
+            Route::get('/', 'index')->name('admin.achievement.index');
+            Route::post('create', 'createAchievement')->name('admin.achievement.create');
+            Route::put('edit/{achievement_id}', 'editAchievement')->name('admin.achievement.edit');
         });
     });
 
-    Route::controller(ServiceController::class)->group(function () {
-        Route::group(["prefix" => "services"], function ()
-        {
-            Route::get('/', 'index')->name('admin.service.index');
-            Route::post('create', 'createService')->name('admin.service.create');
-            Route::put('edit/{service_id}', 'editService')->name('admin.service.edit');
+    Route::controller(GalleryController::class)->group(function () {
+        Route::group(["prefix" => "galleries"], function () {
+            Route::get('', 'index')->name('admin.gallery.index');
+            Route::match(['GET', 'POST'], 'create-gallery', 'createGallery')->name('admin.gallery.create');
+            Route::match(['GET', 'POST'], 'edit/{gallery_id}', 'editGallery')->name('admin.gallery.edit');
+            Route::get('remove-gallery-image/{gallery_id}/{image_id}', 'removeImage')->name('admin.gallery.remove.image');
+            // Route::get('delete/{gallery_id}', 'deleteGallery')->name('admin.gallery.delete');
+            Route::get('delete-file/{file_id}', 'deleteGalleryFile')->name('admin.gallery.delete.file');
+            Route::get('mark-file-preview/{file_id}', 'markGalleryFileAsPreview')->name('admin.gallery.file.preview');
         });
     });
-
-    Route::controller(ProjectController::class)->group(function () {
-        Route::group(["prefix" => "projects"], function ()
-        {
-            Route::get('/', 'index')->name('admin.project.index');
-            Route::match(['GET', 'POST'], 'create', 'createProject')->name('admin.project.create');
-            Route::match(['GET', 'PATCH'], 'edit/{project_id}', 'editProject')->name('admin.project.edit');
-            Route::get('remove-project-image/{project_id}/{image_id}', 'removeImage')->name('admin.project.remove.image');
-        });
-    });
-
-    Route::controller(CaseStudyController::class)->group(function () {
-        Route::group(["prefix" => "case-studies"], function ()
-        {
-            Route::get('/', 'index')->name('admin.case.studies.index');
-            Route::match(['GET', 'POST'], 'create', 'createCaseStudy')->name('admin.case.studies.create');
-            Route::match(['GET', 'PATCH'], 'edit/{casestudy_id}', 'editCaseStudy')->name('admin.case.studies.edit');
-            Route::get('remove-casestudy-image/{casestudy_id}/{image_id}', 'removeImage')->name('admin.casestudy.remove.image');
-        });
-    });
-    Route::controller(AwardController::class)->group(function () {
-        Route::group(["prefix" => "awards"], function ()
-        {
-            Route::get('/', 'index')->name('admin.award.index');
-            Route::match(['GET', 'POST'], 'create', 'createAward')->name('admin.award.create');
-            Route::match(['GET', 'PATCH'], 'edit/{award_id}', 'editAward')->name('admin.award.edit');
-        });
-    });
-    
 });
 

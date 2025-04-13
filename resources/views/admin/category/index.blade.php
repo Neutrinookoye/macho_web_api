@@ -15,9 +15,9 @@
                 <!--end::Page Title-->
                 <!--begin::Actions-->
                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
-                    <li class="breadcrumb-item">
+                    {{-- <li class="breadcrumb-item">
                         <a href="" class="text-muted">@yield('module')</a>
-                    </li>
+                    </li> --}}
                     <li class="breadcrumb-item">
                         <a href="{{ route('admin.dashboard') }}" class="text-muted">Dashboard</a>
                     </li>
@@ -199,7 +199,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h6 class="modal-title" id="exampleModalLabel"><b>Create New Category</b></h6>
+                <h6 class="modal-title" id="exampleModalLabel"><b>Create New {{ ucfirst($type) }} Category</b></h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>

@@ -8,19 +8,13 @@ use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\File;
 use Illuminate\Validation\ValidationException;
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class BlogController extends Controller
 {
     //
     public function index()
     {
-        if(!checkPermission('view_blogs'))
-        {
-            return redirect()->back()->with('danger', 'Access Forbidden');
-        }
         $blogs = Blog::orderBy('created_at', 'DESC')->get();
         foreach($blogs as $blog)
         {
@@ -29,30 +23,26 @@ class BlogController extends Controller
             $blog["category_name"] = $category->name;
         }
         // dd($blogs);
-        return view('admin.blog.index', compact('blogs'))   ;
+        return view('admin.blog.index', compact('blogs'));
     }   
 
     public function createBlog(Request $request)
     {
-        if(!checkPermission('create_blog'))
-        {
-            return redirect()->back()->with('danger', 'Access Forbidden');
-        }
         if($request->isMethod('post'))
         {
             // dd($request);
-                $this->validate($request, [
-                'title' => 'bail|required|string',
-                'sub_title' => 'bail|string',
-                'category' => 'bail|integer|string',
-                'short_description' => 'bail|required|string',
-                'content' => 'bail|required|string',
-                'author' => 'bail|required|string',
-                'publication_date' => 'bail|required|date',
-                'featured_image' => 'bail|nullable|image',
-                'status' => 'nullable|integer',
-                'is_featured' => 'nullable|integer',
-                'tags' => 'nullable|string' // validate tags as a string
+                $request->validate([
+                    'title' => 'bail|required|string',
+                    'sub_title' => 'bail|string',
+                    'category' => 'bail|integer|string',
+                    'short_description' => 'bail|required|string',
+                    'content' => 'bail|required|string',
+                    'author' => 'bail|required|string',
+                    'publication_date' => 'bail|required|date',
+                    'featured_image' => 'bail|nullable|image',
+                    'status' => 'nullable|integer',
+                    'is_featured' => 'nullable|integer',
+                    'tags' => 'nullable|string' // validate tags as a string
             ]);
 
             $slug = Str::slug($request->title);
@@ -64,28 +54,22 @@ class BlogController extends Controller
 
             if ($request->is_featured) {
                 $featuredBlogsCount = Blog::where('is_featured', 1)->count();
-                if ($featuredBlogsCount >= 1) {
-                    return redirect()->back()->with('danger', 'Sorry! Only 1 blogs can be featured at a time.');
+                if ($featuredBlogsCount >= 3) {
+                    return redirect()->back()->with('danger', 'Sorry! Only 3 blogs can be featured at a time.');
                 }
             }
 
             if($request->hasFile('featured_image'))
             {
-                $uploadedFileUrl = Cloudinary::upload($request->file('featured_image')->getRealPath(),
-                [
-                    'folder' => 'blogs',
-                ])->getSecurePath();
-                // $featured_image_path = public_path("uploads/blogs/");
+                $featured_image_path = public_path("uploads/blogs/");
 
-                // $featured_image = $request->file("featured_image");
-                // $featured_image_name = Str::random(16).'.'.$featured_image->extension();
+                $featured_image = $request->file("featured_image");
+                $featured_image_name = Str::random(16).'.'.$featured_image->extension();
 
-                // if($featured_image->move($featured_image_path, $featured_image_name))
-                // {
-                //     $featured_image_name = $featured_image_name;
-                // }
+                $featured_image->move($featured_image_path, $featured_image_name);
+                $featuredImageUrl = asset('uploads/blogs/' . $featured_image_name);
             }else{
-                $uploadedFileUrl = null;
+                $featuredImageUrl = null;
             }
 
             $blog = Blog::create([
@@ -97,10 +81,10 @@ class BlogController extends Controller
                 'content' => $request->content,
                 'author' => $request->author,
                 'publication_date' => $request->publication_date,
-                'featured_image' => $uploadedFileUrl,
+                'featured_image' => $featuredImageUrl,
                 'status' => $request->status ?? 0,
                 'is_featured' => $request->is_featured ?? 0,
-                'created_by' => auth()->user()->id,
+                // 'created_by' => auth()->user()->id,
             ]);
 
             if ($request->tags) {
@@ -131,16 +115,12 @@ class BlogController extends Controller
 
     public function editBlog(Request $request, $blog_id)
     {
-        if(!checkPermission('edit_blog'))
-        {
-            return redirect()->back()->with('danger', 'Access Forbidden');
-        }
         if($request->isMethod('patch'))
         {
             try
             {
                 // dd($request);
-                $this->validate($request, [
+                $request->validate([
                     'title' => 'bail|required|string',
                     'sub_title' => 'bail|string',
                     'category' => 'bail|integer|string',
@@ -163,8 +143,8 @@ class BlogController extends Controller
 
                 if ($request->is_featured) {
                     $featuredBlogsCount = Blog::where('is_featured', 1)->count();
-                    if ($featuredBlogsCount >= 1) {
-                        return redirect()->back()->with('danger', 'Sorry! Only 1 blog can be featured at a time.');
+                    if ($featuredBlogsCount >= 3) {
+                        return redirect()->back()->with('danger', 'Sorry! Only 3b blog can be featured at a time.');
                     }
                 }
 
@@ -172,25 +152,15 @@ class BlogController extends Controller
 
                 if($request->hasFile('featured_image'))
                 {
-                    $uploadedFileUrl = Cloudinary::upload($request->file('featured_image')->getRealPath(),
-                    [
-                        'folder' => 'blogs',
-                    ])->getSecurePath();
-                    // $featured_image_delete_path = public_path("uploads/blogs/" . $blog->featured_image);
-                    // if (File::exists($featured_image_delete_path)) {
-                    //     File::delete($featured_image_delete_path);
-                    // }
-                    // $featured_image_path = public_path("uploads/blogs/");
+                    $featured_image_path = public_path("uploads/blogs/");
 
-                    // $featured_image = $request->file("featured_image");
-                    // $featured_image_name = Str::random(16).'.'.$featured_image->extension();
+                    $featured_image = $request->file("featured_image");
+                    $featured_image_name = Str::random(16).'.'.$featured_image->extension();
 
-                    // if($featured_image->move($featured_image_path, $featured_image_name))
-                    // {
-                    //     $featured_image_name = $featured_image_name;
-                    // }
+                    $featured_image->move($featured_image_path, $featured_image_name);
+                    $featuredImageUrl = asset('uploads/blogs/' . $featured_image_name);
                 }else{
-                    $uploadedFileUrl = $blog->featured_image;
+                    $featuredImageUrl = $blog->featuredImageUrl;
                 }
 
                 $blog->update([
@@ -202,10 +172,10 @@ class BlogController extends Controller
                     'content' => $request->content,
                     'author' => $request->author,
                     'publication_date' => $request->publication_date,
-                    'featured_image' => $uploadedFileUrl,
+                    'featured_image' => $featuredImageUrl,
                     'status' => $request->status ?? 0,
                     'is_featured' => $request->is_featured ?? 0,
-                    'last_edited_by' => auth()->user()->id,
+                    // 'last_edited_by' => auth()->user()->id,
                 ]);
 
                 if ($request->tags) {
@@ -233,7 +203,6 @@ class BlogController extends Controller
         }else{
             try
             {
-                // $categories = Category::all();
                 $categories = Category::where('type', 'blog')->get();
                 $blog = Blog::find($blog_id);
                 // dd($blog);
