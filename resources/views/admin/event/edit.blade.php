@@ -1,5 +1,5 @@
 @extends("layouts.overall")
-@section("page_title", "Create Event")
+@section("page_title", "Edit Event")
 @section('module', 'Events')
 @section("content")
 
@@ -73,7 +73,7 @@
                                 <div class="form-group row">
                                     <div class="col-lg-12">
                                         <label> Description <span class="text-danger"><b>*</b></span></label>
-                                        <textarea rows="6" type="text" id="description" class="form-control" name="description" placeholder="">{{ $event->location }}</textarea>
+                                        <textarea rows="6" type="text" id="description" class="form-control" name="description" placeholder="">{{ $event->description }}</textarea>
                                     </div>
                                 </div>
 
