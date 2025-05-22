@@ -94,7 +94,7 @@ class GalleryController extends Controller
 
     public function editGallery(Request $request, $gallery_id)
     {
-        if($request->isMethod('post'))
+        if($request->isMethod('patch'))
         {
             try
             {

@@ -87,7 +87,7 @@ Route::group(['middleware' => 'admin_auth'], function()
         Route::group(["prefix" => "galleries"], function () {
             Route::get('', 'index')->name('admin.gallery.index');
             Route::match(['GET', 'POST'], 'create-gallery', 'createGallery')->name('admin.gallery.create');
-            Route::match(['GET', 'POST'], 'edit/{gallery_id}', 'editGallery')->name('admin.gallery.edit');
+            Route::match(['GET', 'PATCH'], 'edit/{gallery_id}', 'editGallery')->name('admin.gallery.edit');
             Route::get('remove-gallery-image/{gallery_id}/{image_id}', 'removeImage')->name('admin.gallery.remove.image');
             // Route::get('delete/{gallery_id}', 'deleteGallery')->name('admin.gallery.delete');
             Route::get('delete-file/{file_id}', 'deleteGalleryFile')->name('admin.gallery.delete.file');
