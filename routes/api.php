@@ -4,9 +4,11 @@ use App\Http\Controllers\Api\AchievementController;
 use App\Http\Controllers\Api\BlogController;
 use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\GalleryController;
+use App\Http\Controllers\Api\NewsletterController;
 use App\Http\Controllers\Api\TeamController;
 use App\Http\Controllers\Api\TestimonialController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +70,13 @@ Route::middleware('throttle:api')->group(function () {
         {
             Route::get('/', 'index');
             Route::get('/{slug}', 'show');
+        });
+    });
+
+    Route::controller(NewsletterController::class)->group(function () {
+        Route::group(["prefix" => "newsletters"], function ()
+        {
+            Route::post('/', 'submit');
         });
     });
 });
