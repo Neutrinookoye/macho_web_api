@@ -1,15 +1,17 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Admin\AchievementController;
 use App\Http\Controllers\Admin\BlogController;
-use App\Http\Controllers\Admin\TeamController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\GalleryController;
-use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\NewsletterController;
+use App\Http\Controllers\Admin\TeamController;
 use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\AuthController;
+use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -92,6 +94,14 @@ Route::group(['middleware' => 'admin_auth'], function()
             // Route::get('delete/{gallery_id}', 'deleteGallery')->name('admin.gallery.delete');
             Route::get('delete-file/{file_id}', 'deleteGalleryFile')->name('admin.gallery.delete.file');
             Route::get('mark-file-preview/{file_id}', 'markGalleryFileAsPreview')->name('admin.gallery.file.preview');
+        });
+    });
+
+    Route::controller(NewsletterController::class)->group(function () {
+        Route::group(["prefix" => "newsletters"], function ()
+        {
+            Route::get('/', 'index')->name('admin.newsletter.index');
+            Route::post('export-newsletters', 'exportNewsletter')->name('admin.newsletter.export');
         });
     });
 });

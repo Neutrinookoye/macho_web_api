@@ -149,6 +149,14 @@
                 </a>
             </li>
 
+            <li class="menu-item @if(in_array(Route::currentRouteName(), ['admin.users.admins'])) menu-item-active @endif" aria-haspopup="true">
+                <a href="{{ route('admin.newsletter.index') }}" class="menu-link">
+                    <span class="svg-icon menu-icon">
+                        <i class="flaticon-envelope"></i>
+                    </span>
+                    <span class="menu-text">Newsletters</span>
+                </a>
+            </li>
 
             <li class="menu-section">
                 <h4 class="menu-text">Account</h4>
